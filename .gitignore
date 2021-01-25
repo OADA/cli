@@ -1,0 +1,19 @@
+# "Compiled" stuff
+dist
+*.tsbuildinfo
+
+.env*
+
+# Dependency directory
+# Commenting this out is preferred by some people, see
+# https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git-
+node_modules
+
+# yarn 2 stuff
+.yarn/*
+!.yarn/releases
+!.yarn/plugins
+!.yarn/versions
+.pnp.*
+# ignore sdk stuff
+.vim

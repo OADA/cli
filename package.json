@@ -1,0 +1,100 @@
+{
+  "name": "clioada",
+  "version": "1.0.0",
+  "description": "CLI OADA",
+  "main": "dist/index.js",
+  "bin": {
+    "oada": "./bin/run"
+  },
+  "author": "Alex Layton <alex@layton.in>",
+  "homepage": "https://github.com/awlayton/clioada",
+  "repository": "awlayton/clioada",
+  "bugs": "https://github.com/awlayton/clioada/issues",
+  "license": "MIT",
+  "keywords": [
+    "OADA",
+    "oclif"
+  ],
+  "oclif": {
+    "commands": "./dist/commands",
+    "topics": {
+      "fs": {
+        "description": "interact with OADA like a filesystem"
+      }
+    },
+    "hooks": {
+      "postrun": "./dist/hooks/postrun/close"
+    },
+    "bin": "oada",
+    "plugins": [
+      "@oclif/plugin-help",
+      "@oclif/plugin-autocomplete",
+      "@oclif/plugin-not-found",
+      "@oclif/plugin-plugins"
+    ]
+  },
+  "scripts": {
+    "postpack": "rm -f oclif.manifest.json",
+    "prepack": "rm -rf lib && tsc -b && oclif-dev manifest && oclif-dev readme",
+    "test": "echo NO TESTS",
+    "version": "oclif-dev readme && git add README.md",
+    "prepare": "npm run build",
+    "bundle": "webpack",
+    "build": "tsc -b",
+    "clean": "tsc -b --clean"
+  },
+  "engines": {
+    "node": "^15"
+  },
+  "files": [
+    "/bin",
+    "/lib",
+    "/npm-shrinkwrap.json",
+    "/oclif.manifest.json"
+  ],
+  "dependencies": {
+    "@oada/client": "^2.2.1",
+    "@oada/oadaify": "^1.0.1",
+    "@oclif/command": "^1",
+    "@oclif/config": "^1",
+    "@oclif/errors": "^1.3.4",
+    "@oclif/plugin-autocomplete": "^0.3.0",
+    "@oclif/plugin-help": "^3",
+    "@oclif/plugin-not-found": "^1.2.4",
+    "@oclif/plugin-plugins": "^1.9.5",
+    "bluebird": "^3.7.2",
+    "cli-highlight": "^2.1.10",
+    "concatjson": "^2.0.1",
+    "dotenv": "^8.2.0",
+    "gaxios": "^4.1.0",
+    "hjson": "^3.2.2",
+    "json-6": "^1.1.1",
+    "ndjson": "^2.0.0",
+    "object-assign-deep": "^0.4.0",
+    "ts-node": "^9.1.1",
+    "tslib": "^1",
+    "type-fest": "^0.20.2"
+  },
+  "devDependencies": {
+    "@oclif/dev-cli": "^1",
+    "@oclif/parser": "^3.8.5",
+    "@tsconfig/node14": "^1.0.0",
+    "@types/bluebird": "^3.5.33",
+    "@types/glob": "^7.1.3",
+    "@types/json5": "^0.0.30",
+    "@types/ndjson": "^2.0.0",
+    "@types/node": "^14.14.22",
+    "@types/object-assign-deep": "^0.4.0",
+    "@types/webpack": "^4.41.26",
+    "@yarnpkg/pnpify": "^2.4.0",
+    "glob": "^7.1.6",
+    "globby": "^10",
+    "shebang-loader": "^0.0.1",
+    "source-map-loader": "^2.0.0",
+    "ts-loader": "^8.0.14",
+    "typescript": "^4.1.3",
+    "webpack": "^5.17.0",
+    "webpack-cli": "^4.4.0",
+    "webpack-pnp-externals": "^1.1.0"
+  }
+}
