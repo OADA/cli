@@ -13,17 +13,18 @@
   "license": "MIT",
   "keywords": [
     "OADA",
+    "CLI",
     "oclif"
   ],
   "oclif": {
-    "commands": "./dist/commands",
+    "commands": "./src/commands",
     "topics": {
       "fs": {
         "description": "interact with OADA like a filesystem"
       }
     },
     "hooks": {
-      "postrun": "./dist/hooks/postrun/close"
+      "postrun": "./src/hooks/postrun/close"
     },
     "bin": "oada",
     "plugins": [
