@@ -12,6 +12,7 @@ import highlight from 'cli-highlight';
 import { request } from 'gaxios';
 
 import type { OADAClient } from '@oada/client';
+import { oadaify } from '@oada/oadaify';
 
 // Support input from TypeScript files
 import 'ts-node/register/transpile-only';
@@ -136,8 +137,11 @@ function inputChain(
       return [
         // TODO: Use code from git subcommand?
         async function* () {
-          const { data } = await conn.get({ path: input });
-          yield data;
+          const paths = expandPath(conn, input);
+          for await (const path of paths) {
+            const { data } = await conn.get({ path });
+            yield data;
+          }
         },
       ];
     case IOType.Url:
@@ -151,6 +155,48 @@ function inputChain(
           yield data;
         },
       ];
+  }
+}
+
+/**
+ * Funtion for expanding * etc. in paths akin to shell expansion
+ *
+ * Only works with OADA paths
+ *
+ * @todo inefficient
+ * @todo handle full URL in OADA
+ */
+export async function* expandPath(
+  conn: OADAClient,
+  path: string
+): AsyncGenerator<string> {
+  const parts = path.split('/');
+  const trailing = path.endsWith('/');
+
+  yield* expand('', parts);
+
+  async function* expand(
+    r: string,
+    parts: readonly string[]
+  ): AsyncGenerator<string> {
+    let p = [...parts];
+    let root = r;
+    for (const part of parts) {
+      p.shift();
+      if (part === '*') {
+        // Find all children
+        const { data: children } = await conn.get({ path: join('/', root) });
+        for (const child in oadaify(children) as {}) {
+          yield* expand(join(root, child), p);
+        }
+
+        return;
+      }
+
+      root = join(root, part);
+    }
+
+    yield root + (trailing ? '/' : '');
   }
 }
 

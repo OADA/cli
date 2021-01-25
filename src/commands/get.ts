@@ -11,7 +11,7 @@ import {
   _id,
 } from '@oada/oadaify';
 
-import { output } from '../io';
+import { output, expandPath } from '../io';
 import getConn from '../connections';
 
 /**
@@ -70,42 +70,49 @@ export default class Get extends Command {
     await output(
       out,
       async function* () {
-        for (const path of paths) {
-          const { data } = await conn.get({ path });
-          const oadaified = oadaify(data);
+        for (const p of paths) {
+          const pp = expandPath(conn, p);
+          for await (const path of pp) {
+            const { data } = await conn.get({ path });
+            const oadaified = oadaify(data);
 
-          if (meta) {
-            await getMeta(oadaified);
+            if (meta) {
+              await getMeta(oadaified);
 
-            async function getMeta(
-              oadaified: OADAifiedJsonValue
-            ): Promise<OADAifiedJsonValue> {
-              if (!oadaified || typeof oadaified !== 'object') {
+              async function getMeta(
+                oadaified: OADAifiedJsonValue
+              ): Promise<OADAifiedJsonValue> {
+                if (!oadaified || typeof oadaified !== 'object') {
+                  return oadaified;
+                }
+
+                if (isArray(oadaified)) {
+                  return Promise.all(oadaified.map(getMeta));
+                }
+
+                for (const key in oadaified) {
+                  oadaified[key] = await getMeta(oadaified[key]);
+                }
+
+                // Check for "empty" meta ?
+                const meta = oadaified[_meta] as
+                  | OADAifiedJsonObject
+                  | undefined;
+                if (meta) {
+                  // Fetch meta?
+                  const { data } = await conn.get({
+                    path: meta[_id] as string,
+                  });
+                  // Fill it in
+                  oadaified[_meta] = oadaify(data);
+                }
+
                 return oadaified;
               }
-
-              if (isArray(oadaified)) {
-                return Promise.all(oadaified.map(getMeta));
-              }
-
-              for (const key in oadaified) {
-                oadaified[key] = await getMeta(oadaified[key]);
-              }
-
-              // Check for "empty" meta ?
-              const meta = oadaified[_meta] as OADAifiedJsonObject | undefined;
-              if (meta) {
-                // Fetch meta?
-                const { data } = await conn.get({ path: meta[_id] as string });
-                // Fill it in
-                oadaified[_meta] = oadaify(data);
-              }
-
-              return oadaified;
             }
-          }
 
-          yield oadaified;
+            yield oadaified;
+          }
         }
       },
       this.iconfig
