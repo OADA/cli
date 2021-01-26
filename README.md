@@ -28,27 +28,27 @@ It has help output that is rather terse for now.
 It supports various JSON-y input formats:
 
 * JSON
-* [JSONL]() (aka. LDJSON or NDJSON)
-* [Concatenated JSON]()
-* [HJSON]()
-* [JSON5]()
-* [JSON6]()
+* [JSONL][] (aka. LDJSON or NDJSON)
+* [Concatenated JSON][]
+* [HJSON][]
+* [JSON5][]
+* [JSON6][]
 * JavaScript/TypeScript (converts what is exported to JSON)
 
 It can get inputs from local files, paths in OADA APIs, or generic URLs to JSON.
-Also it can take [Concatenated JSON]() piped through standard input.
+Also it can take [Concatenated JSON][] piped through standard input.
 
 It will currently die a horrible death if you try to use it with
 any other non-JSON data.
 
-It outputs [JSONL]() (or pretty-printed Concatenated JSON in TTY mode).
+It outputs [JSONL][] (or pretty-printed Concatenated JSON in TTY mode).
 This makes piping with traditional line-based CLI tools easy.
-Also it is _very_ useful with tools like [`jq`]().
+Also it is _very_ useful with tools like [`jq`][].
 
 There is support for configuring it for multiple OADA APIs
 and moving files between them.
 
-It supports "shell expansion" of a sort via [`minimatch`]()
+It supports "shell expansion" of a sort via [`minimatch`][]
 (i.e., you can use paths like `/bookmarks/trellis/*/test{s,y}/`
 and they will be expanded).
 
