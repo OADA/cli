@@ -39,7 +39,7 @@ const [put, post] = (<const>['put', 'post']).map((method) => {
       const path = paths.pop()!;
 
       for (const file of paths) {
-        await input<any>(conn, file, async function* (source) {
+        await input<any>(conn, file, this.iconfig, async function* (source) {
           for await (const data of source) {
             await conn[method]({ path, data });
           }

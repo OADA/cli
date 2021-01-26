@@ -26,7 +26,7 @@ export default class Copy extends Command {
     const method = path.endsWith('/') ? 'post' : 'put';
 
     for (const file of paths) {
-      await input<any>(conn, file, async function* (source) {
+      await input<any>(conn, file, this.iconfig, async function* (source) {
         for await (const data of source) {
           await conn[method]({ path, data });
         }

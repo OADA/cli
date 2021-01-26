@@ -55,8 +55,8 @@ export const enum IOType {
   Tty,
 }
 
-// TODO: Refactor this two functions
-function inputType(input: string) {
+// TODO: Refactor these two functions
+function inputType(input: string, { domain, domains }: IConfig) {
   if (input === '-') {
     return IOType.Stdin;
   }
@@ -66,10 +66,16 @@ function inputType(input: string) {
     return IOType.Oada;
   }
 
-  // TODO: Support multiple OADA domains?
   try {
-    const { protocol } = new URL(input);
-    return protocol === 'file:' ? IOType.File : IOType.Url;
+    const { protocol, host } = new URL(input);
+    if (protocol === 'file:') {
+      return IOType.File;
+    }
+    if ([domain, ...Object.keys(domains)].includes(host)) {
+      // Use OADA connection for known OADA domains
+      return IOType.Oada;
+    }
+    return IOType.Url;
   } catch {
     // Assume it's a file path?
     return IOType.File;
@@ -112,12 +118,13 @@ export const importable = ['.json6', '.json5', '.hjson', '.ts', '.js'];
 
 function inputChain(
   conn: OADAClient,
-  input: string
+  input: string,
+  config: IConfig
 ): [
   Readable | (() => AsyncGenerator<any>),
   ...(Readable | ((source: AsyncIterable<any>) => AsyncGenerator<any>))[]
 ] {
-  switch (inputType(input)) {
+  switch (inputType(input, config)) {
     case IOType.Stdin:
       return [process.stdin, parse()];
     case IOType.File:
@@ -163,17 +170,29 @@ function inputChain(
  *
  * Only works with OADA paths
  *
- * @todo inefficient
- * @todo handle full URL in OADA
+ * @todo inefficient and gross
  */
 export async function* expandPath(
   conn: OADAClient,
   path: string
 ): AsyncGenerator<string> {
-  const parts = path.split('/');
+  let parts: string[];
+  let origin: string;
+  try {
+    // Try parsing path as URL
+    let pathname;
+    ({ pathname, origin } = new URL(path));
+    parts = pathname.split('/');
+  } catch {
+    // Treat as absolute path in OADA
+    parts = path.split('/');
+    origin = '';
+  }
+
+  // Preserve trailing slash
   const trailing = path.endsWith('/');
 
-  yield* expand('', parts);
+  yield* expand('/', parts);
 
   async function* expand(
     r: string,
@@ -207,7 +226,7 @@ export async function* expandPath(
       root = join(root, part);
     }
 
-    yield join('/', root + (trailing ? '/' : ''));
+    yield origin + join('/', root + (trailing ? '/' : ''));
   }
 }
 
@@ -220,10 +239,11 @@ export async function* expandPath(
 export async function input<T>(
   conn: OADAClient,
   paths: string | string[],
+  config: IConfig,
   handler: (source: AsyncIterable<T>) => AsyncGenerator<T>
 ): Promise<void> {
   for (const path of Array.isArray(paths) ? paths : [paths]) {
-    const [source, ...chain] = inputChain(conn, path);
+    const [source, ...chain] = inputChain(conn, path, config);
     return pipeline(
       source,
       // TODO: Why is TS mad here??
