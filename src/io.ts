@@ -183,12 +183,23 @@ export async function* expandPath(
     let root = r;
     for (const part of parts) {
       p.shift();
-      if (part === '*') {
-        // Find all children
-        const { data: children } = await conn.get({ path: join('/', root) });
-        for (const child in oadaify(children) as {}) {
-          yield* expand(join(root, child), p);
-        }
+
+      // "Shell expand" star
+      if (/(?<!\\)\*/.test(part)) {
+        const r = new RegExp('^' + part.replace(/\*/g, '.*') + '$');
+        try {
+          // Find all children
+          const { data: children } = await conn.get({ path: join('/', root) });
+          if (!children || typeof children !== 'object') {
+            // Don't expand strings and such
+            throw new Error('No children');
+          }
+          for (const child in oadaify(children) as {}) {
+            if (r.test(child)) {
+              yield* expand(join(root, child), p);
+            }
+          }
+        } catch {}
 
         return;
       }
