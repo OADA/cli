@@ -10,8 +10,8 @@ import { Command, flags } from '@oclif/command';
 import type { Input } from '@oclif/parser';
 import type { SetRequired } from 'type-fest';
 import objectAssignDeep from 'object-assign-deep';
-
-// Load .env files
+import findUp from 'find-up';
+// Load .env files?
 import { config } from 'dotenv';
 
 import type { OADAClient } from '@oada/client';
@@ -98,11 +98,11 @@ function handleDefaults({
 }
 
 /**
- * Try to load user config from file(s)
+ * Try to load user config from file(s) and merge them
  */
-async function loadUserConfig(configDir: string): Promise<Partial<Config>> {
-  const paths = [join(configDir, 'config'), join(process.cwd(), '.clioada')];
-
+async function loadUserConfig(
+  paths: readonly string[]
+): Promise<Partial<Config>> {
   const config = {};
   for (const path of paths) {
     try {
@@ -156,9 +156,16 @@ export default abstract class BaseCommand extends Command {
    * @todo this is gross, refactor
    */
   iconfig!: IConfig;
+  /**
+   * Loaded config files
+   */
+  configFiles!: readonly string[];
 
   async init() {
-    const userConfig = await loadUserConfig(this.config.configDir);
+    this.configFiles = [join(this.config.configDir, 'config')].concat(
+      (await findUp('.clioada')) || []
+    );
+    const userConfig = await loadUserConfig(this.configFiles);
     const { flags } = this.parse(BaseCommand);
 
     // Merge config sources
