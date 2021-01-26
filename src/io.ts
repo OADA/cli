@@ -207,7 +207,7 @@ export async function* expandPath(
       root = join(root, part);
     }
 
-    yield root + (trailing ? '/' : '');
+    yield join('/', root + (trailing ? '/' : ''));
   }
 }
 
