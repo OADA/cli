@@ -1,6 +1,6 @@
-# clioada
+# CLI OADA
 
-CLI OADA
+Pipeable OADA client CLI
 
 [![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
 [![Version](https://img.shields.io/npm/v/clioada.svg)](https://npmjs.org/package/clioada)
@@ -8,10 +8,49 @@ CLI OADA
 [![License](https://img.shields.io/npm/l/clioada.svg)](https://github.com/awlayton/clioada/blob/master/package.json)
 
 <!-- toc -->
-* [clioada](#clioada)
+* [CLI OADA](#cli-oada)
+* [Overview](#overview)
 * [Usage](#usage)
 * [Commands](#commands)
 <!-- tocstop -->
+
+# Overview
+
+This largely grew from my playground for experimenting with newish
+(or new to me at least) Node and TypeScript stuff.
+As such it requires Node 15, and has no actual tests yet.
+The code could use a major refactor, but it useful and working for me at least.
+I mostly put it here for my own safe-keeping.
+It is not particularly fast or efficient.
+
+It has help output that is rather terse for now.
+
+It supports various JSON-y input formats:
+
+* JSON
+* [JSONL]() (aka. LDJSON or NDJSON)
+* [Concatenated JSON]()
+* [HJSON]()
+* [JSON5]()
+* [JSON6]()
+* JavaScript/TypeScript (converts what is exported to JSON)
+
+It can get inputs from local files, paths in OADA APIs, or generic URLs to JSON.
+Also it can take [Concatenated JSON]() piped through standard input.
+
+It will currently die a horrible death if you try to use it with
+any other non-JSON data.
+
+It outputs [JSONL]() (or pretty-printed Concatenated JSON in TTY mode).
+This makes piping with traditional line-based CLI tools easy.
+Also it is _very_ useful with tools like [`jq`]().
+
+There is support for configuring it for multiple OADA APIs
+and moving files between them.
+
+It supports "shell expansion" of a sort via [`minimatch`]()
+(i.e., you can use paths like `/bookmarks/trellis/*/test{s,y}/`
+and they will be expanded).
 
 # Usage
 
@@ -36,6 +75,7 @@ USAGE
 * [`oada delete PATHS...`](#oada-delete-paths)
 * [`oada fs:copy PATHS... PATH`](#oada-fscopy-paths-path)
 * [`oada fs:link PATHS... PATH`](#oada-fslink-paths-path)
+* [`oada fs:list PATHS...`](#oada-fslist-paths)
 * [`oada fs:move PATHS... PATH`](#oada-fsmove-paths-path)
 * [`oada fs:remove PATHS...`](#oada-fsremove-paths)
 * [`oada get PATHS...`](#oada-get-paths)
@@ -147,6 +187,30 @@ ALIASES
 ```
 
 _See code: [src/commands/fs/link.ts](https://github.com/awlayton/clioada/blob/v1.0.0/src/commands/fs/link.ts)_
+
+## `oada fs:list PATHS...`
+
+perform an "OADA ls"
+
+```
+USAGE
+  $ oada fs:list PATHS...
+
+ARGUMENTS
+  PATHS...  path(s) to list
+
+OPTIONS
+  --domain=domain  [default: localhost] default OADA API domain
+  --token=token    [default: god] default OADA API token
+  --[no-]tty       format output for TTY
+  --[no-]ws        use WebSockets for OADA API
+
+ALIASES
+  $ oada ls
+  $ oada l
+```
+
+_See code: [src/commands/fs/list.ts](https://github.com/awlayton/clioada/blob/v1.0.0/src/commands/fs/list.ts)_
 
 ## `oada fs:move PATHS... PATH`
 
@@ -316,15 +380,15 @@ DESCRIPTION
 
   Installation of a user-installed plugin will override a core plugin.
 
-  e.g. If you have a core plugin that has a 'hello' command, installing a user-installed plugin with a 'hello' command 
-  will override the core plugin implementation. This is useful if a user needs to update core plugin functionality in 
+  e.g. If you have a core plugin that has a 'hello' command, installing a user-installed plugin with a 'hello' command
+  will override the core plugin implementation. This is useful if a user needs to update core plugin functionality in
   the CLI without the need to patch and update the whole CLI.
 
 ALIASES
   $ oada plugins:add
 
 EXAMPLES
-  $ oada plugins:install myplugin 
+  $ oada plugins:install myplugin
   $ oada plugins:install https://github.com/someuser/someplugin
   $ oada plugins:install someuser/someplugin
 ```
@@ -349,7 +413,7 @@ OPTIONS
 DESCRIPTION
   Installation of a linked plugin will override a user-installed or core plugin.
 
-  e.g. If you have a user-installed or core plugin that has a 'hello' command, installing a linked plugin with a 'hello' 
+  e.g. If you have a user-installed or core plugin that has a 'hello' command, installing a linked plugin with a 'hello'
   command will override the user-installed or core plugin implementation. This is useful for development work.
 
 EXAMPLE
@@ -447,3 +511,11 @@ ALIASES
 
 _See code: [src/commands/put.ts](https://github.com/awlayton/clioada/blob/v1.0.0/src/commands/put.ts)_
 <!-- commandsstop -->
+
+[JSONL]: https://en.wikipedia.org/wiki/JSON_streaming#Line-delimited_JSON
+[Concatenated JSON]: https://en.wikipedia.org/wiki/JSON_streaming#Concatenated_JSON
+[HJSON]: https://hjson.github.io
+[JSON5]: https://json5.org
+[JSON6]: https://github.com/d3x0r/JSON6
+[`jq`]: https://github.com/stedolan/jq
+[`minimatch`]: https://github.com/isaacs/minimatch

@@ -1,9 +1,8 @@
 import { createReadStream, createWriteStream } from 'fs';
 import { pipeline } from 'stream/promises';
-import { isAbsolute } from 'path';
+import { isAbsolute, extname, join } from 'path';
 import { URL } from 'url';
 import type { Readable, Writable } from 'stream';
-import { extname, join } from 'path';
 
 import { Minimatch } from 'minimatch';
 // concatenated JSON in, LJSON out
