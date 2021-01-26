@@ -5,6 +5,7 @@ import { URL } from 'url';
 import type { Readable, Writable } from 'stream';
 import { extname, join } from 'path';
 
+import { Minimatch } from 'minimatch';
 // concatenated JSON in, LJSON out
 import { parse } from 'concatjson';
 import { stringify } from 'ndjson';
@@ -203,27 +204,41 @@ export async function* expandPath(
     for (const part of parts) {
       p.shift();
 
-      // "Shell expand" star
-      if (/(?<!\\)\*/.test(part)) {
-        const r = new RegExp('^' + part.replace(/\*/g, '.*') + '$');
-        try {
-          // Find all children
-          const { data: children } = await conn.get({ path: join('/', root) });
-          if (!children || typeof children !== 'object') {
-            // Don't expand strings and such
-            throw new Error('No children');
-          }
-          for (const child in oadaify(children) as {}) {
-            if (r.test(child)) {
-              yield* expand(join(root, child), p);
-            }
-          }
-        } catch {}
+      // Use minimatch for star etc.
+      const mm = new Minimatch(part);
 
-        return;
+      // TODO: Better way to test for non-minimatch key??
+      if (
+        mm.set.length <= 1 &&
+        !(mm.set[0]?.length > 1) &&
+        ['string', 'undefined'].includes(typeof mm.set[0]?.[0])
+      ) {
+        // Just move on to next part
+        root = join(root, part);
+        continue;
       }
 
-      root = join(root, part);
+      // "Shell expand"
+      try {
+        // Get all children
+        const { data: children } = await conn.get({ path: join('/', root) });
+        if (!children || typeof children !== 'object') {
+          // Don't expand strings and such
+          throw new Error('No children');
+        }
+
+        // Test chilren against pattern
+        for (const child in oadaify(children) as {}) {
+          if (mm.match(child)) {
+            // Yield any matching children
+            yield* expand(join(root, child), p);
+          }
+        }
+      } catch {
+        // If we fail to expand, don't error just yield nothing
+      }
+
+      return;
     }
 
     yield origin + join('/', root + (trailing ? '/' : ''));

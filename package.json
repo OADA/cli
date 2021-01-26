@@ -70,6 +70,7 @@
     "gaxios": "^4.1.0",
     "hjson": "^3.2.2",
     "json-6": "^1.1.1",
+    "minimatch": "^3.0.4",
     "ndjson": "^2.0.0",
     "object-assign-deep": "^0.4.0",
     "ts-node": "^9.1.1",
