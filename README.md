@@ -60,7 +60,7 @@ $ npm install -g clioada
 $ oada COMMAND
 running command...
 $ oada (-v|--version|version)
-clioada/1.0.0 linux-x64 node-v15.6.0
+clioada/1.0.1 linux-x64 node-v15.6.0
 $ oada --help [COMMAND]
 USAGE
   $ oada COMMAND
@@ -131,7 +131,7 @@ ALIASES
   $ oada config
 ```
 
-_See code: [src/commands/config/show.ts](https://github.com/awlayton/clioada/blob/v1.0.0/src/commands/config/show.ts)_
+_See code: [src/commands/config/show.ts](https://github.com/awlayton/clioada/blob/v1.0.1/src/commands/config/show.ts)_
 
 ## `oada delete PATHS...`
 
@@ -157,7 +157,7 @@ ALIASES
   $ oada DELETE
 ```
 
-_See code: [src/commands/delete.ts](https://github.com/awlayton/clioada/blob/v1.0.0/src/commands/delete.ts)_
+_See code: [src/commands/delete.ts](https://github.com/awlayton/clioada/blob/v1.0.1/src/commands/delete.ts)_
 
 ## `oada fs:copy PATHS... PATH`
 
@@ -181,7 +181,7 @@ ALIASES
   $ oada cp
 ```
 
-_See code: [src/commands/fs/copy.ts](https://github.com/awlayton/clioada/blob/v1.0.0/src/commands/fs/copy.ts)_
+_See code: [src/commands/fs/copy.ts](https://github.com/awlayton/clioada/blob/v1.0.1/src/commands/fs/copy.ts)_
 
 ## `oada fs:link PATHS... PATH`
 
@@ -207,7 +207,7 @@ ALIASES
   $ oada ln
 ```
 
-_See code: [src/commands/fs/link.ts](https://github.com/awlayton/clioada/blob/v1.0.0/src/commands/fs/link.ts)_
+_See code: [src/commands/fs/link.ts](https://github.com/awlayton/clioada/blob/v1.0.1/src/commands/fs/link.ts)_
 
 ## `oada fs:list PATHS...`
 
@@ -231,7 +231,7 @@ ALIASES
   $ oada l
 ```
 
-_See code: [src/commands/fs/list.ts](https://github.com/awlayton/clioada/blob/v1.0.0/src/commands/fs/list.ts)_
+_See code: [src/commands/fs/list.ts](https://github.com/awlayton/clioada/blob/v1.0.1/src/commands/fs/list.ts)_
 
 ## `oada fs:move PATHS... PATH`
 
@@ -255,7 +255,7 @@ ALIASES
   $ oada mv
 ```
 
-_See code: [src/commands/fs/move.ts](https://github.com/awlayton/clioada/blob/v1.0.0/src/commands/fs/move.ts)_
+_See code: [src/commands/fs/move.ts](https://github.com/awlayton/clioada/blob/v1.0.1/src/commands/fs/move.ts)_
 
 ## `oada fs:remove PATHS...`
 
@@ -281,7 +281,7 @@ ALIASES
   $ oada DELETE
 ```
 
-_See code: [src/commands/fs/remove.ts](https://github.com/awlayton/clioada/blob/v1.0.0/src/commands/fs/remove.ts)_
+_See code: [src/commands/fs/remove.ts](https://github.com/awlayton/clioada/blob/v1.0.1/src/commands/fs/remove.ts)_
 
 ## `oada get PATHS...`
 
@@ -320,7 +320,7 @@ EXAMPLE
   }
 ```
 
-_See code: [src/commands/get.ts](https://github.com/awlayton/clioada/blob/v1.0.0/src/commands/get.ts)_
+_See code: [src/commands/get.ts](https://github.com/awlayton/clioada/blob/v1.0.1/src/commands/get.ts)_
 
 ## `oada head PATHS...`
 
@@ -344,7 +344,7 @@ ALIASES
   $ oada HEAD
 ```
 
-_See code: [src/commands/head.ts](https://github.com/awlayton/clioada/blob/v1.0.0/src/commands/head.ts)_
+_See code: [src/commands/head.ts](https://github.com/awlayton/clioada/blob/v1.0.1/src/commands/head.ts)_
 
 ## `oada help [COMMAND]`
 
@@ -504,7 +504,7 @@ ALIASES
   $ oada POST
 ```
 
-_See code: [src/commands/post.ts](https://github.com/awlayton/clioada/blob/v1.0.0/src/commands/post.ts)_
+_See code: [src/commands/post.ts](https://github.com/awlayton/clioada/blob/v1.0.1/src/commands/post.ts)_
 
 ## `oada put PATHS... PATH`
 
@@ -530,7 +530,7 @@ ALIASES
   $ oada PUT
 ```
 
-_See code: [src/commands/put.ts](https://github.com/awlayton/clioada/blob/v1.0.0/src/commands/put.ts)_
+_See code: [src/commands/put.ts](https://github.com/awlayton/clioada/blob/v1.0.1/src/commands/put.ts)_
 <!-- commandsstop -->
 
 [JSONL]: https://en.wikipedia.org/wiki/JSON_streaming#Line-delimited_JSON

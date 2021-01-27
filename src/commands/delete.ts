@@ -2,6 +2,7 @@ import { flags } from '@oclif/command';
 
 import Command from '../BaseCommand';
 import getConn from '../connections';
+import { expandPath } from '../io';
 
 /**
  * OADA DELETE
@@ -26,8 +27,11 @@ export default class Delete extends Command {
     const { argv: paths } = this.parse(Delete);
     const conn = getConn(this.iconfig);
 
-    for (const path of paths) {
-      await conn.delete({ path });
+    for (const p of paths) {
+      const pp = expandPath(conn, p);
+      for await (const path of pp) {
+        await conn.delete({ path });
+      }
     }
   }
 }
