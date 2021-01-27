@@ -134,6 +134,7 @@ export default abstract class BaseCommand extends Command {
      */
     domain: flags.string({
       description: 'default OADA API domain',
+      char: 'd',
       default: process.env.OADA_DOMAIN,
     }),
     /**
@@ -141,6 +142,7 @@ export default abstract class BaseCommand extends Command {
      */
     token: flags.string({
       description: 'default OADA API token',
+      char: 't',
       default: process.env.OADA_TOKEN,
     }),
     tty: flags.boolean({
@@ -176,7 +178,9 @@ export default abstract class BaseCommand extends Command {
     const { flags } = this.parse(BaseCommand);
 
     // Merge config sources
-    const config = objectAssignDeep(defaults, userConfig as Config, flags);
+    const conf = objectAssignDeep(defaults, userConfig);
+    const fdomain = flags.domain ? conf.domains[flags.domain] : {};
+    const config = objectAssignDeep(conf, fdomain, flags);
 
     this.iconfig = handleDefaults(config);
   }
