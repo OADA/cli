@@ -178,9 +178,18 @@ export default abstract class BaseCommand extends Command {
     const { flags } = this.parse(BaseCommand);
 
     // Merge config sources
-    const conf = objectAssignDeep(defaults, userConfig);
-    const fdomain = flags.domain ? conf.domains[flags.domain] : {};
-    const config = objectAssignDeep(conf, fdomain, flags);
+    // TODO: clean up this mess
+    const config = objectAssignDeep(defaults, userConfig, flags);
+    if (flags.domain) {
+      const { domain = config.domain, token = config.token } =
+        config.domains[flags.domain] || {};
+      // @ts-ignore
+      config.domain = domain;
+      if (!flags.token) {
+        // @ts-ignore
+        config.token = token;
+      }
+    }
 
     this.iconfig = handleDefaults(config);
   }
