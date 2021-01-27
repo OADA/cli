@@ -1,6 +1,6 @@
 {
   "name": "clioada",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "CLI OADA",
   "main": "dist/index.js",
   "bin": {
@@ -42,7 +42,7 @@
   },
   "scripts": {
     "postpack": "rm -f oclif.manifest.json",
-    "prepack": "oclif-dev manifest",
+    "prepack": "npm run build && oclif-dev manifest",
     "readme": "oclif-dev readme",
     "test": "echo NO TESTS",
     "prepare": "npm run build",
