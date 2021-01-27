@@ -14,17 +14,23 @@
   "keywords": [
     "OADA",
     "CLI",
-    "oclif"
+    "oclif",
+    "JSON",
+    "NDJSON",
+    "Concatenated-JSON",
+    "LDJSON",
+    "JSONL",
+    "JSONLines"
   ],
   "oclif": {
-    "commands": "./src/commands",
+    "commands": "./dist/commands",
     "topics": {
       "fs": {
         "description": "interact with OADA like a filesystem"
       }
     },
     "hooks": {
-      "postrun": "./src/hooks/postrun/close"
+      "postrun": "./dist/hooks/postrun/close"
     },
     "bin": "oada",
     "plugins": [
@@ -36,7 +42,7 @@
   },
   "scripts": {
     "postpack": "rm -f oclif.manifest.json",
-    "prepack": "rm -rf lib && tsc -b && oclif-dev manifest && oclif-dev readme",
+    "prepack": "oclif-dev manifest && oclif-dev readme",
     "test": "echo NO TESTS",
     "version": "oclif-dev readme && git add README.md",
     "prepare": "npm run build",
@@ -48,10 +54,10 @@
     "node": "^15"
   },
   "files": [
-    "/bin",
-    "/lib",
-    "/npm-shrinkwrap.json",
-    "/oclif.manifest.json"
+    "bin",
+    "dist",
+    "oclif.manifest.json",
+    "yarn.lock"
   ],
   "dependencies": {
     "@oada/client": "^2.2.2",
