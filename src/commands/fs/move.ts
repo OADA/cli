@@ -1,5 +1,11 @@
 import Command from '../../BaseCommand';
 import getConn from '../../connections';
+import { shell } from '../../highlight';
+
+const examples = [
+  shell`$ oada mv /resources/foo /bookmarks/foo`,
+  shell`$ oada mv /resources/foo1 /resources/foo2 /bookmarks/foos/`,
+];
 
 /**
  * OADA "move"
@@ -8,6 +14,8 @@ export default class Move extends Command {
   static description = 'perform an "OADA move"';
 
   static aliases = ['mv'];
+
+  static examples = examples;
 
   static args = [
     { name: 'paths...', required: true, description: 'path(s) to move' },

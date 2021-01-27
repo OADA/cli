@@ -60,7 +60,7 @@ $ npm install -g clioada
 $ oada COMMAND
 running command...
 $ oada (-v|--version|version)
-clioada/1.0.2 linux-x64 node-v15.6.0
+clioada/1.0.2 linux-x64 node-v15.7.0
 $ oada --help [COMMAND]
 USAGE
   $ oada COMMAND
@@ -155,6 +155,10 @@ ALIASES
   $ oada d
   $ oada rm
   $ oada DELETE
+
+EXAMPLES
+  $ oada delete /bookmarks/foo
+  $ oada rm /bookmarks/foo /bookmarks/bar /bookmarks/baz*
 ```
 
 _See code: [src/commands/delete.ts](https://github.com/awlayton/clioada/blob/v1.0.2/src/commands/delete.ts)_
@@ -179,6 +183,10 @@ OPTIONS
 
 ALIASES
   $ oada cp
+
+EXAMPLES
+  $ oada cp /resources/foo /bookmarks/foo
+  $ oada cp /resources/foo1 /resources/foo2 /bookmarks/foos/
 ```
 
 _See code: [src/commands/fs/copy.ts](https://github.com/awlayton/clioada/blob/v1.0.2/src/commands/fs/copy.ts)_
@@ -205,6 +213,10 @@ OPTIONS
 
 ALIASES
   $ oada ln
+
+EXAMPLES
+  $ oada ln /resources/my-thingy /bookmarks/thingy
+  $ oada ln /resources/thingy1 /resources/thingy2 /bookmarks/thingies/
 ```
 
 _See code: [src/commands/fs/link.ts](https://github.com/awlayton/clioada/blob/v1.0.2/src/commands/fs/link.ts)_
@@ -253,6 +265,10 @@ OPTIONS
 
 ALIASES
   $ oada mv
+
+EXAMPLES
+  $ oada mv /resources/foo /bookmarks/foo
+  $ oada mv /resources/foo1 /resources/foo2 /bookmarks/foos/
 ```
 
 _See code: [src/commands/fs/move.ts](https://github.com/awlayton/clioada/blob/v1.0.2/src/commands/fs/move.ts)_
@@ -279,6 +295,10 @@ ALIASES
   $ oada d
   $ oada rm
   $ oada DELETE
+
+EXAMPLES
+  $ oada delete /bookmarks/foo
+  $ oada rm /bookmarks/foo /bookmarks/bar /bookmarks/baz*
 ```
 
 _See code: [src/commands/fs/remove.ts](https://github.com/awlayton/clioada/blob/v1.0.2/src/commands/fs/remove.ts)_
@@ -307,8 +327,8 @@ ALIASES
   $ oada g
   $ oada GET
 
-EXAMPLE
-  $ oada get /bookmark
+EXAMPLES
+  $ oada get /bookmarks
   {
      "_id": "resources/default:resources_bookmarks_321",
      "_rev": 45,
@@ -316,8 +336,13 @@ EXAMPLE
      "_meta": {
        "_id": "resources/default:resources_bookmarks_321/_meta",
        "_rev": 45
-     }
+     },
+     "foo": "bar",
+     "baz": 700
   }
+  $ oada get /bookmarks/*
+  "bar"
+  700
 ```
 
 _See code: [src/commands/get.ts](https://github.com/awlayton/clioada/blob/v1.0.2/src/commands/get.ts)_
@@ -342,6 +367,12 @@ OPTIONS
 ALIASES
   $ oada h
   $ oada HEAD
+
+EXAMPLES
+  $ oada head /bookmarks/does-exist; echo $?
+  0
+  $ oada head /bookmarks/does-not-exist; echo $?
+  1
 ```
 
 _See code: [src/commands/head.ts](https://github.com/awlayton/clioada/blob/v1.0.2/src/commands/head.ts)_
@@ -401,15 +432,15 @@ DESCRIPTION
 
   Installation of a user-installed plugin will override a core plugin.
 
-  e.g. If you have a core plugin that has a 'hello' command, installing a user-installed plugin with a 'hello' command 
-  will override the core plugin implementation. This is useful if a user needs to update core plugin functionality in 
+  e.g. If you have a core plugin that has a 'hello' command, installing a user-installed plugin with a 'hello' command
+  will override the core plugin implementation. This is useful if a user needs to update core plugin functionality in
   the CLI without the need to patch and update the whole CLI.
 
 ALIASES
   $ oada plugins:add
 
 EXAMPLES
-  $ oada plugins:install myplugin 
+  $ oada plugins:install myplugin
   $ oada plugins:install https://github.com/someuser/someplugin
   $ oada plugins:install someuser/someplugin
 ```
@@ -434,7 +465,7 @@ OPTIONS
 DESCRIPTION
   Installation of a linked plugin will override a user-installed or core plugin.
 
-  e.g. If you have a user-installed or core plugin that has a 'hello' command, installing a linked plugin with a 'hello' 
+  e.g. If you have a user-installed or core plugin that has a 'hello' command, installing a linked plugin with a 'hello'
   command will override the user-installed or core plugin implementation. This is useful for development work.
 
 EXAMPLE
@@ -502,6 +533,9 @@ OPTIONS
 ALIASES
   $ oada po
   $ oada POST
+
+EXAMPLE
+  $ oada post - /bookmarks/ <<< '{"a": 1}{"b": true}'
 ```
 
 _See code: [src/commands/post.ts](https://github.com/awlayton/clioada/blob/v1.0.2/src/commands/post.ts)_
@@ -528,6 +562,9 @@ OPTIONS
 ALIASES
   $ oada pu
   $ oada PUT
+
+EXAMPLE
+  $ oada put - /bookmarks/ <<< '{"a": 1}'
 ```
 
 _See code: [src/commands/put.ts](https://github.com/awlayton/clioada/blob/v1.0.2/src/commands/put.ts)_

@@ -2,7 +2,10 @@ import Command from '../BaseCommand';
 import getConn from '../connections';
 import { shell } from '../highlight';
 
-const examples = [shell`$ oada head /bookmarks`];
+const examples = [
+  shell`$ oada head /bookmarks/does-exist; echo $?\n0`,
+  shell`$ oada head /bookmarks/does-not-exist; echo $?\n1`,
+];
 
 /**
  * OADA HEAD

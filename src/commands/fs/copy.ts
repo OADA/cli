@@ -1,6 +1,12 @@
 import Command from '../../BaseCommand';
 import { input } from '../../io';
 import getConn from '../../connections';
+import { shell } from '../../highlight';
+
+const examples = [
+  shell`$ oada cp /resources/foo /bookmarks/foo`,
+  shell`$ oada cp /resources/foo1 /resources/foo2 /bookmarks/foos/`,
+];
 
 /**
  * OADA "copy"
@@ -9,6 +15,8 @@ export default class Copy extends Command {
   static description = 'perform an "OADA copy"';
 
   static aliases = ['cp'];
+
+  static examples = examples;
 
   static args = [
     { name: 'paths...', required: true, description: 'path(s) to copy' },
