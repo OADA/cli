@@ -114,7 +114,7 @@ async function outputType(output: string, { tty }: IConfig) {
  * @todo make this more extensible?
  * @todo support these extensions coming from remote??
  */
-export const importable = ['.json6', '.json5', '.hjson', '.ts', '.js'];
+export const importable = <const>['.json6', '.json5', '.hjson', '.ts', '.js'];
 
 function inputChain(
   conn: OADAClient,
@@ -129,7 +129,7 @@ function inputChain(
       return [process.stdin, parse()];
     case IOType.File:
       const ext = extname(input);
-      if (importable.includes(ext)) {
+      if ((importable as readonly string[]).includes(ext)) {
         return [
           async function* () {
             const path = join(process.cwd(), input);

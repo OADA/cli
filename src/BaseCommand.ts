@@ -16,6 +16,8 @@ import { config } from 'dotenv';
 
 import type { OADAClient } from '@oada/client';
 
+import { importable } from './io';
+
 config();
 
 /**
@@ -115,6 +117,11 @@ async function loadUserConfig(
 }
 
 /**
+ * List of supported filetypes for config files
+ */
+export const configTypes = <const>['.json', ...importable];
+
+/**
  * Base command class for global flags and user config
  */
 export default abstract class BaseCommand extends Command {
@@ -163,7 +170,7 @@ export default abstract class BaseCommand extends Command {
 
   async init() {
     this.configFiles = [join(this.config.configDir, 'config')].concat(
-      (await findUp('.clioada')) || []
+      (await findUp(configTypes.map((ext) => '.clioada' + ext))) || []
     );
     const userConfig = await loadUserConfig(this.configFiles);
     const { flags } = this.parse(BaseCommand);
