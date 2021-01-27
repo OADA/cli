@@ -3,6 +3,12 @@ import { flags } from '@oclif/command';
 import Command from '../BaseCommand';
 import getConn from '../connections';
 import { expandPath } from '../io';
+import { shell } from '../highlight';
+
+const examples = [
+  shell`$ oada delete /bookmarks/foo`,
+  shell`$ oada rm /bookmarks/foo /bookmarks/bar /bookmarks/baz*`,
+];
 
 /**
  * OADA DELETE
@@ -11,6 +17,8 @@ export default class Delete extends Command {
   static description = 'perform an OADA DELETE';
 
   static aliases = ['d', 'rm', 'DELETE'];
+
+  static examples = examples;
 
   static flags = {
     ...Command.flags,

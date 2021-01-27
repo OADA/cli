@@ -2,6 +2,12 @@ import { flags } from '@oclif/command';
 
 import Command from '../../BaseCommand';
 import getConn from '../../connections';
+import { shell } from '../../highlight';
+
+const examples = [
+  shell`$ oada ln /resources/my-thingy /bookmarks/thingy`,
+  shell`$ oada ln /resources/thingy1 /resources/thingy2 /bookmarks/thingies/`,
+];
 
 /**
  * OADA "link"
@@ -10,6 +16,8 @@ export default class Link extends Command {
   static description = 'perform an "OADA link"';
 
   static aliases = ['ln'];
+
+  static examples = examples;
 
   static flags = {
     ...Command.flags,

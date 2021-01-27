@@ -1,6 +1,7 @@
 import { flags } from '@oclif/command';
 
 import Command from '../BaseCommand';
+import { json, shell } from '../highlight';
 
 import {
   OADAifiedJsonArray,
@@ -24,17 +25,22 @@ function isArray(
 }
 
 const examples = [
-  `$ oada get /bookmark
-{
+  `${shell`$ oada get /bookmarks`}
+${json`{
   "_id": "resources/default:resources_bookmarks_321",
   "_rev": 45,
   "_type": "application/vnd.oada.bookmarks.1+json",
   "_meta": {
     "_id": "resources/default:resources_bookmarks_321/_meta",
     "_rev": 45
-  }
-}
-`,
+  },
+  "foo": "bar",
+  "baz": 700
+}`}`,
+
+  `${shell`$ oada get /bookmarks/*`}
+${json`"bar"`}
+${json`700`}`,
 ];
 
 /**

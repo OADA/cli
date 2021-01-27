@@ -9,6 +9,7 @@ import { flags } from '@oclif/command';
 import Command from '../BaseCommand';
 import { input } from '../io';
 import getConn from '../connections';
+import { shell } from '../highlight';
 
 /**
  * OADA PUT/POST
@@ -16,10 +17,18 @@ import getConn from '../connections';
 const [put, post] = (<const>['put', 'post']).map((method) => {
   const METH = method.toUpperCase();
 
+  // TODO: Fix this nonsense
+  const examples =
+    method === 'put'
+      ? [shell`$ oada put - /bookmarks/ <<< '{"a": 1}'`]
+      : [shell`$ oada post - /bookmarks/ <<< '{"a": 1}{"b": true}'`];
+
   return class Clazz extends Command {
     static description = `Perform an OADA ${METH}`;
 
     static aliases = [method.slice(0, 2), METH];
+
+    static examples = examples;
 
     static flags = {
       ...Command.flags,
