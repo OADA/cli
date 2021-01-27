@@ -54,7 +54,7 @@
     "/oclif.manifest.json"
   ],
   "dependencies": {
-    "@oada/client": "^2.2.1",
+    "@oada/client": "^2.2.2",
     "@oada/oadaify": "^1.0.1",
     "@oclif/command": "^1",
     "@oclif/config": "^1",

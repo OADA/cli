@@ -75,9 +75,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@oada/client@npm:^2.2.1":
-  version: 2.2.1
-  resolution: "@oada/client@npm:2.2.1"
+"@oada/client@npm:^2.2.2":
+  version: 2.2.2
+  resolution: "@oada/client@npm:2.2.2"
   dependencies:
     "@oada/types": ^1.2.0
     cross-fetch: ^3.0.6
@@ -87,7 +87,7 @@ __metadata:
     p-queue: ^6.4.0
     reconnecting-websocket: ^4.4.0
     ws: ^7.2.3
-  checksum: ff1d2f363929d7979cc5e5e15394efadc156e0cd7d075a882dd4f4b2ee1d003e627eb79668d09ee27fd6e2f5a23cf090f0bc1ef2c6bcbbf9d20689ed2950a009
+  checksum: b431876f2b59bcaccb6e8d460b20da1d1ba5ac84c6d1f2074b7c0a3435ee0804dc9366b0a203d4a4183557b19ae82b6c3492da5b89a957fc096f5d0d53c46cc8
   languageName: node
   linkType: hard
 
@@ -1361,7 +1361,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "clioada@workspace:."
   dependencies:
-    "@oada/client": ^2.2.1
+    "@oada/client": ^2.2.2
     "@oada/oadaify": ^1.0.1
     "@oclif/command": ^1
     "@oclif/config": ^1
