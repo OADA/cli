@@ -72,6 +72,7 @@ USAGE
 
 <!-- commands -->
 * [`oada autocomplete [SHELL]`](#oada-autocomplete-shell)
+* [`oada config:show`](#oada-configshow)
 * [`oada delete PATHS...`](#oada-delete-paths)
 * [`oada fs:copy PATHS... PATH`](#oada-fscopy-paths-path)
 * [`oada fs:link PATHS... PATH`](#oada-fslink-paths-path)
@@ -112,6 +113,26 @@ EXAMPLES
 
 _See code: [@oclif/plugin-autocomplete](https://github.com/oclif/plugin-autocomplete/blob/v0.3.0/src/commands/autocomplete/index.ts)_
 
+## `oada config:show`
+
+Show the current config settings
+
+```
+USAGE
+  $ oada config:show
+
+OPTIONS
+  -d, --domain=domain  [default: localhost] default OADA API domain
+  -t, --token=token    default OADA API token
+  --[no-]tty           format output for TTY
+  --[no-]ws            use WebSockets for OADA API
+
+ALIASES
+  $ oada config
+```
+
+_See code: [src/commands/config/show.ts](https://github.com/awlayton/clioada/blob/v1.0.0/src/commands/config/show.ts)_
+
 ## `oada delete PATHS...`
 
 perform an OADA DELETE
@@ -125,10 +146,10 @@ ARGUMENTS
 
 OPTIONS
   -R, --recursive
-  --domain=domain  [default: localhost] default OADA API domain
-  --token=token    [default: god] default OADA API token
-  --[no-]tty       format output for TTY
-  --[no-]ws        use WebSockets for OADA API
+  -d, --domain=domain  [default: localhost] default OADA API domain
+  -t, --token=token    default OADA API token
+  --[no-]tty           format output for TTY
+  --[no-]ws            use WebSockets for OADA API
 
 ALIASES
   $ oada d
@@ -151,10 +172,10 @@ ARGUMENTS
   PATH      OADA path to which to copy
 
 OPTIONS
-  --domain=domain  [default: localhost] default OADA API domain
-  --token=token    [default: god] default OADA API token
-  --[no-]tty       format output for TTY
-  --[no-]ws        use WebSockets for OADA API
+  -d, --domain=domain  [default: localhost] default OADA API domain
+  -t, --token=token    default OADA API token
+  --[no-]tty           format output for TTY
+  --[no-]ws            use WebSockets for OADA API
 
 ALIASES
   $ oada cp
@@ -175,12 +196,12 @@ ARGUMENTS
   PATH      OADA path in which to link
 
 OPTIONS
-  -f, --force      delete conflicting existing data/links
-  -r, --versioned  make versioned link(s)
-  --domain=domain  [default: localhost] default OADA API domain
-  --token=token    [default: god] default OADA API token
-  --[no-]tty       format output for TTY
-  --[no-]ws        use WebSockets for OADA API
+  -d, --domain=domain  [default: localhost] default OADA API domain
+  -f, --force          delete conflicting existing data/links
+  -r, --versioned      make versioned link(s)
+  -t, --token=token    default OADA API token
+  --[no-]tty           format output for TTY
+  --[no-]ws            use WebSockets for OADA API
 
 ALIASES
   $ oada ln
@@ -200,10 +221,10 @@ ARGUMENTS
   PATHS...  path(s) to list
 
 OPTIONS
-  --domain=domain  [default: localhost] default OADA API domain
-  --token=token    [default: god] default OADA API token
-  --[no-]tty       format output for TTY
-  --[no-]ws        use WebSockets for OADA API
+  -d, --domain=domain  [default: localhost] default OADA API domain
+  -t, --token=token    default OADA API token
+  --[no-]tty           format output for TTY
+  --[no-]ws            use WebSockets for OADA API
 
 ALIASES
   $ oada ls
@@ -225,10 +246,10 @@ ARGUMENTS
   PATH      OADA path to which to move
 
 OPTIONS
-  --domain=domain  [default: localhost] default OADA API domain
-  --token=token    [default: god] default OADA API token
-  --[no-]tty       format output for TTY
-  --[no-]ws        use WebSockets for OADA API
+  -d, --domain=domain  [default: localhost] default OADA API domain
+  -t, --token=token    default OADA API token
+  --[no-]tty           format output for TTY
+  --[no-]ws            use WebSockets for OADA API
 
 ALIASES
   $ oada mv
@@ -249,10 +270,10 @@ ARGUMENTS
 
 OPTIONS
   -R, --recursive
-  --domain=domain  [default: localhost] default OADA API domain
-  --token=token    [default: god] default OADA API token
-  --[no-]tty       format output for TTY
-  --[no-]ws        use WebSockets for OADA API
+  -d, --domain=domain  [default: localhost] default OADA API domain
+  -t, --token=token    default OADA API token
+  --[no-]tty           format output for TTY
+  --[no-]ws            use WebSockets for OADA API
 
 ALIASES
   $ oada d
@@ -275,12 +296,12 @@ ARGUMENTS
 
 OPTIONS
   -R, --recursive
+  -d, --domain=domain  [default: localhost] default OADA API domain
   -m, --meta
-  -o, --out=out    [default: -]
-  --domain=domain  [default: localhost] default OADA API domain
-  --token=token    [default: god] default OADA API token
-  --[no-]tty       format output for TTY
-  --[no-]ws        use WebSockets for OADA API
+  -o, --out=out        [default: -]
+  -t, --token=token    default OADA API token
+  --[no-]tty           format output for TTY
+  --[no-]ws            use WebSockets for OADA API
 
 ALIASES
   $ oada g
@@ -313,10 +334,10 @@ ARGUMENTS
   PATHS...  OADA path(s) to HEAD
 
 OPTIONS
-  --domain=domain  [default: localhost] default OADA API domain
-  --token=token    [default: god] default OADA API token
-  --[no-]tty       format output for TTY
-  --[no-]ws        use WebSockets for OADA API
+  -d, --domain=domain  [default: localhost] default OADA API domain
+  -t, --token=token    default OADA API token
+  --[no-]tty           format output for TTY
+  --[no-]ws            use WebSockets for OADA API
 
 ALIASES
   $ oada h
@@ -380,15 +401,15 @@ DESCRIPTION
 
   Installation of a user-installed plugin will override a core plugin.
 
-  e.g. If you have a core plugin that has a 'hello' command, installing a user-installed plugin with a 'hello' command
-  will override the core plugin implementation. This is useful if a user needs to update core plugin functionality in
+  e.g. If you have a core plugin that has a 'hello' command, installing a user-installed plugin with a 'hello' command 
+  will override the core plugin implementation. This is useful if a user needs to update core plugin functionality in 
   the CLI without the need to patch and update the whole CLI.
 
 ALIASES
   $ oada plugins:add
 
 EXAMPLES
-  $ oada plugins:install myplugin
+  $ oada plugins:install myplugin 
   $ oada plugins:install https://github.com/someuser/someplugin
   $ oada plugins:install someuser/someplugin
 ```
@@ -413,7 +434,7 @@ OPTIONS
 DESCRIPTION
   Installation of a linked plugin will override a user-installed or core plugin.
 
-  e.g. If you have a user-installed or core plugin that has a 'hello' command, installing a linked plugin with a 'hello'
+  e.g. If you have a user-installed or core plugin that has a 'hello' command, installing a linked plugin with a 'hello' 
   command will override the user-installed or core plugin implementation. This is useful for development work.
 
 EXAMPLE
@@ -473,10 +494,10 @@ ARGUMENTS
 
 OPTIONS
   -R, --recursive
-  --domain=domain  [default: localhost] default OADA API domain
-  --token=token    [default: god] default OADA API token
-  --[no-]tty       format output for TTY
-  --[no-]ws        use WebSockets for OADA API
+  -d, --domain=domain  [default: localhost] default OADA API domain
+  -t, --token=token    default OADA API token
+  --[no-]tty           format output for TTY
+  --[no-]ws            use WebSockets for OADA API
 
 ALIASES
   $ oada po
@@ -499,10 +520,10 @@ ARGUMENTS
 
 OPTIONS
   -R, --recursive
-  --domain=domain  [default: localhost] default OADA API domain
-  --token=token    [default: god] default OADA API token
-  --[no-]tty       format output for TTY
-  --[no-]ws        use WebSockets for OADA API
+  -d, --domain=domain  [default: localhost] default OADA API domain
+  -t, --token=token    default OADA API token
+  --[no-]tty           format output for TTY
+  --[no-]ws            use WebSockets for OADA API
 
 ALIASES
   $ oada pu
