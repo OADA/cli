@@ -46,6 +46,15 @@ export function conn(config: IConfig): OADAClient {
       }
     };
   }
+  conn.watch = async ({ path: p, ...rest }: any) => {
+    let path = p;
+    let host;
+    try {
+      ({ host, pathname: path } = new URL(p));
+    } finally {
+      return (await getConnection(host)).watch({ path, ...rest });
+    }
+  };
   return conn;
 
   async function getConnection(name?: string): Promise<OADAClient> {
