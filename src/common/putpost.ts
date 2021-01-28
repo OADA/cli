@@ -4,8 +4,6 @@
  * @packageDocumentation
  */
 
-import { flags } from '@oclif/command';
-
 import Command from '../BaseCommand';
 import { input } from '../io';
 import getConn from '../connections';
@@ -29,11 +27,6 @@ const [put, post] = (<const>['put', 'post']).map((method) => {
     static aliases = [method.slice(0, 2), METH];
 
     static examples = examples;
-
-    static flags = {
-      ...Command.flags,
-      recursive: flags.boolean({ char: 'R', default: false }),
-    };
 
     static args = [
       { name: 'paths...', required: true, description: `paths to ${METH}` },

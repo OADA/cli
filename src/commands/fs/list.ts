@@ -2,6 +2,9 @@ import Command from '../../BaseCommand';
 import { output, expandPath } from '../../io';
 import getConn from '../../connections';
 
+/**
+ * OADA version of ls
+ */
 export default class List extends Command {
   static description = 'perform an "OADA ls"';
 
