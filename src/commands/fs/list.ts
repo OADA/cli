@@ -21,7 +21,7 @@ export default class List extends Command {
       '-',
       async function* () {
         for (const p of paths) {
-          yield* expandPath(conn, p);
+          yield* expandPath(conn, p + '/*');
         }
       },
       this.iconfig
