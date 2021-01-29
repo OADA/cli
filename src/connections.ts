@@ -16,7 +16,7 @@ interface Connections {
    *
    * Used when no OADA host is specified (e.g., GET /bookmarks)
    */
-  connection: Promise<OADAClient>;
+  connection?: Promise<OADAClient>;
   domains: {
     [name: string]: Promise<OADAClient>;
   };
@@ -25,11 +25,9 @@ interface Connections {
 // Wrap OADAClient with magics
 const methods = <const>['get', 'head', 'put', 'post', 'delete'];
 export function conn(config: IConfig): OADAClient {
-  const { domain, token, ws } = config;
-
   const connections: Connections = {
     // Init default connection
-    connection: connect({ domain, token, connection: ws ? 'ws' : 'http' }),
+    //connection: connect({ domain, token, connection: ws ? 'ws' : 'http' }),
     domains: {},
   };
 
@@ -60,8 +58,15 @@ export function conn(config: IConfig): OADAClient {
   async function getConnection(name?: string): Promise<OADAClient> {
     if (!name) {
       // Use default OADA connection
-      const { connection } = connections;
-      return connection;
+      if (!connections.connection) {
+        const { domain, token, ws } = config;
+        connections.connection = connect({
+          domain,
+          token,
+          connection: ws ? 'ws' : 'http',
+        });
+      }
+      return connections.connection;
     }
 
     const { domains } = connections;
