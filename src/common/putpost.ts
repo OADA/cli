@@ -4,8 +4,10 @@
  * @packageDocumentation
  */
 
+import { flags } from '@oclif/command';
+
 import Command from '../BaseCommand';
-import { input } from '../io';
+import { input, loadFile } from '../io';
 import getConn from '../connections';
 import { shell } from '../highlight';
 
@@ -28,6 +30,14 @@ const [put, post] = (<const>['put', 'post']).map((method) => {
 
     static examples = examples;
 
+    static flags = {
+      ...Command.flags,
+      tree: flags.string({
+        char: 'T',
+        description: `file containing an OADA tree to use for a tree ${METH}`,
+      }),
+    };
+
     static args = [
       { name: 'paths...', required: true, description: `paths to ${METH}` },
       { name: 'path', required: true, description: 'destination OADA path' },
@@ -36,14 +46,20 @@ const [put, post] = (<const>['put', 'post']).map((method) => {
     static strict = false;
 
     async run() {
-      const { argv: paths } = this.parse(Clazz);
+      const {
+        argv: paths,
+        flags: { tree: treefile },
+      } = this.parse(Clazz);
       const conn = getConn(this.iconfig);
       const path = paths.pop()!;
+
+      // Load tree
+      const tree = treefile && (await loadFile(treefile));
 
       for (const file of paths) {
         await input<any>(conn, file, this.iconfig, async function* (source) {
           for await (const data of source) {
-            await conn[method]({ path, data });
+            await conn[method]({ path, tree, data });
           }
         });
       }

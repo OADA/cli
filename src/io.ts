@@ -116,6 +116,15 @@ async function outputType(output: string, { tty }: IConfig) {
  */
 export const importable = <const>['.json6', '.json5', '.hjson', '.ts', '.js'];
 
+/**
+ * Load a support file as JSON
+ */
+export async function loadFile(input: string) {
+  const path = join(process.cwd(), input);
+  const { default: data } = await import(path);
+  return data;
+}
+
 function inputChain(
   conn: OADAClient,
   input: string,
@@ -132,9 +141,7 @@ function inputChain(
       if ((importable as readonly string[]).includes(ext)) {
         return [
           async function* () {
-            const path = join(process.cwd(), input);
-            const { default: data } = await import(path);
-            yield data;
+            yield loadFile(input);
           },
         ];
       } else {

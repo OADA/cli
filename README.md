@@ -344,6 +344,7 @@ ARGUMENTS
 
 OPTIONS
   -R, --recursive
+  -T, --tree=tree      file containing an OADA tree to use for a tree GET
   -d, --domain=domain  [default: localhost] default OADA API domain
   -m, --meta
   -o, --out=out        [default: -]
@@ -552,6 +553,7 @@ ARGUMENTS
   PATH      destination OADA path
 
 OPTIONS
+  -T, --tree=tree      file containing an OADA tree to use for a tree POST
   -d, --domain=domain  [default: localhost] default OADA API domain
   -t, --token=token    default OADA API token
   --[no-]tty           format output for TTY
@@ -580,6 +582,7 @@ ARGUMENTS
   PATH      destination OADA path
 
 OPTIONS
+  -T, --tree=tree      file containing an OADA tree to use for a tree PUT
   -d, --domain=domain  [default: localhost] default OADA API domain
   -t, --token=token    default OADA API token
   --[no-]tty           format output for TTY

@@ -12,7 +12,7 @@ import {
   _id,
 } from '@oada/oadaify';
 
-import { output, expandPath } from '../io';
+import { output, expandPath, loadFile } from '../io';
 import getConn from '../connections';
 
 /**
@@ -55,6 +55,10 @@ export default class Get extends Command {
 
   static flags = {
     ...Command.flags,
+    tree: flags.string({
+      char: 'T',
+      description: 'file containing an OADA tree to use for a tree GET',
+    }),
     recursive: flags.boolean({ char: 'R', default: false }),
     meta: flags.boolean({ char: 'm', default: false }),
     out: flags.string({ char: 'o', default: '-' }),
@@ -69,9 +73,12 @@ export default class Get extends Command {
   async run() {
     const {
       argv: paths,
-      flags: { out, meta },
+      flags: { out, meta, tree: treefile },
     } = this.parse(Get);
     const conn = getConn(this.iconfig);
+
+    // Load tree
+    const tree = treefile && (await loadFile(treefile));
 
     await output(
       out,
@@ -79,7 +86,7 @@ export default class Get extends Command {
         for (const p of paths) {
           const pp = expandPath(conn, p);
           for await (const path of pp) {
-            const { data } = await conn.get({ path });
+            const { data } = await conn.get({ path, tree });
             const oadaified = oadaify(data);
 
             if (meta) {
