@@ -125,11 +125,10 @@ export default class Watch extends Command {
           rev = +cur! + rev;
         }
         await conn.watch({
-          // @ts-ignore
-          type,
+          type: type as 'single' | 'tree',
           rev: rev + '',
           path,
-          watchCallback(change) {
+          watchCallback(change: unknown) {
             sink.write(change);
           },
         });

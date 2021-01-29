@@ -60,7 +60,7 @@ $ npm install -g clioada
 $ oada COMMAND
 running command...
 $ oada (-v|--version|version)
-clioada/1.0.2 linux-x64 node-v15.7.0
+clioada/1.1.0 linux-x64 node-v15.7.0
 $ oada --help [COMMAND]
 USAGE
   $ oada COMMAND
@@ -79,6 +79,7 @@ USAGE
 * [`oada fs:list PATHS...`](#oada-fslist-paths)
 * [`oada fs:move PATHS... PATH`](#oada-fsmove-paths-path)
 * [`oada fs:remove PATHS...`](#oada-fsremove-paths)
+* [`oada fs:touch PATHS...`](#oada-fstouch-paths)
 * [`oada get PATHS...`](#oada-get-paths)
 * [`oada head PATHS...`](#oada-head-paths)
 * [`oada help [COMMAND]`](#oada-help-command)
@@ -89,6 +90,7 @@ USAGE
 * [`oada plugins:update`](#oada-pluginsupdate)
 * [`oada post PATHS... PATH`](#oada-post-paths-path)
 * [`oada put PATHS... PATH`](#oada-put-paths-path)
+* [`oada watch PATH`](#oada-watch-path)
 
 ## `oada autocomplete [SHELL]`
 
@@ -131,7 +133,7 @@ ALIASES
   $ oada config
 ```
 
-_See code: [src/commands/config/show.ts](https://github.com/awlayton/clioada/blob/v1.0.2/src/commands/config/show.ts)_
+_See code: [src/commands/config/show.ts](https://github.com/awlayton/clioada/blob/v1.1.0/src/commands/config/show.ts)_
 
 ## `oada delete PATHS...`
 
@@ -161,7 +163,7 @@ EXAMPLES
   $ oada rm /bookmarks/foo /bookmarks/bar /bookmarks/baz*
 ```
 
-_See code: [src/commands/delete.ts](https://github.com/awlayton/clioada/blob/v1.0.2/src/commands/delete.ts)_
+_See code: [src/commands/delete.ts](https://github.com/awlayton/clioada/blob/v1.1.0/src/commands/delete.ts)_
 
 ## `oada fs:copy PATHS... PATH`
 
@@ -189,7 +191,7 @@ EXAMPLES
   $ oada cp /resources/foo1 /resources/foo2 /bookmarks/foos/
 ```
 
-_See code: [src/commands/fs/copy.ts](https://github.com/awlayton/clioada/blob/v1.0.2/src/commands/fs/copy.ts)_
+_See code: [src/commands/fs/copy.ts](https://github.com/awlayton/clioada/blob/v1.1.0/src/commands/fs/copy.ts)_
 
 ## `oada fs:link PATHS... PATH`
 
@@ -219,7 +221,7 @@ EXAMPLES
   $ oada ln /resources/thingy1 /resources/thingy2 /bookmarks/thingies/
 ```
 
-_See code: [src/commands/fs/link.ts](https://github.com/awlayton/clioada/blob/v1.0.2/src/commands/fs/link.ts)_
+_See code: [src/commands/fs/link.ts](https://github.com/awlayton/clioada/blob/v1.1.0/src/commands/fs/link.ts)_
 
 ## `oada fs:list PATHS...`
 
@@ -243,7 +245,7 @@ ALIASES
   $ oada l
 ```
 
-_See code: [src/commands/fs/list.ts](https://github.com/awlayton/clioada/blob/v1.0.2/src/commands/fs/list.ts)_
+_See code: [src/commands/fs/list.ts](https://github.com/awlayton/clioada/blob/v1.1.0/src/commands/fs/list.ts)_
 
 ## `oada fs:move PATHS... PATH`
 
@@ -271,7 +273,7 @@ EXAMPLES
   $ oada mv /resources/foo1 /resources/foo2 /bookmarks/foos/
 ```
 
-_See code: [src/commands/fs/move.ts](https://github.com/awlayton/clioada/blob/v1.0.2/src/commands/fs/move.ts)_
+_See code: [src/commands/fs/move.ts](https://github.com/awlayton/clioada/blob/v1.1.0/src/commands/fs/move.ts)_
 
 ## `oada fs:remove PATHS...`
 
@@ -301,7 +303,33 @@ EXAMPLES
   $ oada rm /bookmarks/foo /bookmarks/bar /bookmarks/baz*
 ```
 
-_See code: [src/commands/fs/remove.ts](https://github.com/awlayton/clioada/blob/v1.0.2/src/commands/fs/remove.ts)_
+_See code: [src/commands/fs/remove.ts](https://github.com/awlayton/clioada/blob/v1.1.0/src/commands/fs/remove.ts)_
+
+## `oada fs:touch PATHS...`
+
+perform and "OADA touch"
+
+```
+USAGE
+  $ oada fs:touch PATHS...
+
+ARGUMENTS
+  PATHS...  paths to touch
+
+OPTIONS
+  -d, --domain=domain  [default: localhost] default OADA API domain
+  -t, --token=token    default OADA API token
+  --[no-]tty           format output for TTY
+  --[no-]ws            use WebSockets for OADA API
+
+ALIASES
+  $ oada touch
+
+EXAMPLE
+  $ oada touch /bookmarks
+```
+
+_See code: [src/commands/fs/touch.ts](https://github.com/awlayton/clioada/blob/v1.1.0/src/commands/fs/touch.ts)_
 
 ## `oada get PATHS...`
 
@@ -345,7 +373,7 @@ EXAMPLES
   700
 ```
 
-_See code: [src/commands/get.ts](https://github.com/awlayton/clioada/blob/v1.0.2/src/commands/get.ts)_
+_See code: [src/commands/get.ts](https://github.com/awlayton/clioada/blob/v1.1.0/src/commands/get.ts)_
 
 ## `oada head PATHS...`
 
@@ -375,7 +403,7 @@ EXAMPLES
   1
 ```
 
-_See code: [src/commands/head.ts](https://github.com/awlayton/clioada/blob/v1.0.2/src/commands/head.ts)_
+_See code: [src/commands/head.ts](https://github.com/awlayton/clioada/blob/v1.1.0/src/commands/head.ts)_
 
 ## `oada help [COMMAND]`
 
@@ -524,7 +552,6 @@ ARGUMENTS
   PATH      destination OADA path
 
 OPTIONS
-  -R, --recursive
   -d, --domain=domain  [default: localhost] default OADA API domain
   -t, --token=token    default OADA API token
   --[no-]tty           format output for TTY
@@ -538,7 +565,7 @@ EXAMPLE
   $ oada post - /bookmarks/ <<< '{"a": 1}{"b": true}'
 ```
 
-_See code: [src/commands/post.ts](https://github.com/awlayton/clioada/blob/v1.0.2/src/commands/post.ts)_
+_See code: [src/commands/post.ts](https://github.com/awlayton/clioada/blob/v1.1.0/src/commands/post.ts)_
 
 ## `oada put PATHS... PATH`
 
@@ -553,7 +580,6 @@ ARGUMENTS
   PATH      destination OADA path
 
 OPTIONS
-  -R, --recursive
   -d, --domain=domain  [default: localhost] default OADA API domain
   -t, --token=token    default OADA API token
   --[no-]tty           format output for TTY
@@ -567,7 +593,100 @@ EXAMPLE
   $ oada put - /bookmarks/ <<< '{"a": 1}'
 ```
 
-_See code: [src/commands/put.ts](https://github.com/awlayton/clioada/blob/v1.0.2/src/commands/put.ts)_
+_See code: [src/commands/put.ts](https://github.com/awlayton/clioada/blob/v1.1.0/src/commands/put.ts)_
+
+## `oada watch PATH`
+
+perform and OADA WATCH
+
+```
+USAGE
+  $ oada watch PATH
+
+ARGUMENTS
+  PATH  OADA path to WATCH
+
+OPTIONS
+  -d, --domain=domain       [default: localhost] default OADA API domain
+  -o, --out=out             [default: -]
+  -r, --rev=rev             rev from which to start (negative means latest - n)
+  -t, --token=token         default OADA API token
+  -t, --type=(sinlge|tree)  [default: tree]
+  --[no-]tty                format output for TTY
+  --[no-]ws                 use WebSockets for OADA API
+
+ALIASES
+  $ oada w
+  $ oada WATCH
+
+EXAMPLE
+  $ oada watch /bookmarks
+  [
+     {
+       "resource_id": "resources/dd2d0c95-89ab-400d-863c-e2f62e9570a5",
+       "path": "",
+       "body": {
+         "services": {
+           "_rev": 213
+         },
+         "_meta": {
+           "modifiedBy": "system/rev_graph_update",
+           "modified": 1610676324.424,
+           "_rev": 8799
+         },
+         "_rev": 8799
+       },
+       "type": "merge"
+     },
+     {
+       "resource_id": "resources/1e6mHvcV9ZUczdzLDIdz9T8s2eV",
+       "path": "/services",
+       "body": {
+         "ainz": {
+           "_rev": 169
+         },
+         "_meta": {
+           "modifiedBy": "system/rev_graph_update",
+           "modified": 1610676324.29,
+           "_rev": 213
+         },
+         "_rev": 213
+       },
+       "type": "merge"
+     },
+     {
+       "resource_id": "resources/7f0d1bcf-c0f9-44a1-a506-18c2fb3e73ed",
+       "path": "/services/ainz",
+       "body": {
+         "rules": {
+           "_rev": 151
+         },
+         "_meta": {
+           "modifiedBy": "system/rev_graph_update",
+           "modified": 1610676324.12,
+           "_rev": 169
+         },
+         "_rev": 169
+       },
+       "type": "merge"
+     },
+     {
+       "resource_id": "resources/f6e90c0f-7900-446e-989d-5d32d5dcb741",
+       "path": "/services/ainz/rules",
+       "body": {
+         "_meta": {
+           "modifiedBy": "users/5989462",
+           "modified": 1610676323.964,
+           "_rev": 151
+         },
+         "_rev": 151
+       },
+       "type": "merge"
+     }
+  ]
+```
+
+_See code: [src/commands/watch.ts](https://github.com/awlayton/clioada/blob/v1.1.0/src/commands/watch.ts)_
 <!-- commandsstop -->
 
 [JSONL]: https://en.wikipedia.org/wiki/JSON_streaming#Line-delimited_JSON

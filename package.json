@@ -1,6 +1,6 @@
 {
   "name": "clioada",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "CLI OADA",
   "main": "dist/index.js",
   "bin": {
@@ -60,7 +60,7 @@
     "yarn.lock"
   ],
   "dependencies": {
-    "@oada/client": "^2.2.2",
+    "@oada/client": "^2.3.0",
     "@oada/oadaify": "^1.0.1",
     "@oclif/command": "^1",
     "@oclif/config": "^1",
@@ -82,7 +82,7 @@
     "ndjson": "^2.0.0",
     "object-assign-deep": "^0.4.0",
     "ts-node": "^9.1.1",
-    "tslib": "^1",
+    "tslib": "^2.1.0",
     "type-fest": "^0.20.2"
   },
   "devDependencies": {
