@@ -1,10 +1,10 @@
 {
   "name": "clioada",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "CLI OADA",
   "main": "dist/index.js",
   "bin": {
-    "oada": "./bin/run"
+    "oada": "bin/run"
   },
   "author": "Alex Layton <alex@layton.in>",
   "homepage": "https://github.com/awlayton/clioada",
