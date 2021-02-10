@@ -17,6 +17,10 @@ export default class Touch extends Command {
 
   static examples = examples;
 
+  static flags = {
+    ...Command.flags,
+  };
+
   static args = [
     { name: 'paths...', required: true, description: `paths to touch` },
   ];

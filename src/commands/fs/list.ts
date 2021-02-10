@@ -10,6 +10,10 @@ export default class List extends Command {
 
   static aliases = ['ls', 'l'];
 
+  static flags = {
+    ...Command.flags,
+  };
+
   static args = [
     { name: 'paths...', required: true, description: 'path(s) to list' },
   ];

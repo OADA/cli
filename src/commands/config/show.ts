@@ -10,6 +10,10 @@ export default class ShowConfig extends Command {
 
   static aliases = ['config'];
 
+  static flags = {
+    ...Command.flags,
+  };
+
   async run() {
     const config = this.iconfig;
     console.error(`Loading configs:\n${this.configFiles.join('\n')}`);

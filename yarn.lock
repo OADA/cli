@@ -1392,6 +1392,7 @@ __metadata:
     hjson: ^3.2.2
     ix: ^4.2.0
     json-6: ^1.1.1
+    ksuid: ^2.0.0
     minimatch: ^3.0.4
     ndjson: ^2.0.0
     object-assign-deep: ^0.4.0
@@ -1406,7 +1407,7 @@ __metadata:
     webpack-cli: ^4.4.0
     webpack-pnp-externals: ^1.1.0
   bin:
-    oada: ./bin/run
+    oada: bin/run
   languageName: unknown
   linkType: soft
 
@@ -2860,6 +2861,15 @@ __metadata:
     base-convert-int-array: ^1.0.1
     string.prototype.padstart: ^3.0.0
   checksum: 89d501cf8ad1098fe059177825a1cbfe0910de01c5db8d39e11985ebaa3869574c00e679befa03cbe4e24dc8ef022f54a2b3dd855a046730bc52584944c7964b
+  languageName: node
+  linkType: hard
+
+"ksuid@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "ksuid@npm:2.0.0"
+  dependencies:
+    base-convert-int-array: ^1.0.1
+  checksum: b622c136413673eb07bbe8d8110770c6546acd1b3cfe8ad33134893d3710a5603f2b234181b72a2f6c35f32637b144daa4d4e681e2a036ae268d0a43b4a4f84f
   languageName: node
   linkType: hard
 

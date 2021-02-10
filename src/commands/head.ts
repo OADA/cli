@@ -17,6 +17,10 @@ export default class Head extends Command {
 
   static examples = examples;
 
+  static flags = {
+    ...Command.flags,
+  };
+
   static args = [
     { name: 'paths...', required: true, description: 'OADA path(s) to HEAD' },
   ];

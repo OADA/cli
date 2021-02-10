@@ -18,6 +18,10 @@ export default class Copy extends Command {
 
   static examples = examples;
 
+  static flags = {
+    ...Command.flags,
+  };
+
   static args = [
     { name: 'paths...', required: true, description: 'path(s) to copy' },
     { name: 'path', required: true, description: 'OADA path to which to copy' },

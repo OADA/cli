@@ -15,6 +15,10 @@ export default class Move extends Command {
 
   static aliases = ['mv'];
 
+  static flags = {
+    ...Command.flags,
+  };
+
   static examples = examples;
 
   static args = [
