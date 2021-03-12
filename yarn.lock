@@ -125,7 +125,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@oclif/command@npm:^1, @oclif/command@npm:^1.5.12, @oclif/command@npm:^1.5.13, @oclif/command@npm:^1.5.20, @oclif/command@npm:^1.6.0, @oclif/command@npm:^1.8.0":
+"@oclif/command@npm:^1.5.12, @oclif/command@npm:^1.5.13, @oclif/command@npm:^1.5.20, @oclif/command@npm:^1.6.0, @oclif/command@npm:^1.8.0":
   version: 1.8.0
   resolution: "@oclif/command@npm:1.8.0"
   dependencies:
@@ -141,7 +141,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@oclif/config@npm:^1, @oclif/config@npm:^1.13.0, @oclif/config@npm:^1.15.1, @oclif/config@npm:^1.17.0":
+"@oclif/config@npm:^1.13.0, @oclif/config@npm:^1.15.1, @oclif/config@npm:^1.17.0":
   version: 1.17.0
   resolution: "@oclif/config@npm:1.17.0"
   dependencies:
@@ -155,7 +155,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@oclif/dev-cli@npm:^1":
+"@oclif/dev-cli@npm:^1.26.0":
   version: 1.26.0
   resolution: "@oclif/dev-cli@npm:1.26.0"
   dependencies:
@@ -225,21 +225,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@oclif/plugin-help@npm:*, @oclif/plugin-help@npm:^3, @oclif/plugin-help@npm:^3.2.0":
-  version: 3.2.1
-  resolution: "@oclif/plugin-help@npm:3.2.1"
+"@oclif/plugin-help@npm:*, @oclif/plugin-help@npm:^3, @oclif/plugin-help@npm:^3.2.0, @oclif/plugin-help@npm:^3.2.2":
+  version: 3.2.2
+  resolution: "@oclif/plugin-help@npm:3.2.2"
   dependencies:
     "@oclif/command": ^1.5.20
     "@oclif/config": ^1.15.1
     "@oclif/errors": ^1.2.2
-    chalk: ^2.4.1
+    chalk: ^4.1.0
     indent-string: ^4.0.0
     lodash.template: ^4.4.0
     string-width: ^4.2.0
     strip-ansi: ^6.0.0
     widest-line: ^3.1.0
     wrap-ansi: ^4.0.0
-  checksum: 724b430f9201f8e107d63b986d8f50886f6059e00771d5b34a43ab5009cdb0456163df00d3a66cc257fed9b2e5b65088e79f8d2e81088c606239bd038ea41eb8
+  checksum: f28e4689a8cd97804bcf3ee1ce15346857eda65f833a0717dfa18d321ec2ac2006d7e3430c71824b05971edaa947746d2af21a92d5a93b64dbc340fefd0df4a3
   languageName: node
   linkType: hard
 
@@ -256,9 +256,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@oclif/plugin-plugins@npm:*, @oclif/plugin-plugins@npm:^1.9.5":
-  version: 1.9.5
-  resolution: "@oclif/plugin-plugins@npm:1.9.5"
+"@oclif/plugin-plugins@npm:*, @oclif/plugin-plugins@npm:^1.10.0":
+  version: 1.10.0
+  resolution: "@oclif/plugin-plugins@npm:1.10.0"
   dependencies:
     "@oclif/color": ^0.x
     "@oclif/command": ^1.5.12
@@ -273,7 +273,7 @@ __metadata:
     semver: ^7.3.2
     tslib: ^2.0.0
     yarn: ^1.21.1
-  checksum: 1bff4acb8210e6b53b460da8d3a80ca0925a7a5db44c82b2906067b315d5742f65f360d5e2603bb58c0eca94ab5c617b611b7d9da7d9f6eb7cfd59917d8b7c46
+  checksum: c971d56096f58960c94e9f954c82d698f63108093f26e0b2d79d6a8ec2f5165d54d86d066a63982aa23be2a018fe572f27731a06310fa0f8e3100ce30438007e
   languageName: node
   linkType: hard
 
@@ -391,10 +391,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/json5@npm:^0.0.30":
-  version: 0.0.30
-  resolution: "@types/json5@npm:0.0.30"
-  checksum: af9d434f14dc6337e16454944bca5eadbdf5d0e85a0ef59fe5e011eadabfe126f42f3913bf7fee478747cf34efd88061ac0e15ede07b83986ae31aa2ddda6232
+"@types/json5@npm:^2.2.0":
+  version: 2.2.0
+  resolution: "@types/json5@npm:2.2.0"
+  dependencies:
+    json5: "*"
+  checksum: 09af40db70ed5c449a3ef840ed4f7243ecde1593cd275f0dfb8fed8bea5348d5e8649750513ca58c42195ec32e537719fac6f6809afce457bc7c2feb3f51de44
   languageName: node
   linkType: hard
 
@@ -424,10 +426,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:^14.14.22":
-  version: 14.14.22
-  resolution: "@types/node@npm:14.14.22"
-  checksum: e46e32685b4d0261779c13c10ba3ff220cfa714b5c12f8f571fd52cc309546bdbc8ffc86cbad20559ad88e7b17e66fc51c98b067d8c3766597092c05df157b9b
+"@types/node@npm:*, @types/node@npm:^14.14.34":
+  version: 14.14.34
+  resolution: "@types/node@npm:14.14.34"
+  checksum: 74db0d80ad997c3ca2597abe1c63c85e87c32e06b4e8c8392a24a11ad00a4567b293a72bbdf49ace201150b420a943609181771cab034cef10fe65272d452718
   languageName: node
   linkType: hard
 
@@ -683,36 +685,36 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@webpack-cli/configtest@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "@webpack-cli/configtest@npm:1.0.0"
+"@webpack-cli/configtest@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "@webpack-cli/configtest@npm:1.0.1"
   peerDependencies:
     webpack: 4.x.x || 5.x.x
     webpack-cli: 4.x.x
-  checksum: 7aac463cd48f42c523e4d5af540cdb00cb5ff867c471160e0c96845db5b3ec80f4c572128bd6911f2954507ee4a5b8aaa983a427b3a053a09d20743ced59a549
+  checksum: 6db91531c43658c7830767cd698e72dd2d569d85b306a9eedafc1d8a8935b0a9ecf3881b7fff21eca18695c3440e911f2020fa7b9ea29af41944f23efa54bd16
   languageName: node
   linkType: hard
 
-"@webpack-cli/info@npm:^1.2.1":
-  version: 1.2.1
-  resolution: "@webpack-cli/info@npm:1.2.1"
+"@webpack-cli/info@npm:^1.2.2":
+  version: 1.2.2
+  resolution: "@webpack-cli/info@npm:1.2.2"
   dependencies:
     envinfo: ^7.7.3
   peerDependencies:
     webpack-cli: 4.x.x
-  checksum: 5d7533ed5a2b3cf5429730661b1dba47f96a3ee9a4f87fc4bbf889fac28a603bc73d4ee143df4cf5cd3e4e91d91ad6bfdfb76a786d346265f7a193c3612582e6
+  checksum: ee23161d9ea56be871e67596f9d65b8342de858b59cb6658870bda474deaa328ea0d34320344eac704b88673a373456584e08748f0a7d60226bf76c2e667e706
   languageName: node
   linkType: hard
 
-"@webpack-cli/serve@npm:^1.2.2":
-  version: 1.2.2
-  resolution: "@webpack-cli/serve@npm:1.2.2"
+"@webpack-cli/serve@npm:^1.3.0":
+  version: 1.3.0
+  resolution: "@webpack-cli/serve@npm:1.3.0"
   peerDependencies:
     webpack-cli: 4.x.x
   peerDependenciesMeta:
     webpack-dev-server:
       optional: true
-  checksum: 86dab170ba2f516e56005bc9a58d7e8c453064b897ed11fe18db23e02e69642ff61a9682e53593471285f3122eef276a46ee54ffb3c1a9608f073e28dc4e39f7
+  checksum: ce97bd9db98663375d62edbcd5711e057291e890c9e89254e4333fb9e6192252afca743b8a0fa087be00c6222db1c2e1d4da67707c6a679e1d9e1d7a3d001381
   languageName: node
   linkType: hard
 
@@ -1387,21 +1389,21 @@ __metadata:
   dependencies:
     "@oada/client": ^2.4.0
     "@oada/oadaify": ^1.0.1
-    "@oclif/command": ^1
-    "@oclif/config": ^1
-    "@oclif/dev-cli": ^1
+    "@oclif/command": ^1.8.0
+    "@oclif/config": ^1.17.0
+    "@oclif/dev-cli": ^1.26.0
     "@oclif/errors": ^1.3.4
     "@oclif/parser": ^3.8.5
     "@oclif/plugin-autocomplete": ^0.3.0
-    "@oclif/plugin-help": ^3
+    "@oclif/plugin-help": ^3.2.2
     "@oclif/plugin-not-found": ^1.2.4
-    "@oclif/plugin-plugins": ^1.9.5
+    "@oclif/plugin-plugins": ^1.10.0
     "@tsconfig/node14": ^1.0.0
     "@types/bluebird": ^3.5.33
     "@types/glob": ^7.1.3
-    "@types/json5": ^0.0.30
+    "@types/json5": ^2.2.0
     "@types/ndjson": ^2.0.0
-    "@types/node": ^14.14.22
+    "@types/node": ^14.14.34
     "@types/object-assign-deep": ^0.4.0
     "@types/webpack": ^4.41.26
     "@yarnpkg/pnpify": ^2.4.0
@@ -1410,9 +1412,9 @@ __metadata:
     concatjson: ^2.0.1
     dotenv: ^8.2.0
     find-up: ^5.0.0
-    gaxios: ^4.1.0
+    gaxios: ^4.2.0
     glob: ^7.1.6
-    globby: ^10
+    globby: ^10.0.2
     hjson: ^3.2.2
     ix: ^4.2.0
     json-6: ^1.1.1
@@ -1421,14 +1423,14 @@ __metadata:
     ndjson: ^2.0.0
     object-assign-deep: ^0.4.0
     shebang-loader: ^0.0.1
-    source-map-loader: ^2.0.0
-    ts-loader: ^8.0.14
+    source-map-loader: ^2.0.1
+    ts-loader: ^8.0.18
     ts-node: ^9.1.1
     tslib: ^2.1.0
-    type-fest: ^0.20.2
-    typescript: ^4.1.3
-    webpack: ^5.17.0
-    webpack-cli: ^4.4.0
+    type-fest: ^0.21.3
+    typescript: ^4.2.3
+    webpack: ^5.25.0
+    webpack-cli: ^4.5.0
     webpack-pnp-externals: ^1.1.0
   bin:
     oada: bin/run
@@ -1526,10 +1528,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"commander@npm:^6.2.0":
-  version: 6.2.1
-  resolution: "commander@npm:6.2.1"
-  checksum: 47856aae6f194404122e359d8463e5e1a18f7cbab26722ce69f1379be8514bd49a160ef81a983d3d2091e3240022643354101d1276c797dcdd0b5bfc3c3f04a3
+"commander@npm:^7.0.0":
+  version: 7.1.0
+  resolution: "commander@npm:7.1.0"
+  checksum: 2b6dacb11f17cd9b702ae18b586b060327590dd57e2702edefbff701ec7c63b55338e70544210893bad280fc9579ffb839dd8ae0a6bc652fceffe3f9ad1c2c44
   languageName: node
   linkType: hard
 
@@ -1833,10 +1835,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"es-module-lexer@npm:^0.3.26":
-  version: 0.3.26
-  resolution: "es-module-lexer@npm:0.3.26"
-  checksum: f6a6bfb5f38e7ecdb3fb5e530a9998dcf988356757460cb5f3b86240f6150bf5084aa651984a295d820c0532d097ab5296dad73f408f70e846ad566b733910fa
+"es-module-lexer@npm:^0.4.0":
+  version: 0.4.1
+  resolution: "es-module-lexer@npm:0.4.1"
+  checksum: 0c634ce62d3a77b04aa56b9ca2af2b58ff73a834afc76ac6747b25173e97d9050a28451b6ed39b54b84b8498d887ac8bd5bcf2c9aa9ba948ca0aee0acd613618
   languageName: node
   linkType: hard
 
@@ -2159,16 +2161,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"gaxios@npm:^4.1.0":
-  version: 4.1.0
-  resolution: "gaxios@npm:4.1.0"
+"gaxios@npm:^4.2.0":
+  version: 4.2.0
+  resolution: "gaxios@npm:4.2.0"
   dependencies:
     abort-controller: ^3.0.0
     extend: ^3.0.2
     https-proxy-agent: ^5.0.0
     is-stream: ^2.0.0
     node-fetch: ^2.3.0
-  checksum: d54423e28df50b25cf1e7dafb83ecef0a49a429a3ed9674a0d9052708da0c80cedb4b486528ea518d3ae27d2a58b517ed7900052318fa512bce7f59a6d293138
+  checksum: 96ba840591124efcfc1d3047b82302143ee0a0d4102201c691e5e5a4579fb341fcd539074ede201de252c9374b78b2d9cb9e61bf9db5051183b543f6befcee67
   languageName: node
   linkType: hard
 
@@ -2252,7 +2254,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"globby@npm:^10, globby@npm:^10.0.1":
+"globby@npm:^10.0.1, globby@npm:^10.0.2":
   version: 10.0.2
   resolution: "globby@npm:10.0.2"
   dependencies:
@@ -2841,14 +2843,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"json5@npm:^2.1.2":
-  version: 2.1.3
-  resolution: "json5@npm:2.1.3"
+"json5@npm:*, json5@npm:^2.1.2":
+  version: 2.2.0
+  resolution: "json5@npm:2.2.0"
   dependencies:
     minimist: ^1.2.5
   bin:
     json5: lib/cli.js
-  checksum: 957e4937106cf59975aa0281e68911534d65c8a25be5b4d3559aa55eba351ccab516a943a60ba33e461e4b8af749939986e311de910cbcfd197410b57d971741
+  checksum: 07b1f90c2801dc52df2b0ac8d606cc400a85cda79130e754780fa2ab9805d0fb85a0e61b6a5cdd68e88e5d0c8f9109ec415af08283175556cdccaa8563853908
   languageName: node
   linkType: hard
 
@@ -3549,15 +3551,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pkg-dir@npm:^5.0.0":
-  version: 5.0.0
-  resolution: "pkg-dir@npm:5.0.0"
-  dependencies:
-    find-up: ^5.0.0
-  checksum: 86f6ecee1787d8fe1606fd831f823f967c6ea0d760ce714af6afd2fec076ce71fbedcb57b339d93b84edf90ccdd81d4e6e2c10fcde21684ef3ffee5e05fd37dc
-  languageName: node
-  linkType: hard
-
 "pluralize@npm:^7.0.0":
   version: 7.0.0
   resolution: "pluralize@npm:7.0.0"
@@ -3972,16 +3965,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"source-map-loader@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "source-map-loader@npm:2.0.0"
+"source-map-js@npm:^0.6.2":
+  version: 0.6.2
+  resolution: "source-map-js@npm:0.6.2"
+  checksum: 8e2f992cfbedb71286fa6f6e011e2fa756b7f4d944ea4b0f49e9ff6ea34ad0a17dc655f067fdddb32efa7b45000e8c59e47a2e875d91744c86a56329b5f58b32
+  languageName: node
+  linkType: hard
+
+"source-map-loader@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "source-map-loader@npm:2.0.1"
   dependencies:
     abab: ^2.0.5
     iconv-lite: ^0.6.2
-    source-map: ^0.6.1
+    source-map-js: ^0.6.2
   peerDependencies:
     webpack: ^5.0.0
-  checksum: 41b2ccc8b3445919b8d4396f361900f4ca484240833897e892ebe05c74527424f817ca6ff51f001b889fc53691365ea8e82dfe39bc4ac9fe1a13970885e479a8
+  checksum: d3bf51ed491782eaca87b626d7abc8c1c98a062bbf58dfd362460f86192f7dcb6fd79dffb126e91b78f5cc9e718e00386a6849b742f7c8c1785fb4886fa65350
   languageName: node
   linkType: hard
 
@@ -4413,9 +4413,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ts-loader@npm:^8.0.14":
-  version: 8.0.14
-  resolution: "ts-loader@npm:8.0.14"
+"ts-loader@npm:^8.0.18":
+  version: 8.0.18
+  resolution: "ts-loader@npm:8.0.18"
   dependencies:
     chalk: ^4.1.0
     enhanced-resolve: ^4.0.0
@@ -4425,7 +4425,7 @@ __metadata:
   peerDependencies:
     typescript: "*"
     webpack: "*"
-  checksum: 7ccab1af8632370d777733e19821eb304c069cd56cc5246cbc59b6544ffc1d3f1431dd81904491105dfae7335a818563217af4ac715965dcff26b97ce1a44c63
+  checksum: 16c1a3cc4d03fb96293f9e0dd163e9eb872d8b2e610eeff50ed1502b3c5fda870cff3b9cc48423cf1f4bcd4cb5755c4456b3e7d8351014702a7f34d5fdd1ecc0
   languageName: node
   linkType: hard
 
@@ -4501,6 +4501,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"type-fest@npm:^0.21.3":
+  version: 0.21.3
+  resolution: "type-fest@npm:0.21.3"
+  checksum: bbe5f5c60e8da4e0b0fe290c31821b10c2fd935768802cd659784cb5e792c7a31bb25a89174d3b42dde3bf8eb9d301ede7456a274c1068280b7698438e250f49
+  languageName: node
+  linkType: hard
+
 "type-fest@npm:^0.3.0":
   version: 0.3.1
   resolution: "type-fest@npm:0.3.1"
@@ -4524,23 +4531,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-typescript@^4.1.3:
-  version: 4.1.3
-  resolution: "typescript@npm:4.1.3"
+typescript@^4.2.3:
+  version: 4.2.3
+  resolution: "typescript@npm:4.2.3"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 4f7ab1506ea22c7a1c313ec5b4285e93ce08d709ad6086d02d3096adb399ca339972ee56d1e578213c51dd0fb7b0fad50283c2d3c39642405644458ae29774f8
+  checksum: 06e8470f317db6f5e2fce809b20eb84a67a7d8179057abff36e5427bd1b891bd08e54581ff81f0fa36aef9b6d1eb0f54eaf6e2643c6dbd4e37a0adcc41eed256
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@^4.1.3#builtin<compat/typescript>":
-  version: 4.1.3
-  resolution: "typescript@patch:typescript@npm%3A4.1.3#builtin<compat/typescript>::version=4.1.3&hash=cc6730"
+"typescript@patch:typescript@^4.2.3#builtin<compat/typescript>":
+  version: 4.2.3
+  resolution: "typescript@patch:typescript@npm%3A4.2.3#builtin<compat/typescript>::version=4.2.3&hash=a45b0e"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 017af992148346e671d5b83b041773825888e9c94db8d2b9472cdbb6d6f0ee85927817473121524d319f8be6ffe5a6904d27ff6ef21356d2274fcadd52e17938
+  checksum: a8956044aabf730699bcc3c2475efdd3f35e509329325cf60b4989761d4c2188e2c474183e2cf92b8c201fcf976814a5a16f144508b2a832643c4f972d0ab803
   languageName: node
   linkType: hard
 
@@ -4641,16 +4648,16 @@ typescript@^4.1.3:
   languageName: node
   linkType: hard
 
-"webpack-cli@npm:^4.4.0":
-  version: 4.4.0
-  resolution: "webpack-cli@npm:4.4.0"
+"webpack-cli@npm:^4.5.0":
+  version: 4.5.0
+  resolution: "webpack-cli@npm:4.5.0"
   dependencies:
     "@discoveryjs/json-ext": ^0.5.0
-    "@webpack-cli/configtest": ^1.0.0
-    "@webpack-cli/info": ^1.2.1
-    "@webpack-cli/serve": ^1.2.2
+    "@webpack-cli/configtest": ^1.0.1
+    "@webpack-cli/info": ^1.2.2
+    "@webpack-cli/serve": ^1.3.0
     colorette: ^1.2.1
-    commander: ^6.2.0
+    commander: ^7.0.0
     enquirer: ^2.3.6
     execa: ^5.0.0
     fastest-levenshtein: ^1.0.12
@@ -4674,7 +4681,7 @@ typescript@^4.1.3:
       optional: true
   bin:
     webpack-cli: bin/cli.js
-  checksum: 0d1328369a1babcb5e90896d9579c13c18696f283e92feb29131fa9d64986e4359df37772a2a3ec15159b89efe5ab2ad77d16e2b735a458d10bb729aeadcecbc
+  checksum: dde382455aa3af9f38b48bfa85d4e3df39766b9478e7457e69b415bd96c30747fe8a16d2405be8a59654e9bbdd3b03296a75d8bdab1b7f2a3fda2028f4683568
   languageName: node
   linkType: hard
 
@@ -4705,9 +4712,9 @@ typescript@^4.1.3:
   languageName: node
   linkType: hard
 
-"webpack@npm:^5.17.0":
-  version: 5.17.0
-  resolution: "webpack@npm:5.17.0"
+"webpack@npm:^5.25.0":
+  version: 5.25.0
+  resolution: "webpack@npm:5.25.0"
   dependencies:
     "@types/eslint-scope": ^3.7.0
     "@types/estree": ^0.0.46
@@ -4718,7 +4725,7 @@ typescript@^4.1.3:
     browserslist: ^4.14.5
     chrome-trace-event: ^1.0.2
     enhanced-resolve: ^5.7.0
-    es-module-lexer: ^0.3.26
+    es-module-lexer: ^0.4.0
     eslint-scope: ^5.1.1
     events: ^3.2.0
     glob-to-regexp: ^0.4.1
@@ -4727,7 +4734,6 @@ typescript@^4.1.3:
     loader-runner: ^4.2.0
     mime-types: ^2.1.27
     neo-async: ^2.6.2
-    pkg-dir: ^5.0.0
     schema-utils: ^3.0.0
     tapable: ^2.1.1
     terser-webpack-plugin: ^5.1.1
@@ -4738,7 +4744,7 @@ typescript@^4.1.3:
       optional: true
   bin:
     webpack: bin/webpack.js
-  checksum: 2840d6291d8caee81f7435e3676bb399ba77785e5a2768aefdb3f28b9c2c95df959c3a1be024a7101ff477f4ae932e40378f2e32bc29d119ea08d39c5c835e77
+  checksum: d80832dddef57b1f64647749ff1c78388ad875f7e9e63e614cee6b62da84853f6bb0150a50684ef7cdd4982adc5381994b44b166101dd68bed78d862bff7fab4
   languageName: node
   linkType: hard
 
