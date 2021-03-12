@@ -60,7 +60,7 @@
     "yarn.lock"
   ],
   "dependencies": {
-    "@oada/client": "^2.3.0",
+    "@oada/client": "^2.4.0",
     "@oada/oadaify": "^1.0.1",
     "@oclif/command": "^1",
     "@oclif/config": "^1",

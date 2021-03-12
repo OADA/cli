@@ -75,19 +75,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@oada/client@npm:^2.3.0":
-  version: 2.3.0
-  resolution: "@oada/client@npm:2.3.0"
+"@oada/client@npm:^2.4.0":
+  version: 2.4.0
+  resolution: "@oada/client@npm:2.4.0"
   dependencies:
     "@oada/types": ^1.2.0
     cross-fetch: ^3.0.6
     debug: ^4.1.1
+    fetch-h2: ^2.5.1
     isomorphic-ws: ^4.0.1
     ksuid: ^1.2.0
     p-queue: ^6.4.0
     reconnecting-websocket: ^4.4.0
     ws: ^7.2.3
-  checksum: 63011a962c18a02bd2d3f73336fc9a5224df8678b844b14988e810d973ff42a31be76d2f5368eb342e6904fd33f1f0d7644b5a0eccaafaba34e2bca0110c374f
+  checksum: cdf8f7548b2c940c704782969bb005c1877ce4e4d77e9a9e729ea4904d4e0207db52ba5e39f40a24a738efe515c2d8f60f96c0315e8325ec4caee250d5c20717
   languageName: node
   linkType: hard
 
@@ -480,6 +481,13 @@ __metadata:
   dependencies:
     "@types/node": "*"
   checksum: 67bae5cefe5c2604a522d98e6227bd5fccf0fa73fd878dddaf54af495c5b89c8a768d62c84efac3cb28e2ce241ffdcd74b3cd0246a7d9723624b5f13d822d09a
+  languageName: node
+  linkType: hard
+
+"@types/tough-cookie@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "@types/tough-cookie@npm:4.0.0"
+  checksum: 5a0cccc6d073b84dbb48d603e692b55ac30cea1653a7fc813e97a3bcaa9edd97c703c15727378d632e416a90178e6da657151eba8175cbb201a9a98de22ac3a8
   languageName: node
   linkType: hard
 
@@ -923,6 +931,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"already@npm:^1.13.1":
+  version: 1.13.2
+  resolution: "already@npm:1.13.2"
+  dependencies:
+    throat: ^5.0.0
+  checksum: 215e2f31ec2a8a28aaf4d4df91ecdd2f40944d9048e387af3077d74eebfdb91eed8e089b9b8951e2b6f2b5a1e33b8c79203da539a66e612164c1c6761fee701c
+  languageName: node
+  linkType: hard
+
 "ansi-colors@npm:^4.1.1":
   version: 4.1.1
   resolution: "ansi-colors@npm:4.1.1"
@@ -1172,6 +1189,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"callguard@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "callguard@npm:2.0.0"
+  checksum: 28050046cf8316c217c3474ef1b5f9d0707b0c87dd87d74bdf28eca85859748d01efc0f5e9f7469a7ab225a78fb76354608c85711dc69fa2069ac9db7db3cb83
+  languageName: node
+  linkType: hard
+
 "camelcase@npm:^5.3.1":
   version: 5.3.1
   resolution: "camelcase@npm:5.3.1"
@@ -1361,7 +1385,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "clioada@workspace:."
   dependencies:
-    "@oada/client": ^2.3.0
+    "@oada/client": ^2.4.0
     "@oada/oadaify": ^1.0.1
     "@oclif/command": ^1
     "@oclif/config": ^1
@@ -2013,6 +2037,21 @@ __metadata:
   dependencies:
     reusify: ^1.0.4
   checksum: 706546e7fb2fbb5dbc98df821abfa258e93a1162663af6f1e491207229e91a72c7391920e9567a8b02d342e01d670ffbbee2ebb5f034993080ac9fa9895e3b2f
+  languageName: node
+  linkType: hard
+
+"fetch-h2@npm:^2.5.1":
+  version: 2.5.1
+  resolution: "fetch-h2@npm:2.5.1"
+  dependencies:
+    "@types/tough-cookie": ^4.0.0
+    already: ^1.13.1
+    callguard: ^2.0.0
+    get-stream: ^6.0.0
+    through2: ^4.0.2
+    to-arraybuffer: ^1.0.1
+    tough-cookie: ^4.0.0
+  checksum: 321e9bafb7b82fc5759d6bbf1f681cddf96169ad85b9dd1f0414671aee575833100a807018e3874fa2a5310a3ad0493875929bb0a8a0d683c1fe053d4a3f01ac
   languageName: node
   linkType: hard
 
@@ -3575,6 +3614,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"psl@npm:^1.1.33":
+  version: 1.8.0
+  resolution: "psl@npm:1.8.0"
+  checksum: 92d47c6257456878bfa8190d76b84de69bcefdc129eeee3f9fe204c15fd08d35fe5b8627033f39b455e40a9375a1474b25ff4ab2c5448dd8c8f75da692d0f5b4
+  languageName: node
+  linkType: hard
+
 "pump@npm:^3.0.0":
   version: 3.0.0
   resolution: "pump@npm:3.0.0"
@@ -3585,7 +3631,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"punycode@npm:^2.1.0":
+"punycode@npm:^2.1.0, punycode@npm:^2.1.1":
   version: 2.1.1
   resolution: "punycode@npm:2.1.1"
   checksum: 0202dc191cb35bfd88870ac99a1e824b03486d4cee20b543ef337a6dee8d8b11017da32a3e4c40b69b19976e982c030b62bd72bba42884acb691bc5ef91354c8
@@ -4298,6 +4344,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"throat@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "throat@npm:5.0.0"
+  checksum: 2fa41c09ccd97982cd6601eca704913f5d8ef5cc4070fcd71c67e7240da7c0df86f65f5cb23f5c3132ab5567154740114cc92379663aa098b6076a39481b0f5f
+  languageName: node
+  linkType: hard
+
 "through2@npm:^2.0.2, through2@npm:^2.0.3":
   version: 2.0.5
   resolution: "through2@npm:2.0.5"
@@ -4308,7 +4361,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"through2@npm:^4.0.0":
+"through2@npm:^4.0.0, through2@npm:^4.0.2":
   version: 4.0.2
   resolution: "through2@npm:4.0.2"
   dependencies:
@@ -4326,12 +4379,30 @@ __metadata:
   languageName: node
   linkType: hard
 
+"to-arraybuffer@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "to-arraybuffer@npm:1.0.1"
+  checksum: 23e72a6636e32fa992a4ad952564af136460b8b9ac603737fd8e7ecefe762284c4368f3f455b4252c95401cb2d3c8e356da1ef915a7c40152b62592ee38911c4
+  languageName: node
+  linkType: hard
+
 "to-regex-range@npm:^5.0.1":
   version: 5.0.1
   resolution: "to-regex-range@npm:5.0.1"
   dependencies:
     is-number: ^7.0.0
   checksum: 2b6001e314e4998a07137c197e333fac2f86d46d0593da90b678ae64e2daa07274b508f83cca09e6b3504cdf222497dcb5b7daceb6dc13a9a8872f58a27db907
+  languageName: node
+  linkType: hard
+
+"tough-cookie@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "tough-cookie@npm:4.0.0"
+  dependencies:
+    psl: ^1.1.33
+    punycode: ^2.1.1
+    universalify: ^0.1.2
+  checksum: 161dc4728e2801c1bd3b32d4d14abd2762120d9ed0b96d892720440aa04ed0ad6c425c38195265c74366fe01d8aaf1cc0a31636cb18b82c9b6ce630743210235
   languageName: node
   linkType: hard
 
@@ -4473,7 +4544,7 @@ typescript@^4.1.3:
   languageName: node
   linkType: hard
 
-"universalify@npm:^0.1.0":
+"universalify@npm:^0.1.0, universalify@npm:^0.1.2":
   version: 0.1.2
   resolution: "universalify@npm:0.1.2"
   checksum: 420fc6547357782c700d53e9a92506a8e95345b13e97684c8f9ab75237912ec2ebb6af8ac10d4f7406b7b6bd21c58f6c5c0811414fb0b4091b78b4743fa6806e

@@ -153,7 +153,7 @@ export default abstract class BaseCommand extends Command {
     ws: flags.boolean({
       description: 'use WebSockets for OADA API',
       allowNo: true,
-      default: true,
+      default: false,
     }),
   };
 
