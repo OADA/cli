@@ -11,8 +11,6 @@
     "noImplicitAny": true,
     "noImplicitThis": true,
     "sourceMap": true,
-    "declaration": true,
-    "declarationMap": true,
     "stripInternal": true
   },
   "include": ["src/**/*.ts"]
