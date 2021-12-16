@@ -216,6 +216,7 @@ export async function* expandPath(
       // TODO: Better way to test for non-minimatch key??
       if (
         mm.set.length <= 1 &&
+        // @ts-ignore
         !(mm.set[0]?.length > 1) &&
         ['string', 'undefined'].includes(typeof mm.set[0]?.[0])
       ) {
@@ -233,7 +234,11 @@ export async function* expandPath(
           throw new Error('No children');
         }
 
-        // Test chilren against pattern
+        if (Buffer.isBuffer(children)) {
+          throw new Error('Cannot traverse non-JSON');
+        }
+
+        // Test children against pattern
         for (const child in oadaify(children) as {}) {
           if (mm.match(child)) {
             // Yield any matching children

@@ -6,19 +6,19 @@ import getConn from '../../connections';
  * OADA version of ls
  */
 export default class List extends Command {
-  static description = 'perform an "OADA ls"';
+  static override description = 'perform an "OADA ls"';
 
-  static aliases = ['ls', 'l'];
+  static override aliases = ['ls', 'l'];
 
-  static flags = {
+  static override flags = {
     ...Command.flags,
   };
 
-  static args = [
+  static override args = [
     { name: 'paths...', required: true, description: 'path(s) to list' },
   ];
 
-  static strict = false;
+  static override strict = false;
 
   async run() {
     const { argv: paths } = this.parse(List);

@@ -1,17 +1,24 @@
 {
-  "extends": "@tsconfig/node14/tsconfig.json",
+  "extends": "@tsconfig/node16",
   "compilerOptions": {
-    "importHelpers": true,
     "esModuleInterop": true,
-    "rootDir": "src",
-    "outDir": "dist",
+    "removeComments": true,
+    "stripInternal": true,
+    "importHelpers": true,
+    "alwaysStrict": true,
     "strict": true,
+    "importsNotUsedAsValues": "error",
+    "noUncheckedIndexedAccess": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noImplicitAny": true,
     "noImplicitThis": true,
+    "noImplicitAny": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
     "sourceMap": true,
-    "stripInternal": true
+    "forceConsistentCasingInFileNames": true,
+    "rootDir": "src",
+    "outDir": "dist"
   },
-  "include": ["src/**/*.ts"]
+  "include": ["src"]
 }

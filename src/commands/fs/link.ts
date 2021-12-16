@@ -13,13 +13,13 @@ const examples = [
  * OADA "link"
  */
 export default class Link extends Command {
-  static description = 'perform an "OADA link"';
+  static override description = 'perform an "OADA link"';
 
-  static aliases = ['ln'];
+  static override aliases = ['ln'];
 
-  static examples = examples;
+  static override examples = examples;
 
-  static flags = {
+  static override flags = {
     ...Command.flags,
     versioned: flags.boolean({
       char: 'r',
@@ -33,12 +33,12 @@ export default class Link extends Command {
     }),
   };
 
-  static args = [
+  static override args = [
     { name: 'paths...', required: true, description: 'path(s) to link' },
     { name: 'path', required: true, description: 'OADA path in which to link' },
   ];
 
-  static strict = false;
+  static override strict = false;
 
   async run() {
     const {

@@ -24,13 +24,13 @@ const [put, post] = (<const>['put', 'post']).map((method) => {
       : [shell`$ oada post - /bookmarks/ <<< '{"a": 1}{"b": true}'`];
 
   return class Clazz extends Command {
-    static description = `Perform an OADA ${METH}`;
+    static override description = `Perform an OADA ${METH}`;
 
-    static aliases = [method.slice(0, 2), METH];
+    static override aliases = [method.slice(0, 2), METH];
 
-    static examples = examples;
+    static override examples = examples;
 
-    static flags = {
+    static override flags = {
       ...Command.flags,
       tree: flags.string({
         char: 'T',
@@ -38,12 +38,12 @@ const [put, post] = (<const>['put', 'post']).map((method) => {
       }),
     };
 
-    static args = [
+    static override args = [
       { name: 'paths...', required: true, description: `paths to ${METH}` },
       { name: 'path', required: true, description: 'destination OADA path' },
     ];
 
-    static strict = false;
+    static override strict = false;
 
     async run() {
       const {

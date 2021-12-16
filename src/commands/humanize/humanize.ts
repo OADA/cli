@@ -68,16 +68,16 @@ const transforms: readonly Transform[] = [
 ];
 
 export default class Humanize extends Command {
-  static aliases = ['humanize'];
+  static override aliases = ['humanize'];
 
-  static args = [
+  static override args = [
     { name: 'paths...', required: true, description: 'OADA path(s) to GET' },
   ];
-  static flags = {
+  static override flags = {
     ...Command.flags,
   };
 
-  static strict = false;
+  static override strict = false;
 
   async run() {
     const { argv: paths } = this.parse(Humanize);

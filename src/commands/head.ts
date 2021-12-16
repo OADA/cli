@@ -11,21 +11,21 @@ const examples = [
  * OADA HEAD
  */
 export default class Head extends Command {
-  static description = 'perform an OADA HEAD';
+  static override description = 'perform an OADA HEAD';
 
-  static aliases = ['h', 'HEAD'];
+  static override aliases = ['h', 'HEAD'];
 
-  static examples = examples;
+  static override examples = examples;
 
-  static flags = {
+  static override flags = {
     ...Command.flags,
   };
 
-  static args = [
+  static override args = [
     { name: 'paths...', required: true, description: 'OADA path(s) to HEAD' },
   ];
 
-  static strict = false;
+  static override strict = false;
 
   async run() {
     const { argv: paths } = this.parse(Head);

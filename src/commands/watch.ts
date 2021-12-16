@@ -7,6 +7,7 @@ import { json, shell } from '../highlight';
 
 import { output } from '../io';
 import getConn from '../connections';
+import type { WatchRequest } from '@oada/client';
 
 const examples = [
   `${shell`$ oada watch /bookmarks`}
@@ -79,13 +80,13 @@ ${json`[
  * OADA WATCH
  */
 export default class Watch extends Command {
-  static description = 'perform and OADA WATCH';
+  static override description = 'perform and OADA WATCH';
 
-  static aliases = ['w', 'WATCH'];
+  static override aliases = ['w', 'WATCH'];
 
-  static examples = examples;
+  static override examples = examples;
 
-  static flags = {
+  static override flags = {
     ...Command.flags,
     out: flags.string({ char: 'o', default: '-' }),
     rev: flags.integer({
@@ -93,17 +94,17 @@ export default class Watch extends Command {
       description: 'rev from which to start (negative means latest - n)',
     }),
     type: flags.enum({
-      options: ['sinlge', 'tree'],
+      options: ['single', 'tree'],
       char: 't',
       default: 'tree',
     }),
   };
 
-  static args = [
+  static override args = [
     { name: 'path', required: true, description: 'OADA path to WATCH' },
   ];
 
-  static strict = true;
+  static override strict = true;
 
   async run() {
     const {
@@ -125,13 +126,13 @@ export default class Watch extends Command {
           rev = +cur! + rev;
         }
         await conn.watch({
-          type: type as 'single' | 'tree',
+          type: type,
           rev: rev + '',
           path,
           watchCallback(change: unknown) {
             sink.write(change);
           },
-        });
+        } as WatchRequest);
 
         yield* sink;
       },

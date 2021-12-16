@@ -16,11 +16,12 @@ export const languages = <const>['json', 'shell'];
 /**
  * @todo better way to achieve this??
  */
-const [json, shell] = languages.map(
-  (language) =>
-    function (strings: readonly string[]): string {
-      return strings.map((s) => highlight(s, { language })).join();
-    }
-);
+function hi(language: string) {
+  return function (strings: readonly string[]): string {
+    return strings.map((s) => highlight(s, { language })).join();
+  };
+}
 
-export { json, shell };
+export const json = hi('json');
+
+export const shell = hi('shell');

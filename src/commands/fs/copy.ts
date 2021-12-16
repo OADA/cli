@@ -12,22 +12,22 @@ const examples = [
  * OADA "copy"
  */
 export default class Copy extends Command {
-  static description = 'perform an "OADA copy"';
+  static override description = 'perform an "OADA copy"';
 
-  static aliases = ['cp'];
+  static override aliases = ['cp'];
 
-  static examples = examples;
+  static override examples = examples;
 
-  static flags = {
+  static override flags = {
     ...Command.flags,
   };
 
-  static args = [
+  static override args = [
     { name: 'paths...', required: true, description: 'path(s) to copy' },
     { name: 'path', required: true, description: 'OADA path to which to copy' },
   ];
 
-  static strict = false;
+  static override strict = false;
 
   async run() {
     const { argv: paths } = this.parse(Copy);

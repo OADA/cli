@@ -3,7 +3,7 @@ import getConn from '../../connections';
 import { expandPath } from '../../io';
 import { shell } from '../../highlight';
 
-const examples = [shell`$ oada touch /bookmarks`];
+const examples = [shell!`$ oada touch /bookmarks`];
 
 /**
  * OADA version of touch
@@ -11,21 +11,21 @@ const examples = [shell`$ oada touch /bookmarks`];
  * @todo this maybe not work with future OADA versions?
  */
 export default class Touch extends Command {
-  static description = 'perform and "OADA touch"';
+  static override description = 'perform and "OADA touch"';
 
-  static aliases = ['touch'];
+  static override aliases = ['touch'];
 
-  static examples = examples;
+  static override examples = examples;
 
-  static flags = {
+  static override flags = {
     ...Command.flags,
   };
 
-  static args = [
+  static override args = [
     { name: 'paths...', required: true, description: `paths to touch` },
   ];
 
-  static strict = false;
+  static override strict = false;
 
   async run() {
     const { argv: paths } = this.parse(Touch);

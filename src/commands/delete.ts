@@ -14,22 +14,22 @@ const examples = [
  * OADA DELETE
  */
 export default class Delete extends Command {
-  static description = 'perform an OADA DELETE';
+  static override description = 'perform an OADA DELETE';
 
-  static aliases = ['d', 'rm', 'DELETE'];
+  static override aliases = ['d', 'rm', 'DELETE'];
 
-  static examples = examples;
+  static override examples = examples;
 
-  static flags = {
+  static override flags = {
     ...Command.flags,
     recursive: flags.boolean({ char: 'R', default: false }),
   };
 
-  static args = [
+  static override args = [
     { name: 'paths...', required: true, description: 'OADA path(s) to GET' },
   ];
 
-  static strict = false;
+  static override strict = false;
 
   async run() {
     const { argv: paths } = this.parse(Delete);

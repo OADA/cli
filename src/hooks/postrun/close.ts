@@ -1,4 +1,4 @@
-import { Hook } from '@oclif/config';
+import type { Hook } from '@oclif/config';
 
 /**
  * Close connections after command so cli doesn't hang

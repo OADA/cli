@@ -70,16 +70,16 @@ export function conn(config: IConfig): OADAClient {
     }
 
     const { domains } = connections;
-    if (domains[name]) {
+    if (name in domains) {
       // Reuse connection for this domain
-      return domains[name];
+      return domains[name]!;
     }
 
     const {
       // TODO: config ws per file??
       ws,
       domains: {
-        [name]: { domain, token, connection },
+        [name]: { domain = '', token = '', connection = undefined } = {},
       },
     } = config;
 

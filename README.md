@@ -8,18 +8,16 @@ Pipeable OADA client CLI
 [![License](https://img.shields.io/npm/l/clioada.svg)](https://github.com/awlayton/clioada/blob/master/package.json)
 
 <!-- toc -->
-* [CLI OADA](#cli-oada)
-* [Overview](#overview)
-* [Usage](#usage)
-* [Commands](#commands)
+
+- [CLI OADA](#cli-oada)
+- [Overview](#overview)
+- [Usage](#usage)
+- [Commands](#commands)
 <!-- tocstop -->
 
-# Overview
+## Overview
 
-This largely grew from my playground for experimenting with newish
-(or new to me at least) Node and TypeScript stuff.
-As such it requires Node 15, and has no actual tests yet.
-The code could use a major refactor, but it useful and working for me at least.
+The code could use a major refactor, but it is useful and working for me at least.
 I mostly put it here for my own safe-keeping.
 It is not particularly fast or efficient.
 
@@ -27,23 +25,23 @@ It has help output that is rather terse for now.
 
 It supports various JSON-y input formats:
 
-* JSON
-* [JSONL][] (aka. LDJSON or NDJSON)
-* [Concatenated JSON][]
-* [HJSON][]
-* [JSON5][]
-* [JSON6][]
-* JavaScript/TypeScript (converts what is exported to JSON)
+- JSON
+- [JSONL][] (aka. LDJSON or NDJSON)
+- [Concatenated JSON][]
+- [HJSON][]
+- [JSON5][]
+- [JSON6][]
+- JavaScript/TypeScript (converts what is exported to JSON)
 
 It can get inputs from local files, paths in OADA APIs, or generic URLs to JSON.
-Also it can take [Concatenated JSON][] piped through standard input.
+Also, it can take [Concatenated JSON][] piped through standard input.
 
 It will currently die a horrible death if you try to use it with
 any other non-JSON data.
 
 It outputs [JSONL][] (or pretty-printed Concatenated JSON in TTY mode).
 This makes piping with traditional line-based CLI tools easy.
-Also it is _very_ useful with tools like [`jq`][].
+Also, it is _very_ useful with tools like [`jq`][].
 
 There is support for configuring it for multiple OADA APIs
 and moving files between them.
@@ -52,9 +50,10 @@ It supports "shell expansion" of a sort via [`minimatch`][]
 (i.e., you can use paths like `/bookmarks/trellis/*/test{s,y}/`
 and they will be expanded).
 
-# Usage
+## Usage
 
 <!-- usage -->
+
 ```sh-session
 $ npm install -g clioada
 $ oada COMMAND
@@ -66,37 +65,39 @@ USAGE
   $ oada COMMAND
 ...
 ```
+
 <!-- usagestop -->
 
-# Commands
+## Commands
 
 <!-- commands -->
-* [`oada autocomplete [SHELL]`](#oada-autocomplete-shell)
-* [`oada config:show`](#oada-configshow)
-* [`oada delete PATHS...`](#oada-delete-paths)
-* [`oada fs:copy PATHS... PATH`](#oada-fscopy-paths-path)
-* [`oada fs:link PATHS... PATH`](#oada-fslink-paths-path)
-* [`oada fs:list PATHS...`](#oada-fslist-paths)
-* [`oada fs:move PATHS... PATH`](#oada-fsmove-paths-path)
-* [`oada fs:remove PATHS...`](#oada-fsremove-paths)
-* [`oada fs:touch PATHS...`](#oada-fstouch-paths)
-* [`oada get PATHS...`](#oada-get-paths)
-* [`oada head PATHS...`](#oada-head-paths)
-* [`oada help [COMMAND]`](#oada-help-command)
-* [`oada plugins`](#oada-plugins)
-* [`oada plugins:install PLUGIN...`](#oada-pluginsinstall-plugin)
-* [`oada plugins:link PLUGIN`](#oada-pluginslink-plugin)
-* [`oada plugins:uninstall PLUGIN...`](#oada-pluginsuninstall-plugin)
-* [`oada plugins:update`](#oada-pluginsupdate)
-* [`oada post PATHS... PATH`](#oada-post-paths-path)
-* [`oada put PATHS... PATH`](#oada-put-paths-path)
-* [`oada watch PATH`](#oada-watch-path)
 
-## `oada autocomplete [SHELL]`
+- [`oada autocomplete [SHELL]`](#oada-autocomplete-shell)
+- [`oada config:show`](#oada-configshow)
+- [`oada delete PATHS...`](#oada-delete-paths)
+- [`oada fs:copy PATHS... PATH`](#oada-fscopy-paths-path)
+- [`oada fs:link PATHS... PATH`](#oada-fslink-paths-path)
+- [`oada fs:list PATHS...`](#oada-fslist-paths)
+- [`oada fs:move PATHS... PATH`](#oada-fsmove-paths-path)
+- [`oada fs:remove PATHS...`](#oada-fsremove-paths)
+- [`oada fs:touch PATHS...`](#oada-fstouch-paths)
+- [`oada get PATHS...`](#oada-get-paths)
+- [`oada head PATHS...`](#oada-head-paths)
+- [`oada help [COMMAND]`](#oada-help-command)
+- [`oada plugins`](#oada-plugins)
+- [`oada plugins:install PLUGIN...`](#oada-pluginsinstall-plugin)
+- [`oada plugins:link PLUGIN`](#oada-pluginslink-plugin)
+- [`oada plugins:uninstall PLUGIN...`](#oada-pluginsuninstall-plugin)
+- [`oada plugins:update`](#oada-pluginsupdate)
+- [`oada post PATHS... PATH`](#oada-post-paths-path)
+- [`oada put PATHS... PATH`](#oada-put-paths-path)
+- [`oada watch PATH`](#oada-watch-path)
+
+### `oada autocomplete [SHELL]`
 
 display autocomplete installation instructions
 
-```
+```shell
 USAGE
   $ oada autocomplete [SHELL]
 
@@ -115,7 +116,7 @@ EXAMPLES
 
 _See code: [@oclif/plugin-autocomplete](https://github.com/oclif/plugin-autocomplete/blob/v0.3.0/src/commands/autocomplete/index.ts)_
 
-## `oada config:show`
+### `oada config:show`
 
 Show the current config settings
 
@@ -135,11 +136,11 @@ ALIASES
 
 _See code: [src/commands/config/show.ts](https://github.com/awlayton/clioada/blob/v1.1.0/src/commands/config/show.ts)_
 
-## `oada delete PATHS...`
+### `oada delete PATHS...`
 
 perform an OADA DELETE
 
-```
+```shell
 USAGE
   $ oada delete PATHS...
 
@@ -165,11 +166,11 @@ EXAMPLES
 
 _See code: [src/commands/delete.ts](https://github.com/awlayton/clioada/blob/v1.1.0/src/commands/delete.ts)_
 
-## `oada fs:copy PATHS... PATH`
+### `oada fs:copy PATHS... PATH`
 
 perform an "OADA copy"
 
-```
+```shell
 USAGE
   $ oada fs:copy PATHS... PATH
 
@@ -193,11 +194,11 @@ EXAMPLES
 
 _See code: [src/commands/fs/copy.ts](https://github.com/awlayton/clioada/blob/v1.1.0/src/commands/fs/copy.ts)_
 
-## `oada fs:link PATHS... PATH`
+### `oada fs:link PATHS... PATH`
 
 perform an "OADA link"
 
-```
+```shell
 USAGE
   $ oada fs:link PATHS... PATH
 
@@ -223,11 +224,11 @@ EXAMPLES
 
 _See code: [src/commands/fs/link.ts](https://github.com/awlayton/clioada/blob/v1.1.0/src/commands/fs/link.ts)_
 
-## `oada fs:list PATHS...`
+### `oada fs:list PATHS...`
 
 perform an "OADA ls"
 
-```
+```shell
 USAGE
   $ oada fs:list PATHS...
 
@@ -247,11 +248,11 @@ ALIASES
 
 _See code: [src/commands/fs/list.ts](https://github.com/awlayton/clioada/blob/v1.1.0/src/commands/fs/list.ts)_
 
-## `oada fs:move PATHS... PATH`
+### `oada fs:move PATHS... PATH`
 
 perform an "OADA move"
 
-```
+```shell
 USAGE
   $ oada fs:move PATHS... PATH
 
@@ -275,11 +276,11 @@ EXAMPLES
 
 _See code: [src/commands/fs/move.ts](https://github.com/awlayton/clioada/blob/v1.1.0/src/commands/fs/move.ts)_
 
-## `oada fs:remove PATHS...`
+### `oada fs:remove PATHS...`
 
 perform an OADA DELETE
 
-```
+```shell
 USAGE
   $ oada fs:remove PATHS...
 
@@ -305,11 +306,11 @@ EXAMPLES
 
 _See code: [src/commands/fs/remove.ts](https://github.com/awlayton/clioada/blob/v1.1.0/src/commands/fs/remove.ts)_
 
-## `oada fs:touch PATHS...`
+### `oada fs:touch PATHS...`
 
 perform and "OADA touch"
 
-```
+```shell
 USAGE
   $ oada fs:touch PATHS...
 
@@ -331,11 +332,11 @@ EXAMPLE
 
 _See code: [src/commands/fs/touch.ts](https://github.com/awlayton/clioada/blob/v1.1.0/src/commands/fs/touch.ts)_
 
-## `oada get PATHS...`
+### `oada get PATHS...`
 
 perform an OADA GET (read)
 
-```
+```shell
 USAGE
   $ oada get PATHS...
 
@@ -376,11 +377,11 @@ EXAMPLES
 
 _See code: [src/commands/get.ts](https://github.com/awlayton/clioada/blob/v1.1.0/src/commands/get.ts)_
 
-## `oada head PATHS...`
+### `oada head PATHS...`
 
 perform an OADA HEAD
 
-```
+```shell
 USAGE
   $ oada head PATHS...
 
@@ -406,11 +407,11 @@ EXAMPLES
 
 _See code: [src/commands/head.ts](https://github.com/awlayton/clioada/blob/v1.1.0/src/commands/head.ts)_
 
-## `oada help [COMMAND]`
+### `oada help [COMMAND]`
 
-display help for oada
+display help for `oada`
 
-```
+```shell
 USAGE
   $ oada help [COMMAND]
 
@@ -423,11 +424,11 @@ OPTIONS
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.1/src/commands/help.ts)_
 
-## `oada plugins`
+### `oada plugins`
 
 list installed plugins
 
-```
+```shell
 USAGE
   $ oada plugins
 
@@ -440,11 +441,11 @@ EXAMPLE
 
 _See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v1.9.5/src/commands/plugins/index.ts)_
 
-## `oada plugins:install PLUGIN...`
+### `oada plugins:install PLUGIN...`
 
 installs a plugin into the CLI
 
-```
+```shell
 USAGE
   $ oada plugins:install PLUGIN...
 
@@ -476,11 +477,11 @@ EXAMPLES
 
 _See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v1.9.5/src/commands/plugins/install.ts)_
 
-## `oada plugins:link PLUGIN`
+### `oada plugins:link PLUGIN`
 
 links a plugin into the CLI for development
 
-```
+```shell
 USAGE
   $ oada plugins:link PLUGIN
 
@@ -503,11 +504,11 @@ EXAMPLE
 
 _See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v1.9.5/src/commands/plugins/link.ts)_
 
-## `oada plugins:uninstall PLUGIN...`
+### `oada plugins:uninstall PLUGIN...`
 
 removes a plugin from the CLI
 
-```
+```shell
 USAGE
   $ oada plugins:uninstall PLUGIN...
 
@@ -525,11 +526,11 @@ ALIASES
 
 _See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v1.9.5/src/commands/plugins/uninstall.ts)_
 
-## `oada plugins:update`
+### `oada plugins:update`
 
 update installed plugins
 
-```
+```shell
 USAGE
   $ oada plugins:update
 
@@ -540,11 +541,11 @@ OPTIONS
 
 _See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v1.9.5/src/commands/plugins/update.ts)_
 
-## `oada post PATHS... PATH`
+### `oada post PATHS... PATH`
 
 Perform an OADA POST
 
-```
+```shell
 USAGE
   $ oada post PATHS... PATH
 
@@ -569,11 +570,11 @@ EXAMPLE
 
 _See code: [src/commands/post.ts](https://github.com/awlayton/clioada/blob/v1.1.0/src/commands/post.ts)_
 
-## `oada put PATHS... PATH`
+### `oada put PATHS... PATH`
 
 Perform an OADA PUT
 
-```
+```shell
 USAGE
   $ oada put PATHS... PATH
 
@@ -598,11 +599,11 @@ EXAMPLE
 
 _See code: [src/commands/put.ts](https://github.com/awlayton/clioada/blob/v1.1.0/src/commands/put.ts)_
 
-## `oada watch PATH`
+### `oada watch PATH`
 
 perform and OADA WATCH
 
-```
+```shell
 USAGE
   $ oada watch PATH
 
@@ -690,12 +691,13 @@ EXAMPLE
 ```
 
 _See code: [src/commands/watch.ts](https://github.com/awlayton/clioada/blob/v1.1.0/src/commands/watch.ts)_
+
 <!-- commandsstop -->
 
-[JSONL]: https://en.wikipedia.org/wiki/JSON_streaming#Line-delimited_JSON
-[Concatenated JSON]: https://en.wikipedia.org/wiki/JSON_streaming#Concatenated_JSON
-[HJSON]: https://hjson.github.io
-[JSON5]: https://json5.org
-[JSON6]: https://github.com/d3x0r/JSON6
+[jsonl]: https://en.wikipedia.org/wiki/JSON_streaming#Line-delimited_JSON
+[concatenated json]: https://en.wikipedia.org/wiki/JSON_streaming#Concatenated_JSON
+[hjson]: https://hjson.github.io
+[json5]: https://json5.org
+[json6]: https://github.com/d3x0r/JSON6
 [`jq`]: https://github.com/stedolan/jq
 [`minimatch`]: https://github.com/isaacs/minimatch

@@ -6,11 +6,11 @@ import { output } from '../../io';
  * Class for showing the config and from where it is loaded?
  */
 export default class ShowConfig extends Command {
-  static description = 'Show the current config settings';
+  static override description = 'Show the current config settings';
 
-  static aliases = ['config'];
+  static override aliases = ['config'];
 
-  static flags = {
+  static override flags = {
     ...Command.flags,
   };
 

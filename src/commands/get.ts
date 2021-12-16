@@ -47,13 +47,13 @@ ${json`700`}`,
  * OADA GET
  */
 export default class Get extends Command {
-  static description = 'perform an OADA GET (read)';
+  static override description = 'perform an OADA GET (read)';
 
-  static aliases = ['g', 'GET'];
+  static override aliases = ['g', 'GET'];
 
-  static examples = examples;
+  static override examples = examples;
 
-  static flags = {
+  static override flags = {
     ...Command.flags,
     tree: flags.string({
       char: 'T',
@@ -64,11 +64,11 @@ export default class Get extends Command {
     out: flags.string({ char: 'o', default: '-' }),
   };
 
-  static args = [
+  static override args = [
     { name: 'paths...', required: true, description: 'OADA path(s) to GET' },
   ];
 
-  static strict = false;
+  static override strict = false;
 
   async run() {
     const {
@@ -87,7 +87,13 @@ export default class Get extends Command {
           const pp = expandPath(conn, p);
           for await (const path of pp) {
             const { data } = await conn.get({ path, tree });
-            const oadaified = oadaify(data);
+
+            if (Buffer.isBuffer(data)) {
+              yield data;
+              return;
+            }
+
+            const oadaified = oadaify(data as object);
 
             if (meta) {
               await getMeta(oadaified);
@@ -95,7 +101,11 @@ export default class Get extends Command {
               async function getMeta(
                 oadaified: OADAifiedJsonValue
               ): Promise<OADAifiedJsonValue> {
-                if (!oadaified || typeof oadaified !== 'object') {
+                if (
+                  !oadaified ||
+                  typeof oadaified !== 'object' ||
+                  Buffer.isBuffer(oadaified)
+                ) {
                   return oadaified;
                 }
 
@@ -103,8 +113,8 @@ export default class Get extends Command {
                   return Promise.all(oadaified.map(getMeta));
                 }
 
-                for (const key in oadaified) {
-                  oadaified[key] = await getMeta(oadaified[key]);
+                for (const [key, value] of Object.entries(oadaified)) {
+                  oadaified[key] = await getMeta(value);
                 }
 
                 // Check for "empty" meta ?
@@ -117,7 +127,7 @@ export default class Get extends Command {
                     path: meta[_id] as string,
                   });
                   // Fill it in
-                  oadaified[_meta] = oadaify(data);
+                  oadaified[_meta] = oadaify(data as object);
                 }
 
                 return oadaified;

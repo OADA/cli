@@ -11,22 +11,22 @@ const examples = [
  * OADA "move"
  */
 export default class Move extends Command {
-  static description = 'perform an "OADA move"';
+  static override description = 'perform an "OADA move"';
 
-  static aliases = ['mv'];
+  static override aliases = ['mv'];
 
-  static flags = {
+  static override flags = {
     ...Command.flags,
   };
 
-  static examples = examples;
+  static override examples = examples;
 
-  static args = [
+  static override args = [
     { name: 'paths...', required: true, description: 'path(s) to move' },
     { name: 'path', required: true, description: 'OADA path to which to move' },
   ];
 
-  static strict = false;
+  static override strict = false;
 
   async run() {
     const { argv: paths } = this.parse(Move);
@@ -39,13 +39,17 @@ export default class Move extends Command {
     // TODO: Figure out to do this with io stuff (move between OADAs)
     for (const file of paths) {
       try {
-        // GET orinial
+        // GET original
         const { data } = await conn.get({ path: file });
+
+        if (!data) {
+          throw new Error(`No data found at ${file}`);
+        }
 
         // PUT/POST to destination
         await conn[method]({ path, data });
 
-        // DELETE orinial
+        // DELETE original
         await conn.delete({ path: file });
       } catch (err) {
         console.error(err);

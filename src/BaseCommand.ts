@@ -66,14 +66,14 @@ interface DomainConfig {
  */
 const defaults = <const>{
   /**
-   * dev token from oada-srvc-docker
+   * dev token from oada/server
    */
   token: 'god',
   /**
    * assume a local OADA
    */
   domain: 'localhost',
-  domains: { localhost: { token: 'god' } },
+  domains: { localhost: { token: 'god' } as DomainConfig },
 };
 
 /**
@@ -128,7 +128,7 @@ export default abstract class BaseCommand extends Command {
   /**
    * Global CLI flags
    */
-  static flags = {
+  static override flags = {
     /**
      * Default OADA API domain
      */
@@ -157,7 +157,7 @@ export default abstract class BaseCommand extends Command {
     }),
   };
 
-  static strict = false;
+  static override strict = false;
 
   /**
    * Somewhere to store config?
@@ -170,7 +170,7 @@ export default abstract class BaseCommand extends Command {
    */
   configFiles!: readonly string[];
 
-  async init() {
+  override async init() {
     this.configFiles = [join(this.config.configDir, 'config')].concat(
       (await findUp(configTypes.map((ext) => '.clioada' + ext))) || []
     );
