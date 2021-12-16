@@ -1,5 +1,13 @@
+/**
+ * @license
+ * Copyright (c) 2021 Alex Layton
+ *
+ * This software is released under the MIT License.
+ * https://opensource.org/licenses/MIT
+ */
+
 declare module 'concatjson' {
-  import { Transform } from 'stream';
+  import { Readable, Stream, Transform, Writable } from 'node:stream';
 
   export function parse(): Transform;
   export function serialize(): Transform;
@@ -9,29 +17,27 @@ declare module 'concatjson' {
  * Promise based stream API in Node 15
  */
 declare module 'stream/promises' {
-  import { Stream, Readable, Writable } from 'stream';
-
   export async function finished(stream: Readable): Promise<void>;
 
   export async function pipeline<T>(
     streams:
       | Stream[]
-      | Iterable<T>[]
-      | AsyncIterable<T>[]
-      | (() => Iterable<T> | AsyncIterable<T>)[]
-      | AsyncGenerator<T>[]
+      | Array<Iterable<T>>
+      | Array<AsyncIterable<T>>
+      | Array<() => Iterable<T> | AsyncIterable<T>>
+      | Array<AsyncGenerator<T>>
   );
   export async function pipeline<T>(
-    ...args: [
+    ...parameters: [
       source:
         | Stream
         | Iterable<T>
         | AsyncIterable<T>
         | (() => Iterable<T> | AsyncIterable<T> | AsyncGenerator<T>),
-      ...transforms: (
+      ...transforms: Array<
         | Stream
         | ((source: AsyncIterable<T>) => AsyncIterable<T> | AsyncGenerator<T>)
-      )[],
+      >,
       destination:
         | Stream
         | ((

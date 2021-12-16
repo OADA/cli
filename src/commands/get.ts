@@ -1,3 +1,10 @@
+/**
+ * @license
+ * Copyright (c) 2021 Alex Layton
+ *
+ * This software is released under the MIT License.
+ * https://opensource.org/licenses/MIT
+ */
 import { flags } from '@oclif/command';
 
 import Command from '../BaseCommand';
@@ -7,12 +14,12 @@ import {
   OADAifiedJsonArray,
   OADAifiedJsonObject,
   OADAifiedJsonValue,
-  oadaify,
-  _meta,
   _id,
+  _meta,
+  oadaify,
 } from '@oada/oadaify';
 
-import { output, expandPath, loadFile } from '../io';
+import { expandPath, loadFile, output } from '../io';
 import getConn from '../connections';
 
 /**
@@ -93,7 +100,7 @@ export default class Get extends Command {
               return;
             }
 
-            const oadaified = oadaify(data as object);
+            const oadaified = oadaify(data as Record<string, unknown>);
 
             if (meta) {
               await getMeta(oadaified);
@@ -127,7 +134,7 @@ export default class Get extends Command {
                     path: meta[_id] as string,
                   });
                   // Fill it in
-                  oadaified[_meta] = oadaify(data as object);
+                  oadaified[_meta] = oadaify(data as Record<string, unknown>);
                 }
 
                 return oadaified;

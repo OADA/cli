@@ -1,3 +1,10 @@
+/**
+ * @license
+ * Copyright (c) 2021 Alex Layton
+ *
+ * This software is released under the MIT License.
+ * https://opensource.org/licenses/MIT
+ */
 import { flags } from '@oclif/command';
 
 import Command from '../../BaseCommand';
@@ -60,7 +67,7 @@ export default class Link extends Command {
         })) as any;
 
         if (force && method === 'put') {
-          // delete anything in the way
+          // Delete anything in the way
           await conn.delete({ path: file });
         }
 
@@ -69,8 +76,8 @@ export default class Link extends Command {
           path,
           data: versioned ? { _id } : { _id, _rev: 0 },
         });
-      } catch (err) {
-        console.error(err);
+      } catch (error) {
+        console.error(error);
       }
     }
   }

@@ -1,33 +1,44 @@
+/**
+ * @license
+ * Copyright (c) 2021 Alex Layton
+ *
+ * This software is released under the MIT License.
+ * https://opensource.org/licenses/MIT
+ */
 import KSUID from 'ksuid';
 
 import Command from '../../BaseCommand';
 import { input } from '../../io';
 import getConn from '../../connections';
-//import { json, shell } from '../../highlight';
+// Import { json, shell } from '../../highlight';
 
-function humanize(val: unknown): any {
-  if (!val) {
-    return val;
+function humanize(value: unknown): any {
+  if (!value) {
+    return value;
   }
-  if (typeof val === 'object') {
+
+  if (typeof value === 'object') {
     const out = new Map<any, any>();
-    for (const [k, vval] of Object.entries(val!)) {
+    for (const [k, vval] of Object.entries(value)) {
       const v = humanize(vval);
       let t = false;
       for (const transform of transforms) {
-        if (transform.match({ k, v })) {
+        if ({ k, v }.test(transform)) {
           const { k: kk, v: vv } = transform.apply({ k, v });
           out.set(kk, vv);
           t = true;
         }
       }
+
       if (!t) {
         out.set(k, v);
       }
     }
+
     return out;
   }
-  return val;
+
+  return value;
 }
 
 interface Item {
@@ -35,8 +46,8 @@ interface Item {
   v: unknown;
 }
 type Transform = {
-  match: (val: Item) => boolean;
-  apply: (val: Item) => Item;
+  match: (value: Item) => boolean;
+  apply: (value: Item) => Item;
 };
 const transforms: readonly Transform[] = [
   // KSUIDs transform
@@ -73,6 +84,7 @@ export default class Humanize extends Command {
   static override args = [
     { name: 'paths...', required: true, description: 'OADA path(s) to GET' },
   ];
+
   static override flags = {
     ...Command.flags,
   };

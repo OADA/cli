@@ -1,5 +1,12 @@
+/**
+ * @license
+ * Copyright (c) 2021 Alex Layton
+ *
+ * This software is released under the MIT License.
+ * https://opensource.org/licenses/MIT
+ */
 import Command from '../../BaseCommand';
-import { output, expandPath } from '../../io';
+import { expandPath, output } from '../../io';
 import getConn from '../../connections';
 
 /**
@@ -28,7 +35,7 @@ export default class List extends Command {
       '-',
       async function* () {
         for (const p of paths) {
-          yield* expandPath(conn, p + '/*');
+          yield* expandPath(conn, `${p}/*`);
         }
       },
       this.iconfig

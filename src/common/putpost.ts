@@ -1,4 +1,12 @@
 /**
+ * @license
+ * Copyright (c) 2021 Alex Layton
+ *
+ * This software is released under the MIT License.
+ * https://opensource.org/licenses/MIT
+ */
+
+/**
  * Shared code for PUT and POST commands
  *
  * @packageDocumentation
@@ -6,8 +14,8 @@
 
 import { flags } from '@oclif/command';
 
-import Command from '../BaseCommand';
 import { input, loadFile } from '../io';
+import Command from '../BaseCommand';
 import getConn from '../connections';
 import { shell } from '../highlight';
 

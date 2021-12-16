@@ -2,3 +2,6 @@ LICENSE
 dist
 yarn.lock
 yarn-error.log
+.history
+.yarn
+oclif.manifest.json

@@ -1,15 +1,23 @@
-import { createReadStream, createWriteStream } from 'fs';
-import { pipeline } from 'stream/promises';
-import { isAbsolute, extname, join } from 'path';
-import { URL } from 'url';
-import type { Readable, Writable } from 'stream';
+/**
+ * @license
+ * Copyright (c) 2021 Alex Layton
+ *
+ * This software is released under the MIT License.
+ * https://opensource.org/licenses/MIT
+ */
+
+import type { Readable, Writable } from 'node:stream';
+import { createReadStream, createWriteStream } from 'node:fs';
+import { extname, isAbsolute, join } from 'node:path';
+import { URL } from 'node:url';
+import { pipeline } from 'node:stream/promises';
 
 import { Minimatch } from 'minimatch';
-// concatenated JSON in, LJSON out
-import { parse } from 'concatjson';
-import { stringify } from 'ndjson';
+// Concatenated JSON in, LJSON out
 import highlight from 'cli-highlight';
+import { parse } from 'concatjson';
 import { request } from 'gaxios';
+import { stringify } from 'ndjson';
 
 import type { OADAClient } from '@oada/client';
 import { oadaify } from '@oada/oadaify';
@@ -20,10 +28,11 @@ import 'ts-node/register/transpile-only';
 import 'hjson/lib/require-config';
 // Support for input from JSON6 files
 import 'json-6/lib/require';
-// @ts-ignore Make json-6 load JSON5 (because it can)
-require.extensions['.json5'] = require.extensions['.json6'];
 
 import type { IConfig } from './BaseCommand';
+// Make json-6 load JSON5 (because it can)
+// eslint-disable-next-line node/no-deprecated-api
+require.extensions['.json5'] = require.extensions['.json6'];
 
 /**
  * Supported input/output types
@@ -71,21 +80,25 @@ function inputType(input: string, { domain, domains }: IConfig) {
     if (protocol === 'file:') {
       return IOType.File;
     }
+
     if ([domain, ...Object.keys(domains)].includes(host)) {
       // Use OADA connection for known OADA domains
       return IOType.Oada;
     }
+
     return IOType.Url;
   } catch {
     // Assume it's a file path?
     return IOType.File;
   }
 }
+
 async function outputType(output: string, { tty }: IConfig) {
   if (output === '-') {
     if (tty) {
       return IOType.Tty;
     }
+
     return IOType.Stdout;
   }
 
@@ -121,7 +134,7 @@ export const importable = <const>['.json6', '.json5', '.hjson', '.ts', '.js'];
  */
 export async function loadFile(input: string) {
   const path = join(process.cwd(), input);
-  const { default: data } = await import(path);
+  const { default: data } = (await import(path)) as { default: unknown };
   return data;
 }
 
@@ -130,23 +143,25 @@ function inputChain(
   input: string,
   config: IConfig
 ): [
-  Readable | (() => AsyncGenerator<any>),
-  ...(Readable | ((source: AsyncIterable<any>) => AsyncGenerator<any>))[]
+  Readable | (() => AsyncGenerator),
+  ...Array<Readable | ((source: AsyncIterable<unknown>) => AsyncGenerator)>
 ] {
   switch (inputType(input, config)) {
     case IOType.Stdin:
       return [process.stdin, parse()];
-    case IOType.File:
-      const ext = extname(input);
-      if ((importable as readonly string[]).includes(ext)) {
+    case IOType.File: {
+      const extension = extname(input);
+      if ((importable as readonly string[]).includes(extension)) {
         return [
           async function* () {
             yield loadFile(input);
           },
         ];
-      } else {
-        return [createReadStream(input), parse()];
       }
+
+      return [createReadStream(input), parse()];
+    }
+
     case IOType.Oada:
       return [
         // TODO: Use code from git subcommand?
@@ -169,11 +184,13 @@ function inputChain(
           yield data;
         },
       ];
+    default:
+      throw new Error(`Unsupported input type: ${input}`);
   }
 }
 
 /**
- * Funtion for expanding * etc. in paths akin to shell expansion
+ * Function for expanding * etc. in paths akin to shell expansion
  *
  * Only works with OADA paths
  *
@@ -205,7 +222,7 @@ export async function* expandPath(
     r: string,
     parts: readonly string[]
   ): AsyncGenerator<string> {
-    let p = [...parts];
+    const p = Array.from(parts);
     let root = r;
     for (const part of parts) {
       p.shift();
@@ -216,8 +233,8 @@ export async function* expandPath(
       // TODO: Better way to test for non-minimatch key??
       if (
         mm.set.length <= 1 &&
-        // @ts-ignore
-        !(mm.set[0]?.length > 1) &&
+        // @ts-expect-error
+        mm.set[0]?.length <= 1 &&
         ['string', 'undefined'].includes(typeof mm.set[0]?.[0])
       ) {
         // Just move on to next part
@@ -235,12 +252,12 @@ export async function* expandPath(
         }
 
         if (Buffer.isBuffer(children)) {
-          throw new Error('Cannot traverse non-JSON');
+          throw new TypeError('Cannot traverse non-JSON');
         }
 
         // Test children against pattern
-        for (const child in oadaify(children) as {}) {
-          if (mm.match(child)) {
+        for (const child in oadaify(children) as Record<string, unknown>) {
+          if (child.test(mm)) {
             // Yield any matching children
             yield* expand(join(root, child), p);
           }
@@ -273,25 +290,26 @@ export async function input<T>(
     return pipeline(
       source,
       // TODO: Why is TS mad here??
-      // @ts-ignore
+      // @ts-expect-error
       ...chain,
       handler
     );
   }
 }
+
 // TODO: Clean up this mess...
 async function outputChain(
   output: string,
   config: IConfig
 ): Promise<
-  [...(Writable | ((source: AsyncIterable<any>) => AsyncGenerator<any>))[]]
+  [...Array<Writable | ((source: AsyncIterable<any>) => AsyncGenerator<any>)>]
 > {
   switch (await outputType(output, config)) {
     case IOType.Tty:
       return [
         async function* (source) {
           for await (const data of source) {
-            yield highlight(JSON.stringify(data, null, 2) + '\n', {
+            yield highlight(`${JSON.stringify(data, undefined, 2)}\n`, {
               language: 'json',
             });
           }
@@ -310,6 +328,8 @@ async function outputChain(
           }
         },
       ];
+    default:
+      throw new Error(`Unsupported output type: ${output}`);
   }
 }
 
@@ -327,6 +347,6 @@ export async function output(
   const chain = await outputChain(file, config);
 
   // TODO: Why is TS mad here??
-  // @ts-ignore
+  // @ts-expect-error
   return pipeline(handler, ...chain);
 }

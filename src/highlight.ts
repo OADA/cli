@@ -1,12 +1,18 @@
 /**
+ * @license
+ * Copyright (c) 2021 Alex Layton
+ *
+ * This software is released under the MIT License.
+ * https://opensource.org/licenses/MIT
+ */
+
+/**
  * Functions for highlighting stuff for TTY output
  *
  * @packageDocumentation
  */
 
 import highlight from 'cli-highlight';
-
-export default highlight;
 
 /**
  * Languages we support highlighting
@@ -18,10 +24,12 @@ export const languages = <const>['json', 'shell'];
  */
 function hi(language: string) {
   return function (strings: readonly string[]): string {
-    return strings.map((s) => highlight(s, { language })).join();
+    return strings.map((s) => highlight(s, { language })).join(',');
   };
 }
 
 export const json = hi('json');
 
 export const shell = hi('shell');
+
+export { default } from 'cli-highlight';

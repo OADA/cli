@@ -1,16 +1,24 @@
 /**
+ * @license
+ * Copyright (c) 2021 Alex Layton
+ *
+ * This software is released under the MIT License.
+ * https://opensource.org/licenses/MIT
+ */
+
+/**
  * Base command class to handle global flags and config stuff
  *
  * @packageDocumentation
  */
 
-import { join } from 'path';
+import { join } from 'node:path';
 
 import { Command, flags } from '@oclif/command';
 import type { Input } from '@oclif/parser';
 import type { SetRequired } from 'type-fest';
-import objectAssignDeep from 'object-assign-deep';
 import findUp from 'find-up';
+import objectAssignDeep from 'object-assign-deep';
 // Load .env files?
 import { config } from 'dotenv';
 
@@ -30,9 +38,7 @@ type BaseFlags = typeof BaseCommand extends Input<infer F> ? F : never;
  */
 export interface Config<D extends DomainConfig = DomainConfig>
   extends Partial<BaseFlags> {
-  domains?: {
-    [name: string]: D;
-  };
+  domains?: Record<string, D>;
 }
 
 /**
@@ -66,11 +72,11 @@ interface DomainConfig {
  */
 const defaults = <const>{
   /**
-   * dev token from oada/server
+   * Dev token from oada/server
    */
   token: 'god',
   /**
-   * assume a local OADA
+   * Assume a local OADA
    */
   domain: 'localhost',
   domains: { localhost: { token: 'god' } as DomainConfig },
@@ -172,7 +178,8 @@ export default abstract class BaseCommand extends Command {
 
   override async init() {
     this.configFiles = [join(this.config.configDir, 'config')].concat(
-      (await findUp(configTypes.map((ext) => '.clioada' + ext))) || []
+      (await findUp(configTypes.map((extension) => `.clioada${extension}`))) ??
+        []
     );
     const userConfig = await loadUserConfig(this.configFiles);
     const { flags } = this.parse(BaseCommand);
@@ -183,10 +190,10 @@ export default abstract class BaseCommand extends Command {
     if (flags.domain) {
       const { domain = config.domain, token = config.token } =
         config.domains[flags.domain] || {};
-      // @ts-ignore
+      // @ts-expect-error
       config.domain = domain;
       if (!flags.token) {
-        // @ts-ignore
+        // @ts-expect-error
         config.token = token;
       }
     }

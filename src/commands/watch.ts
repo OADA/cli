@@ -1,3 +1,10 @@
+/**
+ * @license
+ * Copyright (c) 2021 Alex Layton
+ *
+ * This software is released under the MIT License.
+ * https://opensource.org/licenses/MIT
+ */
 import { flags } from '@oclif/command';
 
 import { AsyncSink } from 'ix/asynciterable';
@@ -121,13 +128,14 @@ export default class Watch extends Command {
         // Interpret negative rev as "n before latest"
         if (rev && rev < 0) {
           const {
-            headers: { 'x-oada-rev': cur },
+            headers: { 'x-oada-rev': current },
           } = await conn.get({ path });
-          rev = +cur! + rev;
+          rev = Number(current!) + rev;
         }
+
         await conn.watch({
-          type: type,
-          rev: rev + '',
+          type,
+          rev: `${rev}`,
           path,
           watchCallback(change: unknown) {
             sink.write(change);

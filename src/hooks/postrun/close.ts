@@ -1,3 +1,18 @@
+/**
+ * @license
+ * Copyright (c) 2021 Alex Layton
+ *
+ * This software is released under the MIT License.
+ * https://opensource.org/licenses/MIT
+ */
+
+/**
+ * @license
+ * Copyright (c) 2021 Alex Layton
+ *
+ * This software is released under the MIT License.
+ * https://opensource.org/licenses/MIT
+ */
 import type { Hook } from '@oclif/config';
 
 /**
@@ -5,7 +20,9 @@ import type { Hook } from '@oclif/config';
  *
  * @todo actually clean up things?
  */
-export const hook: Hook<'postrun'> = async function close() {
+// eslint-disable-next-line func-style
+export const hook: Hook<'postrun'> = async function (this) {
   this.exit();
 };
+
 export default hook;

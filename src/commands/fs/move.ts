@@ -1,3 +1,10 @@
+/**
+ * @license
+ * Copyright (c) 2021 Alex Layton
+ *
+ * This software is released under the MIT License.
+ * https://opensource.org/licenses/MIT
+ */
 import Command from '../../BaseCommand';
 import getConn from '../../connections';
 import { shell } from '../../highlight';
@@ -51,8 +58,8 @@ export default class Move extends Command {
 
         // DELETE original
         await conn.delete({ path: file });
-      } catch (err) {
-        console.error(err);
+      } catch (error) {
+        console.error(error);
       }
     }
   }
