@@ -182,7 +182,7 @@ export default abstract class BaseCommand extends Command {
 
   override async init() {
     this.configFiles = [join(this.config.configDir, 'config')].concat(
-      (await findUp(configTypes.map((extension) => `.clioada${extension}`))) ??
+      (await findUp(configTypes.map((extension) => `.oadacli${extension}`))) ??
         []
     );
     const userConfig = await loadUserConfig(this.configFiles);

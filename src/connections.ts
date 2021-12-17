@@ -14,14 +14,12 @@
 
 import { URL } from 'node:url';
 
-import {
-  GETRequest,
-  OADAClient,
-  PUTRequest,
-  WatchRequest,
-  connect,
-} from '@oada/client';
+import { GETRequest, OADAClient, PUTRequest, connect } from '@oada/client';
 
+import type {
+  WatchRequestSingle,
+  WatchRequestTree,
+} from '@oada/client/dist/client';
 import type { IConfig } from './BaseCommand';
 
 interface Connections {
@@ -67,7 +65,10 @@ export function conn(config: IConfig): OADAClient {
     };
   }
 
-  client.watch = async ({ path: p, ...rest }: WatchRequest) => {
+  client.watch = async <R extends WatchRequestSingle | WatchRequestTree>({
+    path: p,
+    ...rest
+  }: R) => {
     let path = `${p}`;
     let host;
     try {
@@ -75,7 +76,13 @@ export function conn(config: IConfig): OADAClient {
     } finally {
       const con = await getConnection(host);
       // eslint-disable-next-line security/detect-non-literal-fs-filename, no-unsafe-finally
-      return con.watch({ path, ...rest });
+      return con.watch(
+        // @ts-expect-error the deprecated v2 API screws up the types
+        {
+          path,
+          ...rest,
+        } as R
+      );
     }
   };
 

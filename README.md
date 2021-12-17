@@ -3,9 +3,9 @@
 Pipeable OADA client CLI
 
 [![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
-[![Version](https://img.shields.io/npm/v/clioada.svg)](https://npmjs.org/package/clioada)
-[![Downloads/week](https://img.shields.io/npm/dw/clioada.svg)](https://npmjs.org/package/clioada)
-[![License](https://img.shields.io/npm/l/clioada.svg)](https://github.com/awlayton/clioada/blob/master/package.json)
+[![Version](https://img.shields.io/npm/v/@oada/cli.svg)](https://npmjs.org/package/@oada/cli)
+[![Downloads/week](https://img.shields.io/npm/dw/@oada/cli.svg)](https://npmjs.org/package/@oada/cli)
+[![License](https://img.shields.io/npm/l/@oada/cli.svg)](https://github.com/OADA/cli/blob/master/package.json)
 
 <!-- toc -->
 
@@ -55,11 +55,9 @@ and they will be expanded).
 <!-- usage -->
 
 ```sh-session
-$ npm install -g clioada
+$ yarn global add @oada/cli
 $ oada COMMAND
 running command...
-$ oada (-v|--version|version)
-clioada/1.1.0 linux-x64 node-v15.7.0
 $ oada --help [COMMAND]
 USAGE
   $ oada COMMAND
@@ -134,7 +132,7 @@ ALIASES
   $ oada config
 ```
 
-_See code: [src/commands/config/show.ts](https://github.com/awlayton/clioada/blob/v1.1.0/src/commands/config/show.ts)_
+_See code: [src/commands/config/show.ts](https://github.com/OADA/cli/blob/v1.1.0/src/commands/config/show.ts)_
 
 ### `oada delete PATHS...`
 
@@ -164,7 +162,7 @@ EXAMPLES
   $ oada rm /bookmarks/foo /bookmarks/bar /bookmarks/baz*
 ```
 
-_See code: [src/commands/delete.ts](https://github.com/awlayton/clioada/blob/v1.1.0/src/commands/delete.ts)_
+_See code: [src/commands/delete.ts](https://github.com/OADA/cli/blob/v1.1.0/src/commands/delete.ts)_
 
 ### `oada fs:copy PATHS... PATH`
 
@@ -192,7 +190,7 @@ EXAMPLES
   $ oada cp /resources/foo1 /resources/foo2 /bookmarks/foos/
 ```
 
-_See code: [src/commands/fs/copy.ts](https://github.com/awlayton/clioada/blob/v1.1.0/src/commands/fs/copy.ts)_
+_See code: [src/commands/fs/copy.ts](https://github.com/OADA/cli/blob/v1.1.0/src/commands/fs/copy.ts)_
 
 ### `oada fs:link PATHS... PATH`
 
@@ -222,7 +220,7 @@ EXAMPLES
   $ oada ln /resources/thingy1 /resources/thingy2 /bookmarks/thingies/
 ```
 
-_See code: [src/commands/fs/link.ts](https://github.com/awlayton/clioada/blob/v1.1.0/src/commands/fs/link.ts)_
+_See code: [src/commands/fs/link.ts](https://github.com/OADA/cli/blob/v1.1.0/src/commands/fs/link.ts)_
 
 ### `oada fs:list PATHS...`
 
@@ -246,7 +244,7 @@ ALIASES
   $ oada l
 ```
 
-_See code: [src/commands/fs/list.ts](https://github.com/awlayton/clioada/blob/v1.1.0/src/commands/fs/list.ts)_
+_See code: [src/commands/fs/list.ts](https://github.com/OADA/cli/blob/v1.1.0/src/commands/fs/list.ts)_
 
 ### `oada fs:move PATHS... PATH`
 
@@ -274,7 +272,7 @@ EXAMPLES
   $ oada mv /resources/foo1 /resources/foo2 /bookmarks/foos/
 ```
 
-_See code: [src/commands/fs/move.ts](https://github.com/awlayton/clioada/blob/v1.1.0/src/commands/fs/move.ts)_
+_See code: [src/commands/fs/move.ts](https://github.com/OADA/cli/blob/v1.1.0/src/commands/fs/move.ts)_
 
 ### `oada fs:remove PATHS...`
 
@@ -304,7 +302,7 @@ EXAMPLES
   $ oada rm /bookmarks/foo /bookmarks/bar /bookmarks/baz*
 ```
 
-_See code: [src/commands/fs/remove.ts](https://github.com/awlayton/clioada/blob/v1.1.0/src/commands/fs/remove.ts)_
+_See code: [src/commands/fs/remove.ts](https://github.com/OADA/cli/blob/v1.1.0/src/commands/fs/remove.ts)_
 
 ### `oada fs:touch PATHS...`
 
@@ -330,7 +328,7 @@ EXAMPLE
   $ oada touch /bookmarks
 ```
 
-_See code: [src/commands/fs/touch.ts](https://github.com/awlayton/clioada/blob/v1.1.0/src/commands/fs/touch.ts)_
+_See code: [src/commands/fs/touch.ts](https://github.com/OADA/cli/blob/v1.1.0/src/commands/fs/touch.ts)_
 
 ### `oada get PATHS...`
 
@@ -375,7 +373,7 @@ EXAMPLES
   700
 ```
 
-_See code: [src/commands/get.ts](https://github.com/awlayton/clioada/blob/v1.1.0/src/commands/get.ts)_
+_See code: [src/commands/get.ts](https://github.com/OADA/cli/blob/v1.1.0/src/commands/get.ts)_
 
 ### `oada head PATHS...`
 
@@ -405,7 +403,7 @@ EXAMPLES
   1
 ```
 
-_See code: [src/commands/head.ts](https://github.com/awlayton/clioada/blob/v1.1.0/src/commands/head.ts)_
+_See code: [src/commands/head.ts](https://github.com/OADA/cli/blob/v1.1.0/src/commands/head.ts)_
 
 ### `oada help [COMMAND]`
 
@@ -568,7 +566,7 @@ EXAMPLE
   $ oada post - /bookmarks/ <<< '{"a": 1}{"b": true}'
 ```
 
-_See code: [src/commands/post.ts](https://github.com/awlayton/clioada/blob/v1.1.0/src/commands/post.ts)_
+_See code: [src/commands/post.ts](https://github.com/OADA/cli/blob/v1.1.0/src/commands/post.ts)_
 
 ### `oada put PATHS... PATH`
 
@@ -597,7 +595,7 @@ EXAMPLE
   $ oada put - /bookmarks/ <<< '{"a": 1}'
 ```
 
-_See code: [src/commands/put.ts](https://github.com/awlayton/clioada/blob/v1.1.0/src/commands/put.ts)_
+_See code: [src/commands/put.ts](https://github.com/OADA/cli/blob/v1.1.0/src/commands/put.ts)_
 
 ### `oada watch PATH`
 
@@ -690,7 +688,7 @@ EXAMPLE
   ]
 ```
 
-_See code: [src/commands/watch.ts](https://github.com/awlayton/clioada/blob/v1.1.0/src/commands/watch.ts)_
+_See code: [src/commands/watch.ts](https://github.com/OADA/cli/blob/v1.1.0/src/commands/watch.ts)_
 
 <!-- commandsstop -->
 

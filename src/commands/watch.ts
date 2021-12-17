@@ -11,12 +11,9 @@
 
 import { flags } from '@oclif/command';
 
-import { AsyncSink } from 'ix/asynciterable';
-
 import { json, shell } from '../highlight';
 import Command from '../BaseCommand';
 
-import type { WatchRequest } from '@oada/client';
 import getConn from '../connections';
 import { output } from '../io';
 
@@ -126,7 +123,6 @@ export default class Watch extends Command {
     const conn = getConn(this.iconfig);
 
     const path = `${rawpath}`;
-    const sink = new AsyncSink();
     await output(
       out,
       async function* () {
@@ -139,17 +135,15 @@ export default class Watch extends Command {
           rev = Number(current!) + rev;
         }
 
+        // @ts-expect-error the deprecated v2 API confuses the types
         // eslint-disable-next-line security/detect-non-literal-fs-filename
-        await conn.watch({
-          type,
+        const { changes } = await conn.watch({
+          type: type as 'single' | 'tree',
           rev: `${rev}`,
           path,
-          watchCallback(change: unknown) {
-            sink.write(change);
-          },
-        } as WatchRequest);
+        });
 
-        yield* sink;
+        yield* changes;
       },
       this.iconfig
     );
