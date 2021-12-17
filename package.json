@@ -27,7 +27,7 @@
   ],
   "pkg": {
     "options": {
-      "require": "./pnp.js"
+      "enable-source-maps": true
     },
     "assets": [
       "oclif.manifest.json",
@@ -116,9 +116,9 @@
     "@types/object-assign-deep": "^0.4.0",
     "@types/semver": "^7.3.9",
     "@types/webpack": "^5.28.0",
-    "@typescript-eslint/eslint-plugin": "^5.6.0",
-    "@typescript-eslint/parser": "^5.6.0",
-    "@yarnpkg/sdks": "^2.5.1-rc.5",
+    "@typescript-eslint/eslint-plugin": "^5.7.0",
+    "@typescript-eslint/parser": "^5.7.0",
+    "@yarnpkg/sdks": "^2.5.1-rc.6",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-config-xo": "^0.39.0",

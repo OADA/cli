@@ -201,7 +201,7 @@ function inputChain(
 export async function* expandPath(
   conn: OADAClient,
   path: string
-): AsyncGenerator<string> {
+): AsyncIterable<string> {
   let parts: string[];
   let origin: string;
   try {
@@ -234,9 +234,10 @@ async function* expand(
     trailing: boolean;
     origin: string;
   }
-): AsyncGenerator<string> {
+): AsyncIterable<string> {
   const p = Array.from(parts);
   let root = r;
+  let expanded = false;
   for (const part of parts) {
     p.shift();
 
@@ -280,16 +281,17 @@ async function* expand(
             trailing,
             origin,
           });
+          expanded = true;
         }
       }
     } catch {
       // If we fail to expand, don't error just yield nothing
     }
-
-    return;
   }
 
-  yield origin + join('/', root + (trailing ? '/' : ''));
+  if (!expanded) {
+    yield origin + join('/', root + (trailing ? '/' : ''));
+  }
 }
 
 /**

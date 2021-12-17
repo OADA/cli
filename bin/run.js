@@ -7,7 +7,6 @@
  * https://opensource.org/licenses/MIT
  */
 
-/* eslint-disable node/shebang */
 /* eslint-disable import/no-commonjs */
 /* eslint-disable unicorn/prefer-module */
 /* eslint-disable github/no-then */
