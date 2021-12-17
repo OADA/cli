@@ -20,13 +20,13 @@ import type { SetRequired } from 'type-fest';
 import findUp from 'find-up';
 import objectAssignDeep from 'object-assign-deep';
 // Load .env files?
-import { config } from 'dotenv';
+import { config as load } from 'dotenv';
 
 import type { OADAClient } from '@oada/client';
 
 import { importable } from './io';
 
-config();
+load();
 
 /**
  * Type of flags from BaseCommand class
@@ -70,7 +70,7 @@ interface DomainConfig {
 /**
  * Defaults for settings
  */
-const defaults = <const>{
+const defaults = {
   /**
    * Dev token from oada/server
    */
@@ -79,7 +79,7 @@ const defaults = <const>{
    * Assume a local OADA
    */
   domain: 'localhost',
-  domains: { localhost: { token: 'god' } as DomainConfig },
+  domains: { localhost: { token: 'god', domain: undefined } },
 };
 
 /**
@@ -100,6 +100,7 @@ function handleDefaults({
             [domain]: config,
           };
         })
+        // eslint-disable-next-line unicorn/prefer-object-from-entries, unicorn/no-array-reduce
         .reduce((o1, o2) => objectAssignDeep(o1, o2), {}),
     },
   };
@@ -114,7 +115,10 @@ async function loadUserConfig(
   const config = {};
   for (const path of paths) {
     try {
-      const { default: userConfig } = await import(path);
+      // eslint-disable-next-line no-await-in-loop
+      const { default: userConfig } = (await import(path)) as {
+        default: unknown;
+      };
       objectAssignDeep(config, userConfig);
     } catch {}
   }
@@ -182,18 +186,16 @@ export default abstract class BaseCommand extends Command {
         []
     );
     const userConfig = await loadUserConfig(this.configFiles);
-    const { flags } = this.parse(BaseCommand);
+    const { flags: fFlags } = this.parse(BaseCommand);
 
     // Merge config sources
     // TODO: clean up this mess
-    const config = objectAssignDeep(defaults, userConfig, flags);
-    if (flags.domain) {
+    const config = objectAssignDeep(defaults, userConfig, fFlags);
+    if (fFlags.domain) {
       const { domain = config.domain, token = config.token } =
-        config.domains[flags.domain] || {};
-      // @ts-expect-error
+        config.domains[fFlags.domain] ?? {};
       config.domain = domain;
-      if (!flags.token) {
-        // @ts-expect-error
+      if (!fFlags.token) {
         config.token = token;
       }
     }

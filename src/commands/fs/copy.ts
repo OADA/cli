@@ -5,14 +5,16 @@
  * This software is released under the MIT License.
  * https://opensource.org/licenses/MIT
  */
+
+import type { Body } from '@oada/client/dist/client';
 import Command from '../../BaseCommand';
-import { input } from '../../io';
 import getConn from '../../connections';
+import { input } from '../../io';
 import { shell } from '../../highlight';
 
 const examples = [
   shell`$ oada cp /resources/foo /bookmarks/foo`,
-  shell`$ oada cp /resources/foo1 /resources/foo2 /bookmarks/foos/`,
+  shell`$ oada cp /resources/foo1 /resources/foo2 /bookmarks/foo/`,
 ];
 
 /**
@@ -45,8 +47,10 @@ export default class Copy extends Command {
     const method = path.endsWith('/') ? 'post' : 'put';
 
     for (const file of paths) {
-      await input<any>(conn, file, this.iconfig, async function* (source) {
+      // eslint-disable-next-line no-await-in-loop, require-yield
+      await input<Body>(conn, file, this.iconfig, async function* (source) {
         for await (const data of source) {
+          // eslint-disable-next-line security/detect-object-injection
           await conn[method]({ path, data });
         }
       });

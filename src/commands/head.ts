@@ -5,6 +5,7 @@
  * This software is released under the MIT License.
  * https://opensource.org/licenses/MIT
  */
+
 import Command from '../BaseCommand';
 import getConn from '../connections';
 import { shell } from '../highlight';
@@ -39,6 +40,7 @@ export default class Head extends Command {
     const conn = getConn(this.iconfig);
 
     for (const path of paths) {
+      // eslint-disable-next-line no-await-in-loop
       await conn.head({ path });
     }
   }

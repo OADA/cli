@@ -16,6 +16,7 @@ declare module 'concatjson' {
 /**
  * Promise based stream API in Node 15
  */
+/*
 declare module 'stream/promises' {
   export async function finished(stream: Readable): Promise<void>;
 
@@ -46,6 +47,7 @@ declare module 'stream/promises' {
     ]
   );
 }
+*/
 
 declare module 'json-6/lib/require' {}
 declare module 'ts-node/register/transpile-only';

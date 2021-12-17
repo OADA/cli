@@ -5,6 +5,7 @@
  * This software is released under the MIT License.
  * https://opensource.org/licenses/MIT
  */
+
 import { flags } from '@oclif/command';
 
 import Command from '../../BaseCommand';
@@ -62,21 +63,29 @@ export default class Link extends Command {
     for (const file of paths) {
       try {
         // Get _id for linking
-        const { data: _id } = (await conn.get({
+        // eslint-disable-next-line no-await-in-loop
+        const { data: _id } = await conn.get({
           path: `${file}/_id`,
-        })) as any;
+        });
+
+        if (typeof _id !== 'string') {
+          throw new TypeError(`${file} is not a valid OADA resource`);
+        }
 
         if (force && method === 'put') {
           // Delete anything in the way
+          // eslint-disable-next-line no-await-in-loop
           await conn.delete({ path: file });
         }
 
         // Create link
+        // eslint-disable-next-line no-await-in-loop, security/detect-object-injection
         await conn[method]({
           path,
           data: versioned ? { _id } : { _id, _rev: 0 },
         });
-      } catch (error) {
+      } catch (error: unknown) {
+        // eslint-disable-next-line no-console
         console.error(error);
       }
     }

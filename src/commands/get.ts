@@ -5,10 +5,13 @@
  * This software is released under the MIT License.
  * https://opensource.org/licenses/MIT
  */
+
+/* eslint-disable sonarjs/no-nested-template-literals */
+
 import { flags } from '@oclif/command';
 
-import Command from '../BaseCommand';
 import { json, shell } from '../highlight';
+import Command from '../BaseCommand';
 
 import {
   OADAifiedJsonArray,
@@ -20,6 +23,7 @@ import {
 } from '@oada/oadaify';
 
 import { expandPath, loadFile, output } from '../io';
+import type { OADAClient } from '@oada/client';
 import getConn from '../connections';
 
 /**
@@ -85,13 +89,16 @@ export default class Get extends Command {
     const conn = getConn(this.iconfig);
 
     // Load tree
-    const tree = treefile && (await loadFile(treefile));
+    const tree = treefile
+      ? ((await loadFile(treefile)) as Record<string, unknown>)
+      : undefined;
 
     await output(
       out,
       async function* () {
         for (const p of paths) {
           const pp = expandPath(conn, p);
+          // eslint-disable-next-line no-await-in-loop
           for await (const path of pp) {
             const { data } = await conn.get({ path, tree });
 
@@ -100,45 +107,10 @@ export default class Get extends Command {
               return;
             }
 
-            const oadaified = oadaify(data as Record<string, unknown>);
+            const oadaified = oadaify(data!);
 
             if (meta) {
-              await getMeta(oadaified);
-
-              async function getMeta(
-                oadaified: OADAifiedJsonValue
-              ): Promise<OADAifiedJsonValue> {
-                if (
-                  !oadaified ||
-                  typeof oadaified !== 'object' ||
-                  Buffer.isBuffer(oadaified)
-                ) {
-                  return oadaified;
-                }
-
-                if (isArray(oadaified)) {
-                  return Promise.all(oadaified.map(getMeta));
-                }
-
-                for (const [key, value] of Object.entries(oadaified)) {
-                  oadaified[key] = await getMeta(value);
-                }
-
-                // Check for "empty" meta ?
-                const meta = oadaified[_meta] as
-                  | OADAifiedJsonObject
-                  | undefined;
-                if (meta) {
-                  // Fetch meta?
-                  const { data } = await conn.get({
-                    path: meta[_id] as string,
-                  });
-                  // Fill it in
-                  oadaified[_meta] = oadaify(data as Record<string, unknown>);
-                }
-
-                return oadaified;
-              }
+              await getMeta(conn, oadaified);
             }
 
             yield oadaified;
@@ -148,4 +120,56 @@ export default class Get extends Command {
       this.iconfig
     );
   }
+}
+
+async function getMeta(
+  conn: OADAClient,
+  oadaified: OADAifiedJsonValue
+): Promise<OADAifiedJsonValue> {
+  if (
+    !oadaified ||
+    typeof oadaified !== 'object' ||
+    Buffer.isBuffer(oadaified)
+  ) {
+    return oadaified;
+  }
+
+  if (isArray(oadaified)) {
+    return Promise.all(
+      oadaified.map(async (element) => getMeta(conn, element))
+    );
+  }
+
+  const out: OADAifiedJsonObject = Object.fromEntries(
+    await Promise.all(
+      Object.entries(oadaified).map(async ([k, v]) => [
+        k,
+        await getMeta(conn, v),
+      ])
+    )
+  ) as OADAifiedJsonObject;
+
+  // Check for "empty" meta ?
+  // eslint-disable-next-line security/detect-object-injection
+  const meta = out[_meta] as OADAifiedJsonObject | undefined;
+  if (meta) {
+    // Fetch meta?
+    const { data } = await conn.get({
+      // eslint-disable-next-line security/detect-object-injection
+      path: meta[_id] as string,
+    });
+
+    if (!data || Buffer.isBuffer(data)) {
+      throw new TypeError(
+        // eslint-disable-next-line security/detect-object-injection
+        `Meta ${meta[_id]} is not a valid OADA meta resource`
+      );
+    }
+
+    // Fill it in
+    // eslint-disable-next-line security/detect-object-injection
+    out[_meta] = oadaify(data);
+  }
+
+  return out;
 }

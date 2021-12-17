@@ -5,16 +5,20 @@
  * This software is released under the MIT License.
  * https://opensource.org/licenses/MIT
  */
+
+/* eslint-disable sonarjs/no-nested-template-literals */
+/* eslint-disable no-secrets/no-secrets */
+
 import { flags } from '@oclif/command';
 
 import { AsyncSink } from 'ix/asynciterable';
 
-import Command from '../BaseCommand';
 import { json, shell } from '../highlight';
+import Command from '../BaseCommand';
 
-import { output } from '../io';
-import getConn from '../connections';
 import type { WatchRequest } from '@oada/client';
+import getConn from '../connections';
+import { output } from '../io';
 
 const examples = [
   `${shell`$ oada watch /bookmarks`}
@@ -115,11 +119,13 @@ export default class Watch extends Command {
 
   async run() {
     const {
-      args: { path },
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      args: { path: rawpath },
       flags: { out, type, rev: r },
     } = this.parse(Watch);
     const conn = getConn(this.iconfig);
 
+    const path = `${rawpath}`;
     const sink = new AsyncSink();
     await output(
       out,
@@ -133,6 +139,7 @@ export default class Watch extends Command {
           rev = Number(current!) + rev;
         }
 
+        // eslint-disable-next-line security/detect-non-literal-fs-filename
         await conn.watch({
           type,
           rev: `${rev}`,

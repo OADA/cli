@@ -5,8 +5,9 @@
  * This software is released under the MIT License.
  * https://opensource.org/licenses/MIT
  */
-import Command from '../../BaseCommand';
+
 import { expandPath, output } from '../../io';
+import Command from '../../BaseCommand';
 import getConn from '../../connections';
 
 /**

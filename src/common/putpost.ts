@@ -15,6 +15,7 @@
 import { flags } from '@oclif/command';
 
 import { input, loadFile } from '../io';
+import type { Body } from '@oada/client/dist/client';
 import Command from '../BaseCommand';
 import getConn from '../connections';
 import { shell } from '../highlight';
@@ -31,7 +32,7 @@ const [put, post] = (<const>['put', 'post']).map((method) => {
       ? [shell`$ oada put - /bookmarks/ <<< '{"a": 1}'`]
       : [shell`$ oada post - /bookmarks/ <<< '{"a": 1}{"b": true}'`];
 
-  return class Clazz extends Command {
+  return class PutPost extends Command {
     static override description = `Perform an OADA ${METH}`;
 
     static override aliases = [method.slice(0, 2), METH];
@@ -56,17 +57,22 @@ const [put, post] = (<const>['put', 'post']).map((method) => {
     async run() {
       const {
         argv: paths,
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         flags: { tree: treefile },
-      } = this.parse(Clazz);
+      } = this.parse(PutPost);
       const conn = getConn(this.iconfig);
       const path = paths.pop()!;
 
       // Load tree
-      const tree = treefile && (await loadFile(treefile));
+      const tree = treefile
+        ? ((await loadFile(treefile)) as Record<string, unknown>)
+        : undefined;
 
       for (const file of paths) {
-        await input<any>(conn, file, this.iconfig, async function* (source) {
+        // eslint-disable-next-line no-await-in-loop, require-yield
+        await input<Body>(conn, file, this.iconfig, async function* (source) {
           for await (const data of source) {
+            // eslint-disable-next-line security/detect-object-injection
             await conn[method]({ path, tree, data });
           }
         });

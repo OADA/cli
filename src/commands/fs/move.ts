@@ -5,13 +5,14 @@
  * This software is released under the MIT License.
  * https://opensource.org/licenses/MIT
  */
+
 import Command from '../../BaseCommand';
 import getConn from '../../connections';
 import { shell } from '../../highlight';
 
 const examples = [
   shell`$ oada mv /resources/foo /bookmarks/foo`,
-  shell`$ oada mv /resources/foo1 /resources/foo2 /bookmarks/foos/`,
+  shell`$ oada mv /resources/foo1 /resources/foo2 /bookmarks/foo/`,
 ];
 
 /**
@@ -47,6 +48,7 @@ export default class Move extends Command {
     for (const file of paths) {
       try {
         // GET original
+        // eslint-disable-next-line no-await-in-loop
         const { data } = await conn.get({ path: file });
 
         if (!data) {
@@ -54,11 +56,14 @@ export default class Move extends Command {
         }
 
         // PUT/POST to destination
+        // eslint-disable-next-line no-await-in-loop, security/detect-object-injection
         await conn[method]({ path, data });
 
         // DELETE original
+        // eslint-disable-next-line no-await-in-loop
         await conn.delete({ path: file });
-      } catch (error) {
+      } catch (error: unknown) {
+        // eslint-disable-next-line no-console
         console.error(error);
       }
     }

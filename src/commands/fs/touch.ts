@@ -5,9 +5,10 @@
  * This software is released under the MIT License.
  * https://opensource.org/licenses/MIT
  */
+
 import Command from '../../BaseCommand';
-import getConn from '../../connections';
 import { expandPath } from '../../io';
+import getConn from '../../connections';
 import { shell } from '../../highlight';
 
 const examples = [shell`$ oada touch /bookmarks`];
@@ -40,6 +41,7 @@ export default class Touch extends Command {
 
     for (const p of paths) {
       const pp = expandPath(conn, p);
+      // eslint-disable-next-line no-await-in-loop
       for await (const path of pp) {
         // PUT an empty object
         await conn.put({ path, data: {} });

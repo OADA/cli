@@ -4,7 +4,7 @@
   "description": "CLI OADA client",
   "main": "dist/index.js",
   "bin": {
-    "oada": "bin/run.cjs"
+    "oada": "bin/run.js"
   },
   "engines": {
     "node": ">=16.0.0"

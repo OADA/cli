@@ -5,25 +5,28 @@
  * This software is released under the MIT License.
  * https://opensource.org/licenses/MIT
  */
+
+import type { Body } from '@oada/client/dist/client';
 import KSUID from 'ksuid';
 
 import Command from '../../BaseCommand';
-import { input } from '../../io';
 import getConn from '../../connections';
+import { input } from '../../io';
 // Import { json, shell } from '../../highlight';
 
-function humanize(value: unknown): any {
+function humanize(value: unknown): unknown {
   if (!value) {
     return value;
   }
 
   if (typeof value === 'object') {
-    const out = new Map<any, any>();
-    for (const [k, vval] of Object.entries(value)) {
-      const v = humanize(vval);
+    const out = new Map<unknown, unknown>();
+    for (const [k, vValue] of Object.entries(value)) {
+      const v = humanize(vValue);
       let t = false;
       for (const transform of transforms) {
-        if ({ k, v }.test(transform)) {
+        // eslint-disable-next-line unicorn/prefer-regexp-test
+        if (transform.match({ k, v })) {
           const { k: kk, v: vv } = transform.apply({ k, v });
           out.set(kk, vv);
           t = true;
@@ -96,10 +99,15 @@ export default class Humanize extends Command {
     const conn = getConn(this.iconfig);
 
     for (const file of paths) {
-      await input<any>(conn, file, this.iconfig, async function* (source) {
+      // eslint-disable-next-line no-await-in-loop, require-yield
+      await input<Body>(conn, file, this.iconfig, async function* (source) {
         for await (const data of source) {
           const out = humanize(data);
-          console.dir(out, { depth: null });
+          // eslint-disable-next-line no-console
+          console.dir(out, {
+            // eslint-disable-next-line unicorn/no-null
+            depth: null,
+          });
         }
       });
     }

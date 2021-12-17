@@ -14,7 +14,13 @@
 
 import { URL } from 'node:url';
 
-import { OADAClient, connect } from '@oada/client';
+import {
+  GETRequest,
+  OADAClient,
+  PUTRequest,
+  WatchRequest,
+  connect,
+} from '@oada/client';
 
 import type { IConfig } from './BaseCommand';
 
@@ -25,7 +31,7 @@ interface Connections {
    * Used when no OADA host is specified (e.g., GET /bookmarks)
    */
   connection?: Promise<OADAClient>;
-  domains: Record<string, Promise<OADAClient>>;
+  domains: Map<string, Promise<OADAClient>>;
 }
 
 // Wrap OADAClient with magics
@@ -34,13 +40,15 @@ export function conn(config: IConfig): OADAClient {
   const connections: Connections = {
     // Init default connection
     // connection: connect({ domain, token, connection: ws ? 'ws' : 'http' }),
-    domains: {},
+    domains: new Map(),
   };
 
-  const conn = {} as OADAClient;
+  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+  const client = {} as OADAClient;
   for (const method of methods) {
     // TODO: Make this less gross?
-    conn[method] = async ({ path: p, ...rest }: any) => {
+    // eslint-disable-next-line security/detect-object-injection
+    client[method] = async ({ path: p, ...rest }: GETRequest | PUTRequest) => {
       let path = `${p}`;
       let host;
       try {
@@ -48,12 +56,18 @@ export function conn(config: IConfig): OADAClient {
       } finally {
         const con = await getConnection(host);
         // eslint-disable-next-line no-unsafe-finally, security/detect-object-injection
-        return con[method]({ path, ...rest });
+        return con[method](
+          // @ts-expect-error stuff
+          {
+            path,
+            ...rest,
+          }
+        );
       }
     };
   }
 
-  conn.watch = async ({ path: p, ...rest }: any) => {
+  client.watch = async ({ path: p, ...rest }: WatchRequest) => {
     let path = `${p}`;
     let host;
     try {
@@ -65,7 +79,7 @@ export function conn(config: IConfig): OADAClient {
     }
   };
 
-  return conn;
+  return client;
 
   async function getConnection(name?: string): Promise<OADAClient> {
     if (!name) {
@@ -83,28 +97,35 @@ export function conn(config: IConfig): OADAClient {
     }
 
     const { domains } = connections;
-    if (name in domains) {
+    if (domains.has(name)) {
       // Reuse connection for this domain
-      return domains[name]!;
+      return domains.get(name)!;
     }
 
     const {
       // TODO: config ws per file??
       ws,
-      domains: { [name]: { domain = '', token = '', connection } = {} },
+      domains: {
+        // eslint-disable-next-line unicorn/no-useless-undefined
+        [name]: { domain = '', token = '', connection = undefined } = {},
+      },
     } = config;
 
     // Allow passing connection through config?
     if (connection) {
-      return (domains[name] = Promise.resolve(connection));
+      const con = Promise.resolve(connection);
+      domains.set(name, con);
+      return con;
     }
 
     // Create connection for this domain
-    return (domains[name] = connect({
+    const con = connect({
       domain,
       token,
       connection: ws ? 'ws' : 'http',
-    }));
+    });
+    domains.set(name, con);
+    return con;
   }
 }
 

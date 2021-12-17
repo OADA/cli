@@ -5,11 +5,12 @@
  * This software is released under the MIT License.
  * https://opensource.org/licenses/MIT
  */
+
 import { flags } from '@oclif/command';
 
 import Command from '../BaseCommand';
-import getConn from '../connections';
 import { expandPath } from '../io';
+import getConn from '../connections';
 import { shell } from '../highlight';
 
 const examples = [
@@ -44,6 +45,7 @@ export default class Delete extends Command {
 
     for (const p of paths) {
       const pp = expandPath(conn, p);
+      // eslint-disable-next-line no-await-in-loop
       for await (const path of pp) {
         await conn.delete({ path });
       }

@@ -5,6 +5,9 @@
  * This software is released under the MIT License.
  * https://opensource.org/licenses/MIT
  */
+
+/* eslint-disable no-console */
+
 import Command from '../../BaseCommand';
 
 import { output } from '../../io';
@@ -23,8 +26,8 @@ export default class ShowConfig extends Command {
 
   async run() {
     const config = this.iconfig;
-    console.error(`Loading configs:\n${this.configFiles.join('\n')}`);
-    output(
+    console.error(this.configFiles, 'Loading configs');
+    await output(
       '-',
       async function* () {
         yield config;
