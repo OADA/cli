@@ -6,9 +6,9 @@
  * https://opensource.org/licenses/MIT
  */
 
-import Command from '../../BaseCommand';
-import getConn from '../../connections';
-import { shell } from '../../highlight';
+import Command from '../../BaseCommand.js';
+import getConn from '../../connections.js';
+import { shell } from '../../highlight.js';
 
 const examples = [
   shell`$ oada mv /resources/foo /bookmarks/foo`,

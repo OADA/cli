@@ -14,8 +14,10 @@
 
 import { flags } from '@oclif/command';
 
-import { input, loadFile } from '../io';
+// @ts-expect-error shut up ts
 import type { Body } from '@oada/client/dist/client';
+
+import { input, loadFile } from '../io';
 import Command from '../BaseCommand';
 import getConn from '../connections';
 import { shell } from '../highlight';
@@ -23,7 +25,7 @@ import { shell } from '../highlight';
 /**
  * OADA PUT/POST
  */
-const [put, post] = (<const>['put', 'post']).map((method) => {
+const [put, post] = (['put', 'post'] as const).map((method) => {
   const METH = method.toUpperCase();
 
   // TODO: Fix this nonsense

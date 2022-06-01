@@ -17,7 +17,7 @@ import highlight from 'cli-highlight';
 /**
  * Languages we support highlighting
  */
-export const languages = <const>['json', 'shell'];
+export const languages = ['json', 'shell'] as const;
 
 /**
  * @todo better way to achieve this??

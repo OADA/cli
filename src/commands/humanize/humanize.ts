@@ -6,6 +6,7 @@
  * https://opensource.org/licenses/MIT
  */
 
+// @ts-expect-error shut up ts
 import type { Body } from '@oada/client/dist/client';
 import KSUID from 'ksuid';
 
@@ -49,15 +50,17 @@ interface Item {
   v: unknown;
 }
 type Transform = {
-  match: (value: Item) => boolean;
-  apply: (value: Item) => Item;
+  match(value: Item): boolean;
+  apply(value: Item): Item;
 };
 const transforms: readonly Transform[] = [
   // KSUIDs transform
   {
     // TODO: Better check?
-    match: ({ k }) => typeof k === 'string' && k.length === 27,
-    apply: ({ k, v }) => {
+    match({ k }) {
+      return typeof k === 'string' && k.length === 27;
+    },
+    apply({ k, v }) {
       const { date, payload } = KSUID.parse(k as string);
       // TODO: Show payload?
       return {
@@ -105,7 +108,6 @@ export default class Humanize extends Command {
           const out = humanize(data);
           // eslint-disable-next-line no-console
           console.dir(out, {
-            // eslint-disable-next-line unicorn/no-null
             depth: null,
           });
         }

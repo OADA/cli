@@ -14,13 +14,16 @@
 
 import { URL } from 'node:url';
 
-import { GETRequest, OADAClient, PUTRequest, connect } from '@oada/client';
+// @ts-expect-error shut up ts
+import type { GETRequest, OADAClient, PUTRequest } from '@oada/client';
 
 import type {
   WatchRequestSingle,
   WatchRequestTree,
+  // @ts-expect-error shut up ts
 } from '@oada/client/dist/client';
-import type { IConfig } from './BaseCommand';
+
+import type { IConfig } from './BaseCommand.js';
 
 interface Connections {
   /**
@@ -33,7 +36,7 @@ interface Connections {
 }
 
 // Wrap OADAClient with magics
-const methods = <const>['get', 'head', 'put', 'post', 'delete'];
+const methods = ['get', 'head', 'put', 'post', 'delete'] as const;
 export function conn(config: IConfig): OADAClient {
   const connections: Connections = {
     // Init default connection
@@ -89,6 +92,7 @@ export function conn(config: IConfig): OADAClient {
   return client;
 
   async function getConnection(name?: string): Promise<OADAClient> {
+    const { connect } = await import('@oada/client');
     if (!name) {
       // Use default OADA connection
       if (!connections.connection) {

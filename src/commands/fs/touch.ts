@@ -6,10 +6,10 @@
  * https://opensource.org/licenses/MIT
  */
 
-import Command from '../../BaseCommand';
-import { expandPath } from '../../io';
-import getConn from '../../connections';
-import { shell } from '../../highlight';
+import Command from '../../BaseCommand.js';
+import { expandPath } from '../../io.js';
+import getConn from '../../connections.js';
+import { shell } from '../../highlight.js';
 
 const examples = [shell`$ oada touch /bookmarks`];
 

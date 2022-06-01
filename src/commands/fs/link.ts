@@ -8,9 +8,9 @@
 
 import { flags } from '@oclif/command';
 
-import Command from '../../BaseCommand';
-import getConn from '../../connections';
-import { shell } from '../../highlight';
+import Command from '../../BaseCommand.js';
+import getConn from '../../connections.js';
+import { shell } from '../../highlight.js';
 
 const examples = [
   shell`$ oada ln /resources/my-thingy /bookmarks/thingy`,

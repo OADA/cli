@@ -23,6 +23,7 @@ import {
 } from '@oada/oadaify';
 
 import { expandPath, loadFile, output } from '../io';
+// @ts-expect-error shut up ts
 import type { OADAClient } from '@oada/client';
 import getConn from '../connections';
 
@@ -144,7 +145,7 @@ async function getMeta(
     await Promise.all(
       Object.entries(oadaified).map(async ([k, v]) => [
         k,
-        await getMeta(conn, v),
+        await getMeta(conn, v!),
       ])
     )
   ) as OADAifiedJsonObject;

@@ -19,6 +19,7 @@ import { parse } from 'concatjson';
 import { request } from 'gaxios';
 import { stringify } from 'ndjson';
 
+// @ts-expect-error shut up ts
 import type { OADAClient } from '@oada/client';
 import { oadaify } from '@oada/oadaify';
 
@@ -29,9 +30,9 @@ import 'hjson/lib/require-config';
 // Support for input from JSON6 files
 import 'json-6/lib/require';
 
-import type { IConfig } from './BaseCommand';
+import type { IConfig } from './BaseCommand.js';
 // Make json-6 load JSON5 (because it can)
-// eslint-disable-next-line node/no-deprecated-api, unicorn/prefer-module
+// eslint-disable-next-line unicorn/prefer-module
 require.extensions['.json5'] = require.extensions['.json6'];
 
 /**
@@ -127,7 +128,7 @@ async function outputType(outString: string, { tty }: IConfig) {
  * @todo make this more extensible?
  * @todo support these extensions coming from remote??
  */
-export const importable = <const>['.json6', '.json5', '.hjson', '.ts', '.js'];
+export const importable = ['.json6', '.json5', '.hjson', '.ts', '.js'] as const;
 
 /**
  * Load a support file as JSON

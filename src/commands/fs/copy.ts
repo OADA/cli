@@ -6,11 +6,13 @@
  * https://opensource.org/licenses/MIT
  */
 
-import type { Body } from '@oada/client/dist/client';
-import Command from '../../BaseCommand';
-import getConn from '../../connections';
-import { input } from '../../io';
-import { shell } from '../../highlight';
+// @ts-expect-error shut up ts
+import type { Body } from '@oada/client/dist/client.js';
+
+import Command from '../../BaseCommand.js';
+import getConn from '../../connections.js';
+import { input } from '../../io.js';
+import { shell } from '../../highlight.js';
 
 const examples = [
   shell`$ oada cp /resources/foo /bookmarks/foo`,

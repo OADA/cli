@@ -14,19 +14,17 @@
 
 import { join } from 'node:path';
 
+import 'dotenv/config';
 import { Command, flags } from '@oclif/command';
 import type { Input } from '@oclif/parser';
 import type { SetRequired } from 'type-fest';
 import findUp from 'find-up';
 import objectAssignDeep from 'object-assign-deep';
-// Load .env files?
-import { config as load } from 'dotenv';
 
+// @ts-expect-error shut up ts
 import type { OADAClient } from '@oada/client';
 
 import { importable } from './io';
-
-load();
 
 /**
  * Type of flags from BaseCommand class
@@ -100,7 +98,7 @@ function handleDefaults({
             [domain]: config,
           };
         })
-        // eslint-disable-next-line unicorn/prefer-object-from-entries, unicorn/no-array-reduce
+        // eslint-disable-next-line unicorn/no-array-reduce
         .reduce((o1, o2) => objectAssignDeep(o1, o2), {}),
     },
   };
@@ -129,7 +127,7 @@ async function loadUserConfig(
 /**
  * List of supported filetypes for config files
  */
-export const configTypes = <const>['.json', ...importable];
+export const configTypes = ['.json', ...importable] as const;
 
 /**
  * Base command class for global flags and user config
