@@ -6,8 +6,6 @@
  * https://opensource.org/licenses/MIT
  */
 
-// @ts-expect-error shut up ts
-import type { Body } from '@oada/client/dist/client';
 import KSUID from 'ksuid';
 
 import Command from '../../BaseCommand';
@@ -73,7 +71,7 @@ const transforms: readonly Transform[] = [
   {
     // TODO: Better check?
     match: ({ k, v }) => k === 'modified' && typeof v === 'number',
-    apply: ({ k, v }) => {
+    apply({ k, v }) {
       const d = new Date((v as number) * 1000);
       // TODO: Show payload?
       return {
@@ -98,12 +96,12 @@ export default class Humanize extends Command {
   static override strict = false;
 
   async run() {
-    const { argv: paths } = this.parse(Humanize);
+    const { argv: paths } = await this.parse(Humanize);
     const conn = getConn(this.iconfig);
 
     for (const file of paths) {
       // eslint-disable-next-line no-await-in-loop, require-yield
-      await input<Body>(conn, file, this.iconfig, async function* (source) {
+      await input(conn, file, this.iconfig, async function* (source) {
         for await (const data of source) {
           const out = humanize(data);
           // eslint-disable-next-line no-console

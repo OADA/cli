@@ -8,9 +8,9 @@
 
 /* eslint-disable no-console */
 
-import Command from '../../BaseCommand.js';
+import Command from '../../BaseCommand';
 
-import { output } from '../../io.js';
+import { output } from '../../io';
 
 /**
  * Class for showing the config and from where it is loaded?

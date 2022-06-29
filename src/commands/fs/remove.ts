@@ -6,7 +6,7 @@
  * https://opensource.org/licenses/MIT
  */
 
-import Delete from '../delete.js';
+import Delete from '../delete';
 
 /**
  * An "OADA remove" is just DELETE

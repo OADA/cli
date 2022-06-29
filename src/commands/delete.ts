@@ -6,7 +6,7 @@
  * https://opensource.org/licenses/MIT
  */
 
-import { flags } from '@oclif/command';
+import { Flags } from '@oclif/core';
 
 import Command from '../BaseCommand';
 import { expandPath } from '../io';
@@ -30,7 +30,7 @@ export default class Delete extends Command {
 
   static override flags = {
     ...Command.flags,
-    recursive: flags.boolean({ char: 'R', default: false }),
+    recursive: Flags.boolean({ char: 'R', default: false }),
   };
 
   static override args = [
@@ -40,7 +40,7 @@ export default class Delete extends Command {
   static override strict = false;
 
   async run() {
-    const { argv: paths } = this.parse(Delete);
+    const { argv: paths } = await this.parse(Delete);
     const conn = getConn(this.iconfig);
 
     for (const p of paths) {

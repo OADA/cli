@@ -14,8 +14,9 @@
     ".yarn": true,
     ".pnp.*": true,
     ".vim": true,
-    "**/.yarn": true,
-    "**/.pnp.*": true
+    ".yarn": true,
+    ".pnp.*": true,
+    "tags.*": true
   },
   //"prettier.prettierPath": ".yarn/sdks/prettier/index.js",
   //"typescript.tsdk": ".yarn/sdks/typescript/lib",
@@ -35,7 +36,8 @@
     "act": true,
     ".yarn": true,
     ".pnp.*": true,
-    ".vim": true
+    ".vim": true,
+    "tags.*": true
   },
   "eslint.packageManager": "yarn",
   "eslint.useESLintClass": true,

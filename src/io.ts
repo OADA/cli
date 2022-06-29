@@ -19,8 +19,7 @@ import { parse } from 'concatjson';
 import { request } from 'gaxios';
 import { stringify } from 'ndjson';
 
-// @ts-expect-error shut up ts
-import type { OADAClient } from '@oada/client';
+import type { OADAClient } from './client.cjs';
 import { oadaify } from '@oada/oadaify';
 
 // Support input from TypeScript files
@@ -30,7 +29,7 @@ import 'hjson/lib/require-config';
 // Support for input from JSON6 files
 import 'json-6/lib/require';
 
-import type { IConfig } from './BaseCommand.js';
+import type { IConfig } from './BaseCommand';
 // Make json-6 load JSON5 (because it can)
 // eslint-disable-next-line unicorn/prefer-module
 require.extensions['.json5'] = require.extensions['.json6'];

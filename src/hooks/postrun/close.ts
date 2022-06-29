@@ -6,7 +6,7 @@
  * https://opensource.org/licenses/MIT
  */
 
-import type { Hook } from '@oclif/config';
+import type { Hook } from '@oclif/core';
 
 /**
  * Close connections after command so cli doesn't hang

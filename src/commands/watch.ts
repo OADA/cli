@@ -9,7 +9,7 @@
 /* eslint-disable sonarjs/no-nested-template-literals */
 /* eslint-disable no-secrets/no-secrets */
 
-import { flags } from '@oclif/command';
+import { Flags } from '@oclif/core';
 
 import { json, shell } from '../highlight';
 import Command from '../BaseCommand';
@@ -96,12 +96,12 @@ export default class Watch extends Command {
 
   static override flags = {
     ...Command.flags,
-    out: flags.string({ char: 'o', default: '-' }),
-    rev: flags.integer({
+    out: Flags.string({ char: 'o', default: '-' }),
+    rev: Flags.integer({
       char: 'r',
       description: 'rev from which to start (negative means latest - n)',
     }),
-    type: flags.enum({
+    type: Flags.enum({
       options: ['single', 'tree'],
       char: 't',
       default: 'tree',
@@ -116,10 +116,9 @@ export default class Watch extends Command {
 
   async run() {
     const {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       args: { path: rawpath },
       flags: { out, type, rev: r },
-    } = this.parse(Watch);
+    } = await this.parse(Watch);
     const conn = getConn(this.iconfig);
 
     const path = `${rawpath}`;

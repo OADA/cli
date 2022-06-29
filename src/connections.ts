@@ -14,16 +14,9 @@
 
 import { URL } from 'node:url';
 
-// @ts-expect-error shut up ts
-import type { GETRequest, OADAClient, PUTRequest } from '@oada/client';
+import { GETRequest, OADAClient, PUTRequest, connect } from './client.cjs';
 
-import type {
-  WatchRequestSingle,
-  WatchRequestTree,
-  // @ts-expect-error shut up ts
-} from '@oada/client/dist/client';
-
-import type { IConfig } from './BaseCommand.js';
+import type { IConfig } from './BaseCommand';
 
 interface Connections {
   /**
@@ -68,10 +61,7 @@ export function conn(config: IConfig): OADAClient {
     };
   }
 
-  client.watch = async <R extends WatchRequestSingle | WatchRequestTree>({
-    path: p,
-    ...rest
-  }: R) => {
+  client.watch = async ({ path: p, ...rest }) => {
     let path = `${p}`;
     let host;
     try {
@@ -84,7 +74,7 @@ export function conn(config: IConfig): OADAClient {
         {
           path,
           ...rest,
-        } as R
+        }
       );
     }
   };
@@ -92,7 +82,6 @@ export function conn(config: IConfig): OADAClient {
   return client;
 
   async function getConnection(name?: string): Promise<OADAClient> {
-    const { connect } = await import('@oada/client');
     if (!name) {
       // Use default OADA connection
       if (!connections.connection) {

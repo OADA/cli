@@ -36,7 +36,7 @@ export default class Head extends Command {
   static override strict = false;
 
   async run() {
-    const { argv: paths } = this.parse(Head);
+    const { argv: paths } = await this.parse(Head);
     const conn = getConn(this.iconfig);
 
     for (const path of paths) {

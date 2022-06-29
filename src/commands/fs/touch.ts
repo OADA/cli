@@ -6,10 +6,10 @@
  * https://opensource.org/licenses/MIT
  */
 
-import Command from '../../BaseCommand.js';
-import { expandPath } from '../../io.js';
-import getConn from '../../connections.js';
-import { shell } from '../../highlight.js';
+import Command from '../../BaseCommand';
+import { expandPath } from '../../io';
+import getConn from '../../connections';
+import { shell } from '../../highlight';
 
 const examples = [shell`$ oada touch /bookmarks`];
 
@@ -36,7 +36,7 @@ export default class Touch extends Command {
   static override strict = false;
 
   async run() {
-    const { argv: paths } = this.parse(Touch);
+    const { argv: paths } = await this.parse(Touch);
     const conn = getConn(this.iconfig);
 
     for (const p of paths) {

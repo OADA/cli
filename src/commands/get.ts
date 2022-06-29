@@ -8,7 +8,7 @@
 
 /* eslint-disable sonarjs/no-nested-template-literals */
 
-import { flags } from '@oclif/command';
+import { Flags } from '@oclif/core';
 
 import { json, shell } from '../highlight';
 import Command from '../BaseCommand';
@@ -23,8 +23,7 @@ import {
 } from '@oada/oadaify';
 
 import { expandPath, loadFile, output } from '../io';
-// @ts-expect-error shut up ts
-import type { OADAClient } from '@oada/client';
+import type { OADAClient } from '../client.cjs';
 import getConn from '../connections';
 
 /**
@@ -67,13 +66,13 @@ export default class Get extends Command {
 
   static override flags = {
     ...Command.flags,
-    tree: flags.string({
+    tree: Flags.string({
       char: 'T',
       description: 'file containing an OADA tree to use for a tree GET',
     }),
-    recursive: flags.boolean({ char: 'R', default: false }),
-    meta: flags.boolean({ char: 'm', default: false }),
-    out: flags.string({ char: 'o', default: '-' }),
+    recursive: Flags.boolean({ char: 'R', default: false }),
+    meta: Flags.boolean({ char: 'm', default: false }),
+    out: Flags.string({ char: 'o', default: '-' }),
   };
 
   static override args = [
@@ -86,7 +85,7 @@ export default class Get extends Command {
     const {
       argv: paths,
       flags: { out, meta, tree: treefile },
-    } = this.parse(Get);
+    } = await this.parse(Get);
     const conn = getConn(this.iconfig);
 
     // Load tree

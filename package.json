@@ -1,9 +1,10 @@
 {
   "name": "@oada/cli",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "description": "CLI OADA client",
+  "main": "dist/index.js",
   "bin": {
-    "oada": "bin/run.js"
+    "oada": "./bin/run.js"
   },
   "engines": {
     "node": ">=16.0.0"
@@ -32,7 +33,10 @@
       "oclif.manifest.json",
       "dist/**/*.map"
     ],
-    "scripts": "dist/**/*.js",
+    "scripts": [
+      "dist/**/*.{c,m,}js",
+      "@oada/client"
+    ],
     "targets": [
       "node16-linux-x64",
       "node16-macos-x64",
@@ -41,6 +45,12 @@
     "outputPath": "packaged"
   },
   "oclif": {
+    "additionalHelpFlags": [
+      "-h"
+    ],
+    "additionalVersionFlags": [
+      "-v"
+    ],
     "commands": "./dist/commands",
     "topics": {
       "fs": {
@@ -51,6 +61,7 @@
       "postrun": "./dist/hooks/postrun/close"
     },
     "bin": "oada",
+    "dirname": "oada",
     "plugins": [
       "@oclif/plugin-help",
       "@oclif/plugin-autocomplete",
@@ -62,7 +73,7 @@
     "postpack": "rm -f oclif.manifest.json",
     "prepare": "npm run build && oclif manifest",
     "readme": "oclif readme",
-    "package": "npm run prepare && pkg .",
+    "package": "npm run prepare && pkg --public-packages '*' --no-bytecode --debug .",
     "build": "tsc -b"
   },
   "files": [
@@ -72,12 +83,9 @@
     "yarn.lock"
   ],
   "dependencies": {
-    "@oada/client": "^4.1.1",
+    "@oada/client": "^4.1.2",
     "@oada/oadaify": "^2.1.0",
-    "@oclif/command": "^1.8.16",
-    "@oclif/config": "1.18.3",
-    "@oclif/errors": "^1.3.5",
-    "@oclif/help": "^1.0.1",
+    "@oclif/core": "^1.9.5",
     "@oclif/plugin-autocomplete": "^1.3.0",
     "@oclif/plugin-help": "^5.1.12",
     "@oclif/plugin-not-found": "^2.3.1",
@@ -93,23 +101,21 @@
     "minimatch": "^5.1.0",
     "ndjson": "^2.0.0",
     "object-assign-deep": "^0.4.0",
-    "ts-node": "^10.8.0",
     "tslib": "^2.4.0",
-    "type-fest": "^2.13.0"
+    "type-fest": "^2.14.0"
   },
   "devDependencies": {
-    "@oclif/parser": "^3.8.7",
-    "@tsconfig/node16": "^1.0.2",
+    "@tsconfig/node16": "^1.0.3",
     "@types/glob": "^7.2.0",
     "@types/json5": "^2.2.0",
     "@types/minimatch": "^3.0.5",
     "@types/ndjson": "^2.0.1",
-    "@types/node": "^16.11.38",
+    "@types/node": "^16.11.41",
     "@types/object-assign-deep": "^0.4.0",
-    "@typescript-eslint/eslint-plugin": "^5.27.0",
-    "@typescript-eslint/parser": "^5.27.0",
-    "@yarnpkg/sdks": "^3.0.0-rc.6",
-    "eslint": "^8.16.0",
+    "@typescript-eslint/eslint-plugin": "^5.30.0",
+    "@typescript-eslint/parser": "^5.30.0",
+    "@yarnpkg/sdks": "^3.0.0-rc.10",
+    "eslint": "^8.18.0",
     "eslint-config-xo": "^0.41.0",
     "eslint-config-xo-typescript": "^0.51.1",
     "eslint-plugin-array-func": "^3.1.7",
@@ -125,7 +131,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-notice": "^0.9.10",
     "eslint-plugin-optimize-regex": "^1.2.1",
-    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-prettier": "^4.1.0",
     "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-regexp": "^1.7.0",
     "eslint-plugin-security": "^1.5.0",
@@ -135,8 +141,9 @@
     "globby": "^11.1.0",
     "oclif": "^3.0.1",
     "pkg": "^5.7.0",
-    "prettier": "^2.6.2",
-    "typescript": "^4.8.0-dev.20220601"
+    "prettier": "^2.7.1",
+    "ts-node": "^10.8.1",
+    "typescript": "^4.7.4"
   },
   "packageManager": "yarn@3.2.1"
 }

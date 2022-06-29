@@ -8,4 +8,5 @@
 
 import classes from '../common/putpost';
 
+/** @internal */
 export default classes.post;

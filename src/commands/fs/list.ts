@@ -6,9 +6,9 @@
  * https://opensource.org/licenses/MIT
  */
 
-import { expandPath, output } from '../../io.js';
-import Command from '../../BaseCommand.js';
-import getConn from '../../connections.js';
+import { expandPath, output } from '../../io';
+import Command from '../../BaseCommand';
+import getConn from '../../connections';
 
 /**
  * OADA version of ls
@@ -29,7 +29,7 @@ export default class List extends Command {
   static override strict = false;
 
   async run() {
-    const { argv: paths } = this.parse(List);
+    const { argv: paths } = await this.parse(List);
     const conn = getConn(this.iconfig);
 
     await output(

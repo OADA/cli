@@ -12,10 +12,7 @@
  * @packageDocumentation
  */
 
-import { flags } from '@oclif/command';
-
-// @ts-expect-error shut up ts
-import type { Body } from '@oada/client/dist/client';
+import { Flags } from '@oclif/core';
 
 import { input, loadFile } from '../io';
 import Command from '../BaseCommand';
@@ -43,7 +40,7 @@ const [put, post] = (['put', 'post'] as const).map((method) => {
 
     static override flags = {
       ...Command.flags,
-      tree: flags.string({
+      tree: Flags.string({
         char: 'T',
         description: `file containing an OADA tree to use for a tree ${METH}`,
       }),
@@ -59,9 +56,8 @@ const [put, post] = (['put', 'post'] as const).map((method) => {
     async run() {
       const {
         argv: paths,
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         flags: { tree: treefile },
-      } = this.parse(PutPost);
+      } = await this.parse(PutPost);
       const conn = getConn(this.iconfig);
       const path = paths.pop()!;
 
@@ -72,10 +68,10 @@ const [put, post] = (['put', 'post'] as const).map((method) => {
 
       for (const file of paths) {
         // eslint-disable-next-line no-await-in-loop, require-yield
-        await input<Body>(conn, file, this.iconfig, async function* (source) {
+        await input(conn, file, this.iconfig, async function* (source) {
           for await (const data of source) {
-            // eslint-disable-next-line security/detect-object-injection
-            await conn[method]({ path, tree, data });
+            // eslint-disable-next-line security/detect-object-injection, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any
+            await conn[method]({ path, tree, data: data as any });
           }
         });
       }
@@ -83,4 +79,5 @@ const [put, post] = (['put', 'post'] as const).map((method) => {
   };
 });
 
+/** @internal */
 export default { put, post };

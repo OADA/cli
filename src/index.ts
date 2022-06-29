@@ -6,4 +6,4 @@
  * https://opensource.org/licenses/MIT
  */
 
-export { run } from '@oclif/command';
+export { run } from '@oclif/core';

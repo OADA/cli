@@ -1,8 +1,8 @@
 {
   "extends": "@tsconfig/node16",
   "compilerOptions": {
-    "module": "nodenext",
-    "esModuleInterop": true,
+    "moduleResolution": "Node16",
+    "declaration": true,
     "removeComments": true,
     "stripInternal": true,
     "importHelpers": true,

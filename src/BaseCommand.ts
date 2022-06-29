@@ -15,28 +15,26 @@
 import { join } from 'node:path';
 
 import 'dotenv/config';
-import { Command, flags } from '@oclif/command';
-import type { Input } from '@oclif/parser';
+import { Command, Flags } from '@oclif/core';
 import type { SetRequired } from 'type-fest';
-import findUp from 'find-up';
-import objectAssignDeep from 'object-assign-deep';
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+import findUp = require('find-up');
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+import objectAssignDeep = require('object-assign-deep');
 
-// @ts-expect-error shut up ts
-import type { OADAClient } from '@oada/client';
+import type { OADAClient } from './client.cjs';
 
 import { importable } from './io';
 
 /**
- * Type of flags from BaseCommand class
- */
-type BaseFlags = typeof BaseCommand extends Input<infer F> ? F : never;
-
-/**
  * Global config stuff
  */
-export interface Config<D extends DomainConfig = DomainConfig>
-  extends Partial<BaseFlags> {
+export interface Config<D extends DomainConfig = DomainConfig> {
   domains?: Record<string, D>;
+  domain?: string;
+  token?: string;
+  tty?: boolean;
+  ws?: boolean;
 }
 
 /**
@@ -86,7 +84,8 @@ const defaults = {
 function handleDefaults({
   domains,
   ...rest
-}: Config & BaseFlags & typeof defaults): IConfig {
+}: Config & typeof defaults): IConfig {
+  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
   return {
     ...rest,
     domains: {
@@ -101,7 +100,7 @@ function handleDefaults({
         // eslint-disable-next-line unicorn/no-array-reduce
         .reduce((o1, o2) => objectAssignDeep(o1, o2), {}),
     },
-  };
+  } as IConfig;
 }
 
 /**
@@ -140,7 +139,7 @@ export default abstract class BaseCommand extends Command {
     /**
      * Default OADA API domain
      */
-    domain: flags.string({
+    domain: Flags.string({
       description: 'default OADA API domain',
       char: 'd',
       default: process.env.OADA_DOMAIN,
@@ -148,17 +147,17 @@ export default abstract class BaseCommand extends Command {
     /**
      * Default OADA API token
      */
-    token: flags.string({
+    token: Flags.string({
       description: 'default OADA API token',
       char: 't',
       default: process.env.OADA_TOKEN,
     }),
-    tty: flags.boolean({
+    tty: Flags.boolean({
       description: 'format output for TTY',
       allowNo: true,
       default: process.stdout.isTTY,
     }),
-    ws: flags.boolean({
+    ws: Flags.boolean({
       description: 'use WebSockets for OADA API',
       allowNo: true,
       default: false,
@@ -184,7 +183,7 @@ export default abstract class BaseCommand extends Command {
         []
     );
     const userConfig = await loadUserConfig(this.configFiles);
-    const { flags: fFlags } = this.parse(BaseCommand);
+    const { flags: fFlags } = await this.parse(BaseCommand);
 
     // Merge config sources
     // TODO: clean up this mess

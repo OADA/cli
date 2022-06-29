@@ -6,9 +6,9 @@
  * https://opensource.org/licenses/MIT
  */
 
-import Command from '../../BaseCommand.js';
-import getConn from '../../connections.js';
-import { shell } from '../../highlight.js';
+import Command from '../../BaseCommand';
+import getConn from '../../connections';
+import { shell } from '../../highlight';
 
 const examples = [
   shell`$ oada mv /resources/foo /bookmarks/foo`,
@@ -37,7 +37,7 @@ export default class Move extends Command {
   static override strict = false;
 
   async run() {
-    const { argv: paths } = this.parse(Move);
+    const { argv: paths } = await this.parse(Move);
     const conn = getConn(this.iconfig);
     const path = paths.pop()!;
 

@@ -6,13 +6,10 @@
  * https://opensource.org/licenses/MIT
  */
 
-// @ts-expect-error shut up ts
-import type { Body } from '@oada/client/dist/client.js';
-
-import Command from '../../BaseCommand.js';
-import getConn from '../../connections.js';
-import { input } from '../../io.js';
-import { shell } from '../../highlight.js';
+import Command from '../../BaseCommand';
+import getConn from '../../connections';
+import { input } from '../../io';
+import { shell } from '../../highlight';
 
 const examples = [
   shell`$ oada cp /resources/foo /bookmarks/foo`,
@@ -41,7 +38,7 @@ export default class Copy extends Command {
   static override strict = false;
 
   async run() {
-    const { argv: paths } = this.parse(Copy);
+    const { argv: paths } = await this.parse(Copy);
     const conn = getConn(this.iconfig);
     const path = paths.pop()!;
 
@@ -50,10 +47,10 @@ export default class Copy extends Command {
 
     for (const file of paths) {
       // eslint-disable-next-line no-await-in-loop, require-yield
-      await input<Body>(conn, file, this.iconfig, async function* (source) {
+      await input(conn, file, this.iconfig, async function* (source) {
         for await (const data of source) {
-          // eslint-disable-next-line security/detect-object-injection
-          await conn[method]({ path, data });
+          // eslint-disable-next-line security/detect-object-injection, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any
+          await conn[method]({ path, data: data as any });
         }
       });
     }

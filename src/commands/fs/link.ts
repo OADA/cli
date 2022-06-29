@@ -6,11 +6,11 @@
  * https://opensource.org/licenses/MIT
  */
 
-import { flags } from '@oclif/command';
+import { Flags } from '@oclif/core';
 
-import Command from '../../BaseCommand.js';
-import getConn from '../../connections.js';
-import { shell } from '../../highlight.js';
+import Command from '../../BaseCommand';
+import getConn from '../../connections';
+import { shell } from '../../highlight';
 
 const examples = [
   shell`$ oada ln /resources/my-thingy /bookmarks/thingy`,
@@ -29,12 +29,12 @@ export default class Link extends Command {
 
   static override flags = {
     ...Command.flags,
-    versioned: flags.boolean({
+    versioned: Flags.boolean({
       char: 'r',
       default: false,
       description: 'make versioned link(s)',
     }),
-    force: flags.boolean({
+    force: Flags.boolean({
       char: 'f',
       default: false,
       description: 'delete conflicting existing data/links',
@@ -52,7 +52,7 @@ export default class Link extends Command {
     const {
       argv: paths,
       flags: { force, versioned },
-    } = this.parse(Link);
+    } = await this.parse(Link);
     const conn = getConn(this.iconfig);
     const path = paths.pop()!;
 
