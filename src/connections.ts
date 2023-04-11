@@ -23,7 +23,7 @@ import {
 
 import type { IConfig } from './BaseCommand.js';
 
-type Connections = {
+interface Connections {
   /**
    * Default OADA connection
    *
@@ -31,7 +31,7 @@ type Connections = {
    */
   connection?: Promise<OADAClient>;
   domains: Map<string, Promise<OADAClient>>;
-};
+}
 
 // Wrap OADAClient with magics
 const methods = ['get', 'head', 'put', 'post', 'delete'] as const;

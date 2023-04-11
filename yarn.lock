@@ -467,8 +467,6 @@ __metadata:
     "@oclif/plugin-plugins": ^2.4.4
     "@tsconfig/node16": ^1.0.3
     "@types/glob": ^8.1.0
-    "@types/hjson": ^2.4.3
-    "@types/json5": ^2.2.0
     "@types/minimatch": ^5.1.2
     "@types/ndjson": ^2.0.1
     "@types/node": ^16.18.23
@@ -505,8 +503,6 @@ __metadata:
     gaxios: ^5.1.0
     glob: ^10.0.0
     globby: ^13.1.3
-    hjson: ^3.2.2
-    json-6: ^1.1.4
     ksuid: ^3.0.0
     minimatch: ^9.0.0
     ndjson: ^2.0.0
@@ -936,13 +932,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/hjson@npm:^2.4.3":
-  version: 2.4.3
-  resolution: "@types/hjson@npm:2.4.3"
-  checksum: 4f90e9a41becd3a3ba2636ae7b421e419d102222fcfb729434406bc98cede61a1ecd32bc928f89693d71ab443696bfdb77cb1a7561b6bf44c530ab3506048eef
-  languageName: node
-  linkType: hard
-
 "@types/http-cache-semantics@npm:*":
   version: 4.0.1
   resolution: "@types/http-cache-semantics@npm:4.0.1"
@@ -968,15 +957,6 @@ __metadata:
   version: 0.0.29
   resolution: "@types/json5@npm:0.0.29"
   checksum: e60b153664572116dfea673c5bda7778dbff150498f44f998e34b5886d8afc47f16799280e4b6e241c0472aef1bc36add771c569c68fc5125fc2ae519a3eb9ac
-  languageName: node
-  linkType: hard
-
-"@types/json5@npm:^2.2.0":
-  version: 2.2.0
-  resolution: "@types/json5@npm:2.2.0"
-  dependencies:
-    json5: "*"
-  checksum: a295f489dd53fd075181b9c24d489efc2655d68a80636e5edcb5aa785b0afefe3ac8bb68d613f318e177b4c7a0394690243497d54b1da9ac129ddaa901e28fdb
   languageName: node
   linkType: hard
 
@@ -4202,15 +4182,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"hjson@npm:^3.2.2":
-  version: 3.2.2
-  resolution: "hjson@npm:3.2.2"
-  bin:
-    hjson: bin/hjson
-  checksum: 556086424f719c82fc8ae880d388e617e88f38213f69a6c380704fa6808790c68f9233ef480cdb22d6f24549b2edfc19aea67ab2c40013b231001f8168d56e33
-  languageName: node
-  linkType: hard
-
 "hosted-git-info@npm:^2.1.4":
   version: 2.8.9
   resolution: "hosted-git-info@npm:2.8.9"
@@ -4967,15 +4938,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"json-6@npm:^1.1.4":
-  version: 1.1.4
-  resolution: "json-6@npm:1.1.4"
-  bin:
-    json-6: lib/cli.js
-  checksum: 0cd3df156616646f4f53d7fbf58f08a5f06387744f1bd2c65a2897ff9fc5678b5b5f1f6c2c3c356c1e9136862a8e0275948ddb46afc2d0c105acedfa4811be98
-  languageName: node
-  linkType: hard
-
 "json-buffer@npm:3.0.1, json-buffer@npm:~3.0.1":
   version: 3.0.1
   resolution: "json-buffer@npm:3.0.1"
@@ -5029,15 +4991,6 @@ __metadata:
   version: 5.0.1
   resolution: "json-stringify-safe@npm:5.0.1"
   checksum: 48ec0adad5280b8a96bb93f4563aa1667fd7a36334f79149abd42446d0989f2ddc58274b479f4819f1f00617957e6344c886c55d05a4e15ebb4ab931e4a6a8ee
-  languageName: node
-  linkType: hard
-
-"json5@npm:*":
-  version: 2.2.1
-  resolution: "json5@npm:2.2.1"
-  bin:
-    json5: lib/cli.js
-  checksum: 74b8a23b102a6f2bf2d224797ae553a75488b5adbaee9c9b6e5ab8b510a2fc6e38f876d4c77dea672d4014a44b2399e15f2051ac2b37b87f74c0c7602003543b
   languageName: node
   linkType: hard
 

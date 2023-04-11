@@ -120,7 +120,7 @@ async function outputType(outString: string, { tty }: IConfig) {
  * @todo make this more extensible?
  * @todo support these extensions coming from remote??
  */
-export const importable = ['.json6', '.json5', '.hjson', '.ts', '.js'] as const;
+export const importable = ['.ts', '.js'] as const;
 
 /**
  * Load a support file as JSON

@@ -40,6 +40,7 @@ export default class Copy extends Command {
       // eslint-disable-next-line require-yield
       await input(conn, `${file}`, this.iconfig, async function* (source) {
         for await (const data of source) {
+          // eslint-disable-next-line security/detect-object-injection
           await conn[method]({ path, data: data as any });
         }
       });

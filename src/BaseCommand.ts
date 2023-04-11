@@ -27,13 +27,13 @@ import { importable } from './io.js';
 /**
  * Global config stuff
  */
-export type Config<D extends DomainConfig = DomainConfig> = {
+export interface Config<D extends DomainConfig = DomainConfig> {
   domains?: Record<string, D>;
   domain?: string;
   token?: string;
   tty?: boolean;
   ws?: boolean;
-};
+}
 
 /**
  * Internal Config type, with defaults filled out
@@ -46,7 +46,7 @@ export type IConfig = Record<string, unknown> &
 /**
  * Config per OADA domain
  */
-type DomainConfig = {
+interface DomainConfig {
   /**
    * OADA API token
    */
@@ -59,7 +59,7 @@ type DomainConfig = {
    * Allow passing in an OADAClient?
    */
   connection?: Promise<OADAClient>;
-};
+}
 
 /**
  * Defaults for settings
@@ -108,9 +108,8 @@ async function loadUserConfig(
   paths: readonly string[]
 ): Promise<Partial<Config>> {
   const config = {};
-  for (const path of paths) {
+  for await (const path of paths) {
     try {
-      // eslint-disable-next-line no-await-in-loop
       const { default: userConfig } = (await import(path)) as {
         default: unknown;
       };

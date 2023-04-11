@@ -7,8 +7,6 @@
  */
 
 declare module 'concatjson' {
-  import { Readable, Stream, type Transform, Writable } from 'node:stream';
-
   export function parse(): Transform;
   export function serialize(): Transform;
 }

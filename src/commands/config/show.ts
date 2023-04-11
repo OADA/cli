@@ -20,10 +20,6 @@ export default class ShowConfig extends Command {
 
   static override aliases = ['config'];
 
-  static override flags = {
-    ...Command.flags,
-  };
-
   async run() {
     const config = this.iconfig;
     console.error(this.configFiles, 'Loading configs');

@@ -43,14 +43,14 @@ function humanize(value: unknown): unknown {
   return value;
 }
 
-type Item = {
+interface Item {
   k: unknown;
   v: unknown;
-};
-type Transform = {
+}
+interface Transform {
   match(value: Item): boolean;
   apply(value: Item): Item;
-};
+}
 const transforms: readonly Transform[] = [
   // KSUIDs transform
   {
