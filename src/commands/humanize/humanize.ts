@@ -8,9 +8,9 @@
 
 import KSUID from 'ksuid';
 
-import Command from '../../BaseCommand';
-import getConn from '../../connections';
-import { input } from '../../io';
+import Command from '../../BaseCommand.js';
+import getConn from '../../connections.js';
+import { input } from '../../io.js';
 // Import { json, shell } from '../../highlight';
 
 function humanize(value: unknown): unknown {
@@ -43,10 +43,10 @@ function humanize(value: unknown): unknown {
   return value;
 }
 
-interface Item {
+type Item = {
   k: unknown;
   v: unknown;
-}
+};
 type Transform = {
   match(value: Item): boolean;
   apply(value: Item): Item;
@@ -85,14 +85,6 @@ const transforms: readonly Transform[] = [
 export default class Humanize extends Command {
   static override aliases = ['humanize'];
 
-  static override args = [
-    { name: 'paths...', required: true, description: 'OADA path(s) to GET' },
-  ];
-
-  static override flags = {
-    ...Command.flags,
-  };
-
   static override strict = false;
 
   async run() {
@@ -101,7 +93,7 @@ export default class Humanize extends Command {
 
     for (const file of paths) {
       // eslint-disable-next-line no-await-in-loop, require-yield
-      await input(conn, file, this.iconfig, async function* (source) {
+      await input(conn, `${file}`, this.iconfig, async function* (source) {
         for await (const data of source) {
           const out = humanize(data);
           // eslint-disable-next-line no-console

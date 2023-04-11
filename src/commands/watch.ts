@@ -9,13 +9,13 @@
 /* eslint-disable sonarjs/no-nested-template-literals */
 /* eslint-disable no-secrets/no-secrets */
 
-import { Flags } from '@oclif/core';
+import { Args, Flags } from '@oclif/core';
 
-import { json, shell } from '../highlight';
-import Command from '../BaseCommand';
+import { json, shell } from '../highlight.js';
+import Command from '../BaseCommand.js';
 
-import getConn from '../connections';
-import { output } from '../io';
+import getConn from '../connections.js';
+import { output } from '../io.js';
 
 const examples = [
   `${shell`$ oada watch /bookmarks`}
@@ -95,22 +95,27 @@ export default class Watch extends Command {
   static override examples = examples;
 
   static override flags = {
-    ...Command.flags,
     out: Flags.string({ char: 'o', default: '-' }),
     rev: Flags.integer({
       char: 'r',
       description: 'rev from which to start (negative means latest - n)',
     }),
-    type: Flags.enum({
-      options: ['single', 'tree'],
+    type: Flags.string({
+      async parse(input) {
+        if (['single', 'tree'].includes(input)) {
+          return input;
+        }
+
+        throw new TypeError(`Invalid watch type: ${input}`);
+      },
       char: 't',
       default: 'tree',
     }),
   };
 
-  static override args = [
-    { name: 'path', required: true, description: 'OADA path to WATCH' },
-  ];
+  static override args = {
+    path: Args.string({ required: true, description: 'OADA path to WATCH' }),
+  };
 
   static override strict = true;
 
@@ -131,11 +136,11 @@ export default class Watch extends Command {
           const {
             headers: { 'x-oada-rev': current },
           } = await conn.get({ path });
-          rev = Number(current!) + rev;
+          rev = Number(current) + rev;
         }
 
         // @ts-expect-error the deprecated v2 API confuses the types
-        // eslint-disable-next-line security/detect-non-literal-fs-filename
+
         const { changes } = await conn.watch({
           type: type as 'single' | 'tree',
           rev: `${rev}`,

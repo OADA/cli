@@ -8,14 +8,15 @@
 
 import { setInterval } from 'node:timers/promises';
 
-import { Flags } from '@oclif/core';
+import { Args, Flags } from '@oclif/core';
 
+import type Tree from '@oada/types/oada/tree/v1.js';
 import { oadaify } from '@oada/oadaify';
 
-import Command from '../BaseCommand';
+import Command from '../BaseCommand.js';
 
-import { loadFile, output } from '../io';
-import getConn from '../connections';
+import { loadFile, output } from '../io.js';
+import getConn from '../connections.js';
 
 const examples = [''];
 
@@ -30,7 +31,6 @@ export default class Poll extends Command {
   static override examples = examples;
 
   static override flags = {
-    ...Command.flags,
     out: Flags.string({ char: 'o', default: '-' }),
     tree: Flags.string({
       char: 'T',
@@ -39,9 +39,9 @@ export default class Poll extends Command {
     interval: Flags.integer({ char: 'i', default: 1000 }),
   };
 
-  static override args = [
-    { name: 'path', required: true, description: 'OADA path to poll' },
-  ];
+  static override args = {
+    path: Args.string({ required: true, description: 'OADA path to poll' }),
+  };
 
   static override strict = true;
 
@@ -53,9 +53,7 @@ export default class Poll extends Command {
     const conn = getConn(this.iconfig);
 
     // Load tree
-    const tree = treefile
-      ? ((await loadFile(treefile)) as Record<string, unknown>)
-      : undefined;
+    const tree = treefile ? ((await loadFile(treefile)) as Tree) : undefined;
 
     const path = `${rawpath}`;
     await output(
@@ -71,7 +69,8 @@ export default class Poll extends Command {
             return;
           }
 
-          const oadaified = oadaify(data!);
+          // @ts-expect-error oadaify nonsense
+          const oadaified = oadaify(data);
 
           yield oadaified;
         }

@@ -6,9 +6,9 @@
  * https://opensource.org/licenses/MIT
  */
 
-import Command from '../BaseCommand';
-import getConn from '../connections';
-import { shell } from '../highlight';
+import Command from '../BaseCommand.js';
+import getConn from '../connections.js';
+import { shell } from '../highlight.js';
 
 const examples = [
   shell`$ oada head /bookmarks/does-exist; echo $?\n0`,
@@ -25,14 +25,6 @@ export default class Head extends Command {
 
   static override examples = examples;
 
-  static override flags = {
-    ...Command.flags,
-  };
-
-  static override args = [
-    { name: 'paths...', required: true, description: 'OADA path(s) to HEAD' },
-  ];
-
   static override strict = false;
 
   async run() {
@@ -41,7 +33,7 @@ export default class Head extends Command {
 
     for (const path of paths) {
       // eslint-disable-next-line no-await-in-loop
-      await conn.head({ path });
+      await conn.head({ path: `${path}` });
     }
   }
 }

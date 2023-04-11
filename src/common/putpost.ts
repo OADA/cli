@@ -14,13 +14,15 @@
 
 import { Flags } from '@oclif/core';
 
-import { input, loadFile } from '../io';
-import Command from '../BaseCommand';
-import getConn from '../connections';
-import { shell } from '../highlight';
+import { input, loadFile } from '../io.js';
+import Command from '../BaseCommand.js';
+import type { Tree } from '@oada/types/oada/tree/v1.js';
+import getConn from '../connections.js';
+import { shell } from '../highlight.js';
 
 /**
  * OADA PUT/POST
+ * @internal
  */
 const [put, post] = (['put', 'post'] as const).map((method) => {
   const METH = method.toUpperCase();
@@ -39,17 +41,11 @@ const [put, post] = (['put', 'post'] as const).map((method) => {
     static override examples = examples;
 
     static override flags = {
-      ...Command.flags,
       tree: Flags.string({
         char: 'T',
         description: `file containing an OADA tree to use for a tree ${METH}`,
       }),
     };
-
-    static override args = [
-      { name: 'paths...', required: true, description: `paths to ${METH}` },
-      { name: 'path', required: true, description: 'destination OADA path' },
-    ];
 
     static override strict = false;
 
@@ -59,16 +55,14 @@ const [put, post] = (['put', 'post'] as const).map((method) => {
         flags: { tree: treefile },
       } = await this.parse(PutPost);
       const conn = getConn(this.iconfig);
-      const path = paths.pop()!;
+      const path = paths.pop()! as string;
 
       // Load tree
-      const tree = treefile
-        ? ((await loadFile(treefile)) as Record<string, unknown>)
-        : undefined;
+      const tree = treefile ? ((await loadFile(treefile)) as Tree) : undefined;
 
-      for (const file of paths) {
-        // eslint-disable-next-line no-await-in-loop, require-yield
-        await input(conn, file, this.iconfig, async function* (source) {
+      for await (const file of paths) {
+        // eslint-disable-next-line require-yield
+        await input(conn, `${file}`, this.iconfig, async function* (source) {
           for await (const data of source) {
             // eslint-disable-next-line security/detect-object-injection, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any
             await conn[method]({ path, tree, data: data as any });
@@ -80,4 +74,4 @@ const [put, post] = (['put', 'post'] as const).map((method) => {
 });
 
 /** @internal */
-export default { put, post };
+export { put, post };

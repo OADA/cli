@@ -8,9 +8,9 @@
 
 import { Flags } from '@oclif/core';
 
-import Command from '../../BaseCommand';
-import getConn from '../../connections';
-import { shell } from '../../highlight';
+import Command from '../../BaseCommand.js';
+import getConn from '../../connections.js';
+import { shell } from '../../highlight.js';
 
 const examples = [
   shell`$ oada ln /resources/my-thingy /bookmarks/thingy`,
@@ -28,7 +28,6 @@ export default class Link extends Command {
   static override examples = examples;
 
   static override flags = {
-    ...Command.flags,
     versioned: Flags.boolean({
       char: 'r',
       default: false,
@@ -41,11 +40,6 @@ export default class Link extends Command {
     }),
   };
 
-  static override args = [
-    { name: 'paths...', required: true, description: 'path(s) to link' },
-    { name: 'path', required: true, description: 'OADA path in which to link' },
-  ];
-
   static override strict = false;
 
   async run() {
@@ -54,7 +48,7 @@ export default class Link extends Command {
       flags: { force, versioned },
     } = await this.parse(Link);
     const conn = getConn(this.iconfig);
-    const path = paths.pop()!;
+    const path = paths.pop()! as string;
 
     // Do POST for trailing slash or multiple things to link, o.w. PUT?
     const method = path.endsWith('/') || paths.length > 1 ? 'post' : 'put';
@@ -75,7 +69,7 @@ export default class Link extends Command {
         if (force && method === 'put') {
           // Delete anything in the way
           // eslint-disable-next-line no-await-in-loop
-          await conn.delete({ path: file });
+          await conn.delete({ path: `${file}` });
         }
 
         // Create link

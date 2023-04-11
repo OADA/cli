@@ -14,11 +14,16 @@
 
 import { URL } from 'node:url';
 
-import { GETRequest, OADAClient, PUTRequest, connect } from './client.cjs';
+import {
+  type GETRequest,
+  type OADAClient,
+  type PUTRequest,
+  connect,
+} from '@oada/client';
 
-import type { IConfig } from './BaseCommand';
+import type { IConfig } from './BaseCommand.js';
 
-interface Connections {
+type Connections = {
   /**
    * Default OADA connection
    *
@@ -26,7 +31,7 @@ interface Connections {
    */
   connection?: Promise<OADAClient>;
   domains: Map<string, Promise<OADAClient>>;
-}
+};
 
 // Wrap OADAClient with magics
 const methods = ['get', 'head', 'put', 'post', 'delete'] as const;
@@ -68,7 +73,7 @@ export function conn(config: IConfig): OADAClient {
       ({ host, pathname: path } = new URL(p));
     } finally {
       const con = await getConnection(host);
-      // eslint-disable-next-line security/detect-non-literal-fs-filename, no-unsafe-finally
+      // eslint-disable-next-line no-unsafe-finally
       return con.watch(
         // @ts-expect-error the deprecated v2 API screws up the types
         {

@@ -17,38 +17,36 @@ import { join } from 'node:path';
 import 'dotenv/config';
 import { Command, Flags } from '@oclif/core';
 import type { SetRequired } from 'type-fest';
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-import findUp = require('find-up');
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-import objectAssignDeep = require('object-assign-deep');
+import { findUp } from 'find-up';
+import objectAssignDeep from 'object-assign-deep';
 
-import type { OADAClient } from './client.cjs';
+import type { OADAClient } from '@oada/client';
 
-import { importable } from './io';
+import { importable } from './io.js';
 
 /**
  * Global config stuff
  */
-export interface Config<D extends DomainConfig = DomainConfig> {
+export type Config<D extends DomainConfig = DomainConfig> = {
   domains?: Record<string, D>;
   domain?: string;
   token?: string;
   tty?: boolean;
   ws?: boolean;
-}
+};
 
 /**
  * Internal Config type, with defaults filled out
  *
  * @see Config
  */
-export interface IConfig
-  extends Required<Config<SetRequired<DomainConfig, 'domain'>>> {}
+export type IConfig = Record<string, unknown> &
+  Required<Config<SetRequired<DomainConfig, 'domain'>>>;
 
 /**
  * Config per OADA domain
  */
-interface DomainConfig {
+type DomainConfig = {
   /**
    * OADA API token
    */
@@ -61,7 +59,7 @@ interface DomainConfig {
    * Allow passing in an OADAClient?
    */
   connection?: Promise<OADAClient>;
-}
+};
 
 /**
  * Defaults for settings
@@ -132,10 +130,11 @@ export const configTypes = ['.json', ...importable] as const;
  * Base command class for global flags and user config
  */
 export default abstract class BaseCommand extends Command {
+  static override description: string;
   /**
    * Global CLI flags
    */
-  static override flags = {
+  static override baseFlags = {
     /**
      * Default OADA API domain
      */
@@ -163,6 +162,8 @@ export default abstract class BaseCommand extends Command {
       default: false,
     }),
   };
+
+  static override flags = {};
 
   static override strict = false;
 

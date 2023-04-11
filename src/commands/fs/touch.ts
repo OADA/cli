@@ -6,10 +6,10 @@
  * https://opensource.org/licenses/MIT
  */
 
-import Command from '../../BaseCommand';
-import { expandPath } from '../../io';
-import getConn from '../../connections';
-import { shell } from '../../highlight';
+import Command from '../../BaseCommand.js';
+import { expandPath } from '../../io.js';
+import getConn from '../../connections.js';
+import { shell } from '../../highlight.js';
 
 const examples = [shell`$ oada touch /bookmarks`];
 
@@ -25,14 +25,6 @@ export default class Touch extends Command {
 
   static override examples = examples;
 
-  static override flags = {
-    ...Command.flags,
-  };
-
-  static override args = [
-    { name: 'paths...', required: true, description: `paths to touch` },
-  ];
-
   static override strict = false;
 
   async run() {
@@ -40,7 +32,7 @@ export default class Touch extends Command {
     const conn = getConn(this.iconfig);
 
     for (const p of paths) {
-      const pp = expandPath(conn, p);
+      const pp = expandPath(conn, `${p}`);
       // eslint-disable-next-line no-await-in-loop
       for await (const path of pp) {
         // PUT an empty object

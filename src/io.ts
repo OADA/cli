@@ -14,25 +14,18 @@ import { pipeline } from 'node:stream/promises';
 
 import { Minimatch } from 'minimatch';
 // Concatenated JSON in, LJSON out
-import highlight from 'cli-highlight';
+import { highlight } from 'cli-highlight';
 import { parse } from 'concatjson';
 import { request } from 'gaxios';
 import { stringify } from 'ndjson';
 
-import type { OADAClient } from './client.cjs';
+import type { OADAClient } from '@oada/client';
 import { oadaify } from '@oada/oadaify';
 
 // Support input from TypeScript files
 import 'ts-node/register/transpile-only';
-// Support input from HJSON files
-import 'hjson/lib/require-config';
-// Support for input from JSON6 files
-import 'json-6/lib/require';
 
-import type { IConfig } from './BaseCommand';
-// Make json-6 load JSON5 (because it can)
-// eslint-disable-next-line unicorn/prefer-module
-require.extensions['.json5'] = require.extensions['.json6'];
+import type { IConfig } from './BaseCommand.js';
 
 /**
  * Supported input/output types
@@ -149,8 +142,10 @@ function inputChain(
   >
 ] {
   switch (inputType(inString, config)) {
-    case IOType.Stdin:
+    case IOType.Stdin: {
       return [process.stdin, parse()];
+    }
+
     case IOType.File: {
       const extension = extname(inString);
       if ((importable as readonly string[]).includes(extension)) {
@@ -164,7 +159,7 @@ function inputChain(
       return [createReadStream(inString), parse()];
     }
 
-    case IOType.Oada:
+    case IOType.Oada: {
       return [
         // TODO: Use code from get subcommand?
         async function* () {
@@ -175,7 +170,9 @@ function inputChain(
           }
         },
       ];
-    case IOType.Url:
+    }
+
+    case IOType.Url: {
       return [
         async function* () {
           const { data } = await request({
@@ -186,8 +183,11 @@ function inputChain(
           yield data;
         },
       ];
-    default:
+    }
+
+    default: {
       throw new Error(`Unsupported input type: ${inString}`);
+    }
   }
 }
 
@@ -329,7 +329,7 @@ async function outputChain(
   ]
 > {
   switch (await outputType(outString, config)) {
-    case IOType.Tty:
+    case IOType.Tty: {
       return [
         async function* (source) {
           for await (const data of source) {
@@ -340,11 +340,17 @@ async function outputChain(
         },
         process.stdout,
       ];
-    case IOType.Stdout:
+    }
+
+    case IOType.Stdout: {
       return [stringify(), process.stdout];
-    case IOType.File:
+    }
+
+    case IOType.File: {
       return [stringify(), createWriteStream(outString)];
-    case IOType.Url:
+    }
+
+    case IOType.Url: {
       return [
         async function* (source) {
           for await (const data of source) {
@@ -352,8 +358,11 @@ async function outputChain(
           }
         },
       ];
-    default:
+    }
+
+    default: {
       throw new Error(`Unsupported output type: ${outString}`);
+    }
   }
 }
 

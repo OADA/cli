@@ -1,5 +1,5 @@
 #!/usr/bin/env node
+/* eslint-disable notice/notice */
+import oclif from '@oclif/core';
 
-const oclif = require('@oclif/core')
-
-oclif.run().then(require('@oclif/core/flush')).catch(require('@oclif/core/handle'))
+await oclif.execute({ type: 'esm', dir: import.meta.url });

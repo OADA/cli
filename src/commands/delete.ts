@@ -8,10 +8,10 @@
 
 import { Flags } from '@oclif/core';
 
-import Command from '../BaseCommand';
-import { expandPath } from '../io';
-import getConn from '../connections';
-import { shell } from '../highlight';
+import Command from '../BaseCommand.js';
+import { expandPath } from '../io.js';
+import getConn from '../connections.js';
+import { shell } from '../highlight.js';
 
 const examples = [
   shell`$ oada delete /bookmarks/foo`,
@@ -29,13 +29,8 @@ export default class Delete extends Command {
   static override examples = examples;
 
   static override flags = {
-    ...Command.flags,
     recursive: Flags.boolean({ char: 'R', default: false }),
   };
-
-  static override args = [
-    { name: 'paths...', required: true, description: 'OADA path(s) to GET' },
-  ];
 
   static override strict = false;
 
@@ -43,9 +38,8 @@ export default class Delete extends Command {
     const { argv: paths } = await this.parse(Delete);
     const conn = getConn(this.iconfig);
 
-    for (const p of paths) {
-      const pp = expandPath(conn, p);
-      // eslint-disable-next-line no-await-in-loop
+    for await (const p of paths) {
+      const pp = expandPath(conn, `${p}`);
       for await (const path of pp) {
         await conn.delete({ path });
       }

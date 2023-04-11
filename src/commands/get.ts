@@ -10,21 +10,22 @@
 
 import { Flags } from '@oclif/core';
 
-import { json, shell } from '../highlight';
-import Command from '../BaseCommand';
+import { json, shell } from '../highlight.js';
+import Command from '../BaseCommand.js';
 
 import {
-  OADAifiedJsonArray,
-  OADAifiedJsonObject,
-  OADAifiedJsonValue,
+  type OADAifiedJsonArray,
+  type OADAifiedJsonObject,
+  type OADAifiedJsonValue,
   _id,
   _meta,
   oadaify,
 } from '@oada/oadaify';
 
-import { expandPath, loadFile, output } from '../io';
-import type { OADAClient } from '../client.cjs';
-import getConn from '../connections';
+import { expandPath, loadFile, output } from '../io.js';
+import type { OADAClient } from '@oada/client';
+import type Tree from '@oada/types/oada/tree/v1.js';
+import getConn from '../connections.js';
 
 /**
  * @todo why does TS need this?
@@ -65,7 +66,6 @@ export default class Get extends Command {
   static override examples = examples;
 
   static override flags = {
-    ...Command.flags,
     tree: Flags.string({
       char: 'T',
       description: 'file containing an OADA tree to use for a tree GET',
@@ -74,10 +74,6 @@ export default class Get extends Command {
     meta: Flags.boolean({ char: 'm', default: false }),
     out: Flags.string({ char: 'o', default: '-' }),
   };
-
-  static override args = [
-    { name: 'paths...', required: true, description: 'OADA path(s) to GET' },
-  ];
 
   static override strict = false;
 
@@ -89,15 +85,13 @@ export default class Get extends Command {
     const conn = getConn(this.iconfig);
 
     // Load tree
-    const tree = treefile
-      ? ((await loadFile(treefile)) as Record<string, unknown>)
-      : undefined;
+    const tree = treefile ? ((await loadFile(treefile)) as Tree) : undefined;
 
     await output(
       out,
       async function* () {
         for (const p of paths) {
-          const pp = expandPath(conn, p);
+          const pp = expandPath(conn, `${p}`);
           // eslint-disable-next-line no-await-in-loop
           for await (const path of pp) {
             const { data } = await conn.get({ path, tree });
@@ -107,7 +101,8 @@ export default class Get extends Command {
               return;
             }
 
-            const oadaified = oadaify(data!);
+            // @ts-expect-error oadaify nonsense
+            const oadaified = oadaify(data);
 
             if (meta) {
               await getMeta(conn, oadaified);

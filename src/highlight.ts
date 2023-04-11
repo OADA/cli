@@ -12,7 +12,7 @@
  * @packageDocumentation
  */
 
-import highlight from 'cli-highlight';
+import { highlight } from 'cli-highlight';
 
 /**
  * Languages we support highlighting

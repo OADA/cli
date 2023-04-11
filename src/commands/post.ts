@@ -6,7 +6,5 @@
  * https://opensource.org/licenses/MIT
  */
 
-import classes from '../common/putpost';
-
 /** @internal */
-export default classes.post;
+export { post as default } from '../common/putpost.js';
