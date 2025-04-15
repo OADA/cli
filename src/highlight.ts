@@ -23,9 +23,7 @@ export const languages = ['json', 'shell'] as const;
  * @todo better way to achieve this??
  */
 function hi(language: string) {
-  return function (strings: readonly string[]): string {
-    return strings.map((s) => highlight(s, { language })).join(',');
-  };
+  return (strings: readonly string[]): string => strings.map((s) => highlight(s, { language })).join(',');
 }
 
 export const json = hi('json');

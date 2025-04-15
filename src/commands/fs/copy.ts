@@ -8,8 +8,8 @@
 
 import Command from '../../BaseCommand.js';
 import getConn from '../../connections.js';
-import { input } from '../../io.js';
 import { shell } from '../../highlight.js';
+import { input } from '../../io.js';
 
 const examples = [
   shell`$ oada cp /resources/foo /bookmarks/foo`,

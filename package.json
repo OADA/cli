@@ -1,148 +1,124 @@
 {
-  "name": "@oada/cli",
-  "version": "5.0.0",
-  "description": "CLI OADA client",
-  "main": "dist/index.js",
-  "type": "module",
-  "bin": {
-    "oada": "./bin/run.js"
-  },
-  "engines": {
-    "node": ">=16.0.0"
-  },
-  "author": "Alex Layton <alex@layton.in>",
-  "homepage": "https://github.com/OADA/cli",
-  "repository": "OADA/cli",
-  "bugs": "https://github.com/OADA/cli/issues",
-  "license": "MIT",
-  "keywords": [
-    "OADA",
-    "CLI",
-    "oclif",
-    "JSON",
-    "NDJSON",
-    "Concatenated-JSON",
-    "LDJSON",
-    "JSONL",
-    "JSONLines"
-  ],
-  "pkg": {
-    "options": {
-      "enable-source-maps": true
-    },
-    "assets": [
-      "oclif.manifest.json",
-      "dist/**/*.map"
-    ],
-    "scripts": [
-      "dist/**/*.{c,m,}js",
-      "@oada/client"
-    ],
-    "targets": [
-      "node16-linux-x64",
-      "node16-macos-x64",
-      "node16-win-x64"
-    ],
-    "outputPath": "packaged"
-  },
-  "oclif": {
-    "additionalHelpFlags": [
-      "-h"
-    ],
-    "additionalVersionFlags": [
-      "-v"
-    ],
-    "commands": "./dist/commands",
-    "topics": {
-      "fs": {
-        "description": "interact with OADA like a filesystem"
-      }
-    },
-    "hooks": {
-      "postrun": "./dist/hooks/postrun/close"
-    },
-    "bin": "oada",
-    "dirname": "oada",
-    "plugins": [
-      "@oclif/plugin-help",
-      "@oclif/plugin-autocomplete",
-      "@oclif/plugin-not-found",
-      "@oclif/plugin-plugins"
-    ]
-  },
-  "scripts": {
-    "postpack": "rm -f oclif.manifest.json",
-    "prepare": "npm run build && oclif manifest",
-    "readme": "oclif readme",
-    "package": "npm run prepare && pkg --public-packages '*' --no-bytecode --debug .",
-    "build": "tsc -b"
-  },
-  "files": [
-    "bin",
-    "dist",
-    "oclif.manifest.json",
-    "yarn.lock"
-  ],
-  "dependencies": {
-    "@oada/client": "^4.5.0",
-    "@oada/oadaify": "^2.1.0",
-    "@oclif/core": "^2.8.0",
-    "@oclif/plugin-autocomplete": "^2.1.8",
-    "@oclif/plugin-help": "^5.2.9",
-    "@oclif/plugin-not-found": "^2.3.23",
-    "@oclif/plugin-plugins": "^2.4.4",
-    "cli-highlight": "^2.1.11",
-    "concatjson": "^2.0.1",
-    "dotenv": "^16.0.3",
-    "find-up": "^6.3.0",
-    "gaxios": "^5.1.0",
-    "ksuid": "^3.0.0",
-    "minimatch": "^9.0.0",
-    "ndjson": "^2.0.0",
-    "object-assign-deep": "^0.4.0",
-    "tslib": "^2.5.0"
-  },
-  "devDependencies": {
-    "@oada/types": "^3.4.5",
-    "@tsconfig/node16": "^1.0.3",
-    "@types/glob": "^8.1.0",
-    "@types/minimatch": "^5.1.2",
-    "@types/ndjson": "^2.0.1",
-    "@types/node": "^16.18.23",
-    "@types/object-assign-deep": "^0.4.0",
-    "@typescript-eslint/eslint-plugin": "^5.58.0",
-    "@typescript-eslint/parser": "^5.58.0",
-    "@yarnpkg/sdks": "^3.0.0-rc.42",
-    "eslint": "^8.38.0",
-    "eslint-config-xo": "^0.43.1",
-    "eslint-config-xo-typescript": "^0.57.0",
-    "eslint-plugin-array-func": "^3.1.8",
-    "eslint-plugin-ava": "^14.0.0",
-    "eslint-plugin-eslint-comments": "^3.2.0",
-    "eslint-plugin-filenames": "^1.3.2",
-    "eslint-plugin-github": "^4.7.0",
-    "eslint-plugin-i18n-text": "^1.0.1",
-    "eslint-plugin-import": "^2.27.5",
-    "eslint-plugin-no-constructor-bind": "^2.0.4",
-    "eslint-plugin-no-only-tests": "^3.1.0",
-    "eslint-plugin-no-secrets": "^0.8.9",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-notice": "^0.9.10",
-    "eslint-plugin-optimize-regex": "^1.2.1",
-    "eslint-plugin-prettier": "^4.2.1",
-    "eslint-plugin-promise": "^6.1.1",
-    "eslint-plugin-regexp": "^1.14.0",
-    "eslint-plugin-security": "^1.7.1",
-    "eslint-plugin-sonarjs": "^0.19.0",
-    "eslint-plugin-unicorn": "^46.0.0",
-    "glob": "^10.0.0",
-    "globby": "^13.1.3",
-    "oclif": "^3.7.3",
-    "pkg": "^5.8.1",
-    "prettier": "^2.8.7",
-    "ts-node": "^10.9.1",
-    "type-fest": "^3.8.0",
-    "typescript": "^5.0.4"
-  },
-  "packageManager": "yarn@3.5.0"
+	"name": "@oada/cli",
+	"version": "6.0.0",
+	"description": "CLI OADA client",
+	"main": "dist/index.js",
+	"type": "module",
+	"bin": {
+		"oada": "./bin/run.js"
+	},
+	"engines": {
+		"node": ">=16.0.0"
+	},
+	"author": "Alex Layton <alex@layton.in>",
+	"homepage": "https://github.com/OADA/cli",
+	"repository": "OADA/cli",
+	"bugs": "https://github.com/OADA/cli/issues",
+	"license": "MIT",
+	"keywords": [
+		"OADA",
+		"CLI",
+		"oclif",
+		"JSON",
+		"NDJSON",
+		"Concatenated-JSON",
+		"LDJSON",
+		"JSONL",
+		"JSONLines"
+	],
+	"pkg": {
+		"options": {
+			"enable-source-maps": true
+		},
+		"assets": [
+			"oclif.manifest.json",
+			"dist/**/*.map"
+		],
+		"scripts": [
+			"dist/**/*.{c,m,}js",
+			"@oada/client"
+		],
+		"targets": [
+			"node16-linux-x64",
+			"node16-macos-x64",
+			"node16-win-x64"
+		],
+		"outputPath": "packaged"
+	},
+	"oclif": {
+		"additionalHelpFlags": [
+			"-h"
+		],
+		"additionalVersionFlags": [
+			"-v"
+		],
+		"commands": "./dist/commands",
+		"topics": {
+			"fs": {
+				"description": "interact with OADA like a filesystem"
+			}
+		},
+		"hooks": {
+			"postrun": "./dist/hooks/postrun/close"
+		},
+		"bin": "oada",
+		"dirname": "oada",
+		"plugins": [
+			"@oclif/plugin-help",
+			"@oclif/plugin-autocomplete",
+			"@oclif/plugin-not-found",
+			"@oclif/plugin-plugins"
+		]
+	},
+	"scripts": {
+		"postpack": "rm -f oclif.manifest.json",
+		"prepare": "npm run build && oclif manifest",
+		"readme": "oclif readme",
+		"package": "npm run prepare && pkg --public-packages '*' --no-bytecode --debug .",
+		"build": "tsc -b"
+	},
+	"files": [
+		"bin",
+		"dist",
+		"oclif.manifest.json",
+		"yarn.lock"
+	],
+	"dependencies": {
+		"@oada/client": "^5.3.0",
+		"@oada/oadaify": "^2.1.0",
+		"@oclif/core": "^4.2.10",
+		"@oclif/plugin-autocomplete": "^3.2.27",
+		"@oclif/plugin-help": "^6.2.27",
+		"@oclif/plugin-not-found": "^3.2.49",
+		"@oclif/plugin-plugins": "^5.4.36",
+		"cli-highlight": "^2.1.11",
+		"concatjson": "^2.0.1",
+		"dotenv": "^16.5.0",
+		"find-up": "^7.0.0",
+		"gaxios": "^6.7.1",
+		"ksuid": "^3.0.0",
+		"minimatch": "^10.0.1",
+		"ndjson": "^2.0.0",
+		"object-assign-deep": "^0.4.0",
+		"tslib": "^2.8.1"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^1.9.4",
+		"@oada/types": "^3.5.3",
+		"@tsconfig/node16": "^16.1.3",
+		"@types/glob": "^8.1.0",
+		"@types/minimatch": "^5.1.2",
+		"@types/ndjson": "^2.0.4",
+		"@types/node": "^22.14.1",
+		"@types/object-assign-deep": "^0.4.3",
+		"@yarnpkg/sdks": "^3.2.1",
+		"glob": "^11.0.1",
+		"globby": "^14.1.0",
+		"oclif": "^4.17.44",
+		"pkg": "^5.8.1",
+		"ts-node": "^10.9.2",
+		"type-fest": "^4.40.0",
+		"typescript": "^5.8.3"
+	},
+	"packageManager": "yarn@4.9.1"
 }

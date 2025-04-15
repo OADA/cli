@@ -10,13 +10,13 @@ import { setInterval } from 'node:timers/promises';
 
 import { Args, Flags } from '@oclif/core';
 
-import type Tree from '@oada/types/oada/tree/v1.js';
 import { oadaify } from '@oada/oadaify';
+import type Tree from '@oada/types/oada/tree/v1.js';
 
 import Command from '../BaseCommand.js';
 
-import { loadFile, output } from '../io.js';
 import getConn from '../connections.js';
+import { loadFile, output } from '../io.js';
 
 const examples = [''];
 

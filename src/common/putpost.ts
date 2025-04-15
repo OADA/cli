@@ -14,11 +14,11 @@
 
 import { Flags } from '@oclif/core';
 
-import { input, loadFile } from '../io.js';
-import Command from '../BaseCommand.js';
 import type { Tree } from '@oada/types/oada/tree/v1.js';
+import Command from '../BaseCommand.js';
 import getConn from '../connections.js';
 import { shell } from '../highlight.js';
+import { input, loadFile } from '../io.js';
 
 /**
  * OADA PUT/POST

@@ -16,9 +16,9 @@ import { join } from 'node:path';
 
 import 'dotenv/config';
 import { Command, Flags } from '@oclif/core';
-import type { SetRequired } from 'type-fest';
 import { findUp } from 'find-up';
 import objectAssignDeep from 'object-assign-deep';
+import type { SetRequired } from 'type-fest';
 
 import type { OADAClient } from '@oada/client';
 

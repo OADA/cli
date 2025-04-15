@@ -6,9 +6,9 @@
  * https://opensource.org/licenses/MIT
  */
 
-import { expandPath, output } from '../../io.js';
 import Command from '../../BaseCommand.js';
 import getConn from '../../connections.js';
+import { expandPath, output } from '../../io.js';
 
 /**
  * OADA version of ls

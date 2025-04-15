@@ -7,9 +7,9 @@
  */
 
 import Command from '../../BaseCommand.js';
-import { expandPath } from '../../io.js';
 import getConn from '../../connections.js';
 import { shell } from '../../highlight.js';
+import { expandPath } from '../../io.js';
 
 const examples = [shell`$ oada touch /bookmarks`];
 

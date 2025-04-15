@@ -16,7 +16,6 @@ node_modules
 
 # yarn 2 stuff
 .yarn/*
-!.yarn/releases
 !.yarn/plugins
 !.yarn/versions
 .pnp.*

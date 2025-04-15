@@ -8,36 +8,36 @@
 
 /* eslint-disable sonarjs/no-nested-template-literals */
 
-import { Flags } from '@oclif/core';
+import { Flags } from "@oclif/core";
 
-import { json, shell } from '../highlight.js';
-import Command from '../BaseCommand.js';
+import Command from "../BaseCommand.js";
+import { json, shell } from "../highlight.js";
 
 import {
-  type OADAifiedJsonArray,
-  type OADAifiedJsonObject,
-  type OADAifiedJsonValue,
-  _id,
-  _meta,
-  oadaify,
-} from '@oada/oadaify';
+	type OADAifiedJsonArray,
+	type OADAifiedJsonObject,
+	type OADAifiedJsonValue,
+	_id,
+	_meta,
+	oadaify,
+} from "@oada/oadaify";
 
-import { expandPath, loadFile, output } from '../io.js';
-import type { OADAClient } from '@oada/client';
-import type Tree from '@oada/types/oada/tree/v1.js';
-import getConn from '../connections.js';
+import type { OADAClient } from "@oada/client";
+import type Tree from "@oada/types/oada/tree/v1.js";
+import getConn from "../connections.js";
+import { expandPath, loadFile, output } from "../io.js";
 
 /**
  * @todo why does TS need this?
  */
 function isArray(
-  oadaified: OADAifiedJsonArray | OADAifiedJsonObject
+	oadaified: OADAifiedJsonArray | OADAifiedJsonObject,
 ): oadaified is OADAifiedJsonArray {
-  return Array.isArray(oadaified);
+	return Array.isArray(oadaified);
 }
 
 const examples = [
-  `${shell`$ oada get /bookmarks`}
+	`${shell`$ oada get /bookmarks`}
 ${json`{
   "_id": "resources/default:resources_bookmarks_321",
   "_rev": 45,
@@ -50,7 +50,7 @@ ${json`{
   "baz": 700
 }`}`,
 
-  `${shell`$ oada get /bookmarks/*`}
+	`${shell`$ oada get /bookmarks/*`}
 ${json`"bar"`}
 ${json`700`}`,
 ];
@@ -59,112 +59,112 @@ ${json`700`}`,
  * OADA GET
  */
 export default class Get extends Command {
-  static override description = 'perform an OADA GET (read)';
+	static override description = "perform an OADA GET (read)";
 
-  static override aliases = ['g', 'GET'];
+	static override aliases = ["g", "GET"];
 
-  static override examples = examples;
+	static override examples = examples;
 
-  static override flags = {
-    tree: Flags.string({
-      char: 'T',
-      description: 'file containing an OADA tree to use for a tree GET',
-    }),
-    recursive: Flags.boolean({ char: 'R', default: false }),
-    meta: Flags.boolean({ char: 'm', default: false }),
-    out: Flags.string({ char: 'o', default: '-' }),
-  };
+	static override flags = {
+		tree: Flags.string({
+			char: "T",
+			description: "file containing an OADA tree to use for a tree GET",
+		}),
+		recursive: Flags.boolean({ char: "R", default: false }),
+		meta: Flags.boolean({ char: "m", default: false }),
+		out: Flags.string({ char: "o", default: "-" }),
+	};
 
-  static override strict = false;
+	static override strict = false;
 
-  async run() {
-    const {
-      argv: paths,
-      flags: { out, meta, tree: treefile },
-    } = await this.parse(Get);
-    const conn = getConn(this.iconfig);
+	async run() {
+		const {
+			argv: paths,
+			flags: { out, meta, tree: treefile },
+		} = await this.parse(Get);
+		const conn = getConn(this.iconfig);
 
-    // Load tree
-    const tree = treefile ? ((await loadFile(treefile)) as Tree) : undefined;
+		// Load tree
+		const tree = treefile ? ((await loadFile(treefile)) as Tree) : undefined;
 
-    await output(
-      out,
-      async function* () {
-        for (const p of paths) {
-          const pp = expandPath(conn, `${p}`);
-          // eslint-disable-next-line no-await-in-loop
-          for await (const path of pp) {
-            const { data } = await conn.get({ path, tree });
+		await output(
+			out,
+			async function* () {
+				for (const p of paths) {
+					const pp = expandPath(conn, `${p}`);
+					// eslint-disable-next-line no-await-in-loop
+					for await (const path of pp) {
+						const { data } = await conn.get({ path, tree });
 
-            if (Buffer.isBuffer(data)) {
-              yield data;
-              return;
-            }
+						if (Buffer.isBuffer(data)) {
+							yield data;
+							return;
+						}
 
-            // @ts-expect-error oadaify nonsense
-            const oadaified = oadaify(data);
+						// @ts-expect-error oadaify nonsense
+						const oadaified = oadaify(data);
 
-            if (meta) {
-              await getMeta(conn, oadaified);
-            }
+						if (meta) {
+							await getMeta(conn, oadaified);
+						}
 
-            yield oadaified;
-          }
-        }
-      },
-      this.iconfig
-    );
-  }
+						yield oadaified;
+					}
+				}
+			},
+			this.iconfig,
+		);
+	}
 }
 
 async function getMeta(
-  conn: OADAClient,
-  oadaified: OADAifiedJsonValue
+	conn: OADAClient,
+	oadaified: OADAifiedJsonValue,
 ): Promise<OADAifiedJsonValue> {
-  if (
-    !oadaified ||
-    typeof oadaified !== 'object' ||
-    Buffer.isBuffer(oadaified)
-  ) {
-    return oadaified;
-  }
+	if (
+		!oadaified ||
+		typeof oadaified !== "object" ||
+		Buffer.isBuffer(oadaified)
+	) {
+		return oadaified;
+	}
 
-  if (isArray(oadaified)) {
-    return Promise.all(
-      oadaified.map(async (element) => getMeta(conn, element))
-    );
-  }
+	if (isArray(oadaified)) {
+		return Promise.all(
+			oadaified.map(async (element) => getMeta(conn, element)),
+		);
+	}
 
-  const out: OADAifiedJsonObject = Object.fromEntries(
-    await Promise.all(
-      Object.entries(oadaified).map(async ([k, v]) => [
-        k,
-        await getMeta(conn, v!),
-      ])
-    )
-  ) as OADAifiedJsonObject;
+	const out: OADAifiedJsonObject = Object.fromEntries(
+		await Promise.all(
+			Object.entries(oadaified).map(async ([k, v]) => [
+				k,
+				await getMeta(conn, v!),
+			]),
+		),
+	) as OADAifiedJsonObject;
 
-  // Check for "empty" meta ?
-  // eslint-disable-next-line security/detect-object-injection
-  const meta = out[_meta] as OADAifiedJsonObject | undefined;
-  if (meta) {
-    // Fetch meta?
-    const { data } = await conn.get({
-      // eslint-disable-next-line security/detect-object-injection
-      path: meta[_id] as string,
-    });
+	// Check for "empty" meta ?
+	// eslint-disable-next-line security/detect-object-injection
+	const meta = out[_meta] as OADAifiedJsonObject | undefined;
+	if (meta) {
+		// Fetch meta?
+		const { data } = await conn.get({
+			// eslint-disable-next-line security/detect-object-injection
+			path: meta[_id] as string,
+		});
 
-    if (!data || Buffer.isBuffer(data)) {
-      throw new TypeError(
-        // eslint-disable-next-line security/detect-object-injection
-        `Meta ${meta[_id]} is not a valid OADA meta resource`
-      );
-    }
+		if (!data || data instanceof Uint8Array) {
+			throw new TypeError(
+				// eslint-disable-next-line security/detect-object-injection
+				`Meta ${meta[_id]} is not a valid OADA meta resource`,
+			);
+		}
 
-    // Fill it in
-    // eslint-disable-next-line security/detect-object-injection
-    out[_meta] = oadaify(data);
-  }
+		// Fill it in
+		// eslint-disable-next-line security/detect-object-injection
+		out[_meta] = oadaify(data);
+	}
 
-  return out;
+	return out;
 }

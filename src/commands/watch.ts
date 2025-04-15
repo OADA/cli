@@ -11,8 +11,8 @@
 
 import { Args, Flags } from '@oclif/core';
 
-import { json, shell } from '../highlight.js';
 import Command from '../BaseCommand.js';
+import { json, shell } from '../highlight.js';
 
 import getConn from '../connections.js';
 import { output } from '../io.js';
