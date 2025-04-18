@@ -1,5 +1,6 @@
 # "Compiled" stuff
 dist
+tmp
 *.tsbuildinfo
 packaged
 oclif.manifest.json

@@ -14,8 +14,6 @@
     ".yarn": true,
     ".pnp.*": true,
     ".vim": true,
-    ".yarn": true,
-    ".pnp.*": true,
     "tags.*": true
   },
   //"prettier.prettierPath": ".yarn/sdks/prettier/index.js",
